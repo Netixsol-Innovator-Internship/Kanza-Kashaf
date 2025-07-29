@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Task 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header{
+            text-align: center;
+        }
+        .header h1 {
+            margin-bottom: 0;
+        }
+        .header p {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .icons {
+            margin-top: 0;
+            font-size: 14px;
+        }
+        table {
+            text-align: left;
+        }
+        th{
+            vertical-align: top;
+            padding-right: 100px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="header">
+            <h1>John Doe</h1>
+            <p>Creative and Innovative Web Developer</p>
+            <div class="icons">
+                <i class="fa-solid fa-location-dot" style="color: #63E6BE;"></i> Pleasantville, CA 94588
+                <i class="fa-solid fa-phone" style="color: #63E6BE;"></i> (555) 123-4567
+                <i class="fa-solid fa-envelope" style="color: #63E6BE;"></i> john.doe@gmail.com
+                <i class="fa-solid fa-link" style="color: #63E6BE;"></i> https://johndoe.me/
+            </div>
+        </div>
+
+        <div class="tableSection">
+            <table cellpadding="10" cellspacing="0" style="border-collapse: collapse; margin-top: 10px;">
+                <tr style="border-top: 2px solid black;">
+                    <th>Profiles</th>
+
+                    <td><div class="linkedin">
+                            <i class="fa-brands fa-linkedin" style="color: #74C0FC;"></i> johndoe<br>
+                            <span>LinkedIn</span>
+                        </div>
+                    </td>
+                    <td><div class="github">
+                            <i class="fab fa-github icon"></i> johndoe<br>
+                            <span>GitHub</span>
+                        </div>
+                    </td>
+                    <td><div class="stackoverflow">
+                            <i class="fa-brands fa-stack-overflow" style="color: #FFD43B;"></i> johndoe<br>
+                            <span>StackOverflow</span>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr style="border-top: 2px solid black;">
+                    <th>Summary</th>
+                    <td colspan="3">Innovative Web Developer with 5 years of experience in building impactful and user-friendly websites and applications.
+                        Specializes in <strong>front-end technologies</strong> and passionate about modern web standards and cutting-edge development techniques.
+                        Proven track record of leading successful projects from concept to deployment.</td>
+                </tr>
+
+                <tr style="border-top: 2px solid black;">
+                    <th rowspan="4">Experience</th>
+                    <td>
+                        <strong>Creative Solutions Inc.</strong><br>
+                        Senior Web Developer<br>
+                        <i class="fa-solid fa-link" style="color: #63E6BE;"></i> https://creativesolutions.inc/
+                    </td>
+                    <td colspan="2" style="text-align: right; vertical-align: top;">
+                        <strong>January 2019 to Present</strong><br>
+                        San Francisco, CA
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <ul>
+                            <li>Superheaded the redesign of the main product website, resulting in a 40% increase in user engagement.</li>
+                            <li>Developed and implemented a new responsive framework, improving cross-device compatibility.</li>
+                            <li>Mentored a team of four junior developers, fostering a culture of technical excellence.</li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <strong>TechAdvancers</strong><br>
+                        Web Developer<br>
+                        <i class="fa-solid fa-link" style="color: #63E6BE;"></i> https://techadvancers.com/
+                    </td>
+                    <td colspan="2" style="text-align: right; vertical-align: top;">
+                        <strong>June 2016 to December 2018</strong><br>
+                        San Jose, CA
+                    </td>
+                </tr>
+
+                <tr">
+                    <td colspan="3">
+                        <ul>
+                            <li>Collaborated in a team of 10 to develop high-quality web application using React.js and Node.js.</li>
+                            <li>Managed the integration of third-party services such as Stripe for payments and Twilio for SMS services.</li>
+                            <li>Optimized application performance, achieving a 30% reduction in load times.</li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr style="border-top: 2px solid black;">
+                    <th>Education</th>
+                    <td style="vertical-align: top;">
+                        <strong>University of California</strong><br>
+                        Berkeley, CA<br>
+                    </td>
+                    <td colspan="2" style="text-align: right; vertical-align: top;">
+                        <strong>August 2012 to May 2016</strong><br>
+                        Bachelor's in Computer Science
+                    </td>
+                </tr>
+
+                <tr style="border-top: 2px solid black;">
+                    <th>Projects</th>
+                    <td colspan="3">
+                        <table>
+
+                            <tr>
+                                <td>
+                                    <strong>E-Commerce Platform</strong><br>
+                                    Project Lead<br>
+                                </td>
+                                <td>
+                                    <strong>Interactive Dashboard</strong><br>
+                                    Frontend Developer<br>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    Led the development of a full-stack e-commerce platform, improving sales conversion by 25%.
+                                </td>
+                                <td>
+                                    Created an analytics dashboard for a SaaS application, enhancing data visualization for clients.
+                                </td>
+                            </tr>
+
+                        </table>   
+                    </td>
+                </tr>
+
+                <tr style="border-top: 2px solid black;">
+                    <th>Skills</th>
+                    <td style="vertical-align: top;">
+                        <strong>Web Technologies</strong><br>
+                        Advanced<br>
+                        HTML5, JavaScript, PHP, Python
+                    </td>
+                    <td>
+                        <strong>Web Frameworks</strong><br>
+                        Intermediate<br>
+                        React.js, Angular, Vue.js, Laravel, Django
+                    </td>
+                    <td>
+                        <strong>Tools</strong><br>
+                        Intermediate<br>
+                        Webpack, Git, Jenkins, Docker, JIRA
+                    </td>
+                </tr>
+
+                <tr style="border-top: 2px solid black;">
+                    <th>Certifications</th>
+                    <td style="vertical-align: top;">
+                        <strong>Full-Stack Web Development</strong><br>
+                        CodeAcademy
+                    </td>
+                    <td>
+                        <div class="certification" style="display: flex; flex-direction: row;">
+                            <div style="margin-right: 10px; margin-top: 27px;">
+                                <strong>2020</strong>
+                            </div>
+                            <div>
+                                <strong>AWS Certified Developer</strong><br>
+                                Amazon Web Services
+                            </div>
+                        </div>
+                    </td>
+                    <td style="text-align: right;">
+                        <strong>2019</strong>
+                    </td>
+                </tr>
+
+                <tr style="border-top: 2px solid black;">
+                    <th>Languages</th>
+                    <td>
+                        <strong>English</strong><br>
+                         Native Speaker
+                    </td>
+                    <td>
+                        <strong>Spanish</strong><br>
+                        Intermediate  
+                    </td>
+                </tr>
+
+                <tr style="border-top: 2px solid black;">
+                    <th>References</th>
+                    <td>
+                        <strong>Available upon request</strong>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
