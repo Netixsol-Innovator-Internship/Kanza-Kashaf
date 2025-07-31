@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hisma Desert</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@275;600&family=Imperial+Script&display=swap"
+      rel="stylesheet"
+    />
+    <link href="../output.css" rel="stylesheet" />
+  </head>
+  <body class="flex justify-center items-start min-h-screen font-[Poppins]">
+    <div class="relative w-full">
+      <!-- Background Section -->
+      <div class="relative w-full h-[982px] overflow-hidden bg-[url('../images/Desert.jpg')] bg-cover bg-center">
+        <!-- Top Black Gradient Overlay -->
+        <div class="absolute top-0 left-0 w-full h-[460px] bg-gradient-to-b from-black to-transparent opacity-90 z-10"></div>
+
+        <!-- Bottom Black Gradient Overlay -->
+        <div class="absolute bottom-0 left-0 w-full h-[460px] bg-gradient-to-t from-black to-transparent opacity-250 z-10"></div>
+
+        <!-- Bottom Content (Text & Profile) -->
+        <div class="absolute bottom-[40px] inset-x-0 flex justify-between items-end px-[105px] z-20">
+          <!-- Description -->
+          <div>
+            <h1 class="font-[Imperial_Script] font-normal text-[100px] leading-[125%] tracking-[0.035em] text-white">
+              Hisma
+            </h1>
+            <h2 class="font-[Poppins] font-semibold text-[100px] leading-[125%] tracking-[-0.01em] text-white -mt-[35px]">
+              Desert
+            </h2>
+          </div>
+
+          <!-- Profile Component -->
+          <div class="w-[259px] h-[79px] flex items-center gap-[14px] pb-[100px] pr-[175px]">
+            <img
+              src="../images/Wazeem.png"
+              alt="Profile"
+              class="w-[72px] h-[69px] rounded-full object-cover"
+            />
+            <div class="w-[143px] h-[42px] flex flex-col justify-center gap-[10px]">
+              <p class="w-[143px] h-[30px] text-base text-white opacity-80 leading-tight">
+                <span class="font-bold block">Wazeem Al Mulk</span>
+                <span class="text-sm block">Traveler</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overlapping Text Section with 15% overlap -->
+      <div class="relative z-30 -mt-[48px] bg-black w-full">
+        <!-- If this section is ~320px tall, 15% ≈ 48px overlap -->
+        <p class="px-[105px] py-[30px] text-white">
+          The Hisma Desert in Saudi Arabia is a realm of ethereal beauty that
+          captivates the senses. Its vast expanse of golden sand dunes, sculpted
+          by the winds of time, creates a mesmerizing landscape that stretches
+          as far as the eye can see. As the sun sets, painting the sky with
+          vivid hues.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

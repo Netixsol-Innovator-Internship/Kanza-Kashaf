@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Page</title>
+    <link href="../output.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet" />
+    <style>
+        /* Custom Tailwind Config */
+        @tailwind utilities;
+
+        @layer utilities {
+        .text-whatsappHeading {
+            font-size: 36px;
+            line-height: 1.06;
+        }
+        .text-whatsappButton {
+            font-size: 24px;
+            line-height: 1.06;
+        }
+        .tracking-tightCustom {
+            letter-spacing: -0.01em;
+        }
+        .shadow-whatsappShine {
+            box-shadow: inset 0 12px 8px rgba(255,255,255,0.4), inset 0 -12px 8px rgba(255,255,255,0.4);
+        }
+        .rounded-pill {
+            border-radius: 127px;
+        }
+        .rounded-button {
+            border-radius: 15px;
+        }
+        .font-poppins {
+            font-family: 'Poppins', sans-serif;
+        }
+        }
+
+        /* Custom responsive adjustments */
+        @media (max-width: 639px) {
+        .whatsapp-cta {
+            flex-direction: column;
+            text-align: center;
+            padding: 1.5rem;
+            gap: 1rem;
+        }
+        }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- NavBar -->
+
+
+    <div class="min-h-screen text-white overflow-x-hidden">
+        <div class="relative bg-cover bg-center font-[Poppins] bg-[url('../images/About.png')]">
+            <img src="../images/Logo.png" alt="Logo" class="absolute w-[213px] h-[118px] top-[83px] left-[79px] lg:block hidden" />
+            <img src="../images/Logo.png" alt="Logo" class="absolute w-[80px] h-[45px] top-[20px] left-[20px] block lg:hidden z-50" />
+
+            <div class="absolute top-[22px] right-[20px] flex items-center gap-3 z-30 lg:hidden">
+            <button id="theme-toggle-mobile" class="flex items-center bg-white rounded-[20px] w-[50px] h-[22px] p-[2px]" aria-label="Toggle dark mode" type="button">
+                <span id="moon-wrap-mobile" class="flex items-center justify-center h-[18px] rounded-[16px] transition-all">
+                <svg id="moon-icon-mobile" class="w-3.5 h-3.5 text-black transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" />
+                </svg>
+                </span>
+                <span id="sun-wrap-mobile" class="flex items-center justify-center h-[18px] ml-1 rounded-[16px] transition-all">
+                <svg id="sun-icon-mobile" class="w-3.5 h-3.5 text-black transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="5" />
+                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                </svg>
+                </span>
+            </button>
+
+            <button id="hamburger" class="w-6 h-6 text-white focus:outline-none">
+                <svg id="open-icon" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            </div>
+
+            <div class="absolute top-[87px] left-[864px] gap-[55px] h-[36px] items-center hidden lg:flex z-50">
+            <button id="theme-toggle" class="flex items-center bg-white rounded-[20px] w-[76px] h-[32px] p-[2px]" aria-label="Toggle dark mode" type="button">
+                <span id="moon-wrap" class="flex items-center justify-center h-[28px] rounded-[16px] transition-all">
+                <svg id="moon-icon" class="w-5 h-5 text-black transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" />
+                </svg>
+                </span>
+                <span id="sun-wrap" class="flex items-center justify-center h-[28px] ml-1 rounded-[16px] transition-all">
+                <svg id="sun-icon" class="w-5 h-5 text-black transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="5" />
+                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                </svg>
+                </span>
+            </button>
+
+            <div class="flex items-center gap-[55px] text-white text-[24px] leading-[100%] font-medium">
+                <a href="DestinationPage.html">
+                        <div class="w-[151px] h-[36px] flex items-center cursor-pointer hover:underline">
+                            Destinations
+                        </div>
+                </a>
+                <div class="w-[115px] h-[36px] flex items-center">Members</div>
+                <div class="w-[86px] h-[36px] flex items-center">Gallery</div>
+            </div>
+            </div>
+
+            <div id="mobile-menu" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-90 -translate-x-full transition-transform duration-300 z-40 lg:hidden flex flex-col items-center justify-center space-y-10 text-[24px] font-medium">
+            <a href="DestinationPage.html">
+                        <div class="w-[151px] h-[36px] flex items-center cursor-pointer hover:underline">
+                            Destinations
+                        </div>
+            </a>
+            <div>Members</div>
+            <div>Gallery</div>
+            </div>
+
+            <!-- Page Content -->
+            <div class="relative flex flex-col items-center pt-[267px] space-y-[122px] pb-[200px] w-full">
+                <!-- Hero Section -->
+                <div class="w-[752px] h-[278px] flex flex-col items-center gap-[4px] text-center text-white z-30">
+                <h1 class="text-[98px] font-bold leading-[116%] mt-[175px]">About Us</h1>
+                <p class="text-[20px] font-normal leading-[116%] w-full">
+                    Discover the country's hidden gems and breathtaking landscapes
+                </p>
+                </div>
+
+                <!-- History and People Section -->
+                <div class="w-[1349px] h-[139px] flex justify-between text-white"></div>
+            <div class="absolute bottom-0 left-0 w-full h-[206px] opacity-[0.9] z-20 bg-[linear-gradient(to_top,#000000_0%,rgba(0,0,0,0)_100%)]"></div>
+        </div>
+    </div>
+
+
+
+    <!-- Text Section -->
+    
+
+    <div class="bg-white text-black font-poppins dark:bg-black dark:text-white">
+        <div class="text-black text-center px-4 py-10 sm:py-14 md:py-16 dark:text-white">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl leading-[116%] font-semibold font-[Poppins]">
+                Saudi, a kingdom that inspires
+            </h2>
+            <p class="text-lg sm:text-xl md:text-2xl leading-[125%] font-light font-[Poppins] mt-2 sm:mt-3 md:mt-4 max-w-xl sm:max-w-2xl mx-auto">
+                a uniquely saudi experience waits in winters
+            </p>
+        </div>
+    </div>
+
+
+
+    <!-- Tradition of Saudi -->
+
+
+    <div class="bg-white text-black font-[Poppins] dark:bg-black dark:text-white">
+        <div class="max-w-[1320px] mx-auto px-4 pt-12 pb-24">
+            <!-- Title -->
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-16">
+                Traditions of Saudi Arabia
+            </h1>
+
+            <!-- Grid wrapper -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-16 gap-x-12 items-start">
+                <!-- Language Image -->
+                <div class="w-full max-w-[520px] mx-auto aspect-[5/4] rounded-[28px] overflow-hidden">
+                    <img
+                        id="languageImage"
+                        src="../images/Language.png"
+                        alt="Language"
+                        class="w-full h-full object-cover"
+                    />
+                </div>
+
+                <!-- Language Text -->
+                <div class="relative">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4">Language</h2>
+                    <p class="text-base sm:text-lg md:text-xl leading-relaxed text-justify mb-10">
+                        Arabic is the official language of Saudi Arabia and the primary language used in all dealings and public transactions. English serves as an informal second language in the Kingdom and is spoken by a large section of its society. All road signs are bilingual, showing information in both Arabic and English.
+                    </p>
+
+                    <!-- Language Arrow -->
+                    <button
+                        onclick="nextLanguageSlide()"
+                        class="absolute -bottom-2 right-0 translate-y-[50%] w-16 h-16 sm:w-[72px] sm:h-[72px] text-black dark:text-white"
+                    >
+                        <!-- SVG Arrow -->
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="0.7"
+                        stroke="currentColor"
+                        class="w-full h-full"
+                        >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                        />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Culture Text -->
+                <div class="relative self-start">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4">Culture</h2>
+                    <p class="text-base sm:text-lg md:text-xl leading-relaxed text-justify mb-10">
+                        Saudi Arabia's rich heritage and traditions have been shaped by its position as a historic trade hub and the birthplace of Islam. In recent years, the Kingdom has undergone a significant cultural transformation, evolving century-old customs to fit the contemporary world we live in today.
+                    </p>
+
+                    <!-- Culture Arrow -->
+                    <button
+                        onclick="nextCultureSlide()"
+                        class="absolute -bottom-14 -right-4 w-16 h-16 sm:w-[72px] sm:h-[72px] text-black dark:text-white"
+                    >
+                        <!-- SVG Arrow -->
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="0.7"
+                        stroke="currentColor"
+                        class="w-full h-full"
+                        >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                        />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Culture Image -->
+                <div class="w-full max-w-[520px] mx-auto aspect-[5/4] rounded-[28px] overflow-hidden self-end">
+                    <img
+                        id="cultureImage"
+                        src="../images/Culture.png"
+                        alt="Culture"
+                        class="w-full h-full object-cover"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- WhatsApp Contact -->
+
+    <div class="flex items-center justify-center p-4 bg-white dark:bg-black">
+        <div class="w-full max-w-[1393px] h-auto min-h-[80px] sm:h-[140px] md:h-[180px] lg:h-[200px] bg-gradient-to-r from-[#047F01] to-[#047E01] rounded-pill shadow-whatsappShine px-4 sm:px-6 md:px-10 flex flex-col sm:flex-row items-center justify-between py-4 sm:py-2 whatsapp-cta">
+            <h2 class="text-white text-xl sm:text-2xl lg:text-[28px] font-semibold tracking-tightCustom px-2 sm:px-0">Contact us on Whatsapp</h2>
+            <button class="w-[140px] sm:w-[160px] md:w-[180px] lg:w-[200px] h-[40px] sm:h-[50px] md:h-[55px] lg:h-[60px] bg-white rounded-button flex items-center justify-center hover:bg-gray-100 transition-colors">
+                <span class="text-[#047E01] text-base sm:text-lg lg:text-[18px] font-normal tracking-tightCustom">Start Chat</span>
+            </button>
+        </div>
+    </div>
+
+
+
+    <!-- Slider -->
+
+
+    <div class="bg-white flex items-center justify-center pt-[120px] pb-[120px] dark:bg-black">
+        <div class="slider-container relative w-full max-w-[1264px] overflow-hidden mx-auto">
+            <!-- SLIDE TRACK -->
+            <div id="sliderTrack" class="slider-track flex transition-transform duration-700 ease-in-out h-full">
+            <!-- Slide 1 -->
+            <div class="slide relative w-full flex-shrink-0">
+                <img src="../images/Explore.png" class="w-full h-full object-cover" alt="Explore Saudi Arabia" />
+                <div class="absolute left-0 top-1/2 -translate-y-1/2 flex items-center w-[90%] max-w-[1118px] min-h-[80px] sm:min-h-[100px] md:min-h-[128px] pl-4 sm:pl-6 md:pl-10 text-white">
+                <div class="w-[70%] md:w-[553px]">
+                    <h2 class="text-2xl sm:text-4xl md:text-5xl lg:text-[60px] font-semibold leading-[106%] tracking-[-0.01em]">Explore<br />Saudi Arabia</h2>
+                </div>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="slide relative w-full flex-shrink-0">
+                <img src="../images/Neom.png" class="w-full h-full object-cover" alt="NEOM" />
+                <div class="absolute left-0 top-1/2 -translate-y-1/2 flex items-center w-[90%] max-w-[1118px] min-h-[80px] sm:min-h-[100px] md:min-h-[128px] pl-4 sm:pl-6 md:pl-10 text-white">
+                <h2 class="text-2xl sm:text-4xl md:text-5xl lg:text-[60px] font-semibold leading-[106%] tracking-[-0.01em]">Made To Change<br />NEOM</h2>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="slide relative w-full flex-shrink-0">
+                <img src="../images/KSA.png" class="w-full h-full object-cover" alt="KSA" />
+                <div class="absolute left-0 top-1/2 -translate-y-1/2 flex items-center w-[90%] max-w-[1118px] min-h-[80px] sm:min-h-[100px] md:min-h-[128px] pl-4 sm:pl-6 md:pl-10 text-white">
+                <h2 class="text-2xl sm:text-4xl md:text-5xl lg:text-[60px] font-semibold leading-[106%] tracking-[-0.01em]">Rules of Behaviour<br />KSA</h2>
+                </div>
+            </div>
+            </div>
+
+            <!-- RIGHT ARROW BUTTON -->
+            <button onclick="manualNextSlide()"
+            class="absolute right-4 sm:right-8 md:right-[70px] top-1/2 -translate-y-1/2 z-10 w-12 h-12 sm:w-16 sm:h-16 md:w-[120px] md:h-[120px] text-white opacity-100 rotate-0 flex items-center justify-center hover:text-gray-300 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke-width="0.7"
+                stroke="currentColor" class="w-8 h-8 sm:w-12 sm:h-12 md:w-20 md:h-20">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+            </button>
+        </div>
+    </div>
+
+
+    <!-- Footer Section -->
+    
+    
+    <div class="bg-black m-0 p-0 font-poppins">
+        <footer class="w-full bg-[#222222] px-6 py-10">
+            <div class="max-w-[1512px] mx-auto flex flex-wrap sm:flex-nowrap justify-start sm:justify-between items-start gap-y-10">
+
+                <!-- Logo -->
+                <div class="w-full sm:w-auto flex justify-center sm:justify-start mb-6 sm:mb-0 sm:mr-20">
+                    <img src="../images/Logo.png" alt="Saudi Logo" class="w-[200px] sm:w-[267px] h-auto object-contain" />
+                </div>
+
+                <!-- Columns Wrapper -->
+                <div class="flex flex-wrap sm:flex-nowrap gap-x-10 sm:gap-x-16 text-white">
+
+                    <!-- About -->
+                    <div class="flex flex-col gap-2 min-w-[120px]">
+                        <h3 class="font-semibold text-custom">About</h3>
+                        <a href="AboutUs.html" class="font-normal text-custom hover:underline">About Us</a>
+                        <a href="#" class="font-normal text-custom hover:underline">Features</a>
+                        <a href="#" class="font-normal text-custom hover:underline">News & Blogs</a>
+                    </div>
+
+                    <!-- Contact -->
+                    <div class="flex flex-col gap-2 min-w-[120px]">
+                        <h3 class="font-semibold text-custom">Contact</h3>
+                        <a href="#" class="font-normal text-custom hover:underline">Instagram</a>
+                        <a href="#" class="font-normal text-custom hover:underline">Twitter</a>
+                        <a href="#" class="font-normal text-custom hover:underline">Facebook</a>
+                    </div>
+
+                    <!-- Support -->
+                    <div class="flex flex-col gap-2 min-w-[120px]">
+                        <h3 class="font-semibold text-custom">Support</h3>
+                        <a href="#" class="font-normal text-custom hover:underline">FAQs</a>
+                        <a href="#" class="font-normal text-custom hover:underline">Support Centre</a>
+                        <a href="#" class="font-normal text-custom hover:underline">Feedback</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+      const themeToggleDesktop = document.getElementById("theme-toggle");
+      const themeToggleMobile = document.getElementById("theme-toggle-mobile");
+
+      function setToggleUI(isDark) {
+        const toggles = [
+          {
+            moonWrap: document.getElementById("moon-wrap"),
+            moonIcon: document.getElementById("moon-icon"),
+            sunWrap: document.getElementById("sun-wrap"),
+            sunIcon: document.getElementById("sun-icon"),
+          },
+          {
+            moonWrap: document.getElementById("moon-wrap-mobile"),
+            moonIcon: document.getElementById("moon-icon-mobile"),
+            sunWrap: document.getElementById("sun-wrap-mobile"),
+            sunIcon: document.getElementById("sun-icon-mobile"),
+          },
+        ];
+
+        toggles.forEach(({ moonWrap, moonIcon, sunWrap, sunIcon }) => {
+          if (!moonWrap || !moonIcon || !sunWrap || !sunIcon) return;
+
+          if (isDark) {
+            moonWrap.classList.add("bg-black", "w-[60px]");
+            moonWrap.classList.remove("w-[32px]");
+            moonIcon.classList.replace("text-black", "text-white");
+
+            sunWrap.classList.remove("bg-black", "w-[60px]");
+            sunWrap.classList.add("w-[32px]");
+            sunIcon.classList.replace("text-white", "text-black");
+          } else {
+            sunWrap.classList.add("bg-black", "w-[60px]");
+            sunWrap.classList.remove("w-[32px]");
+            sunIcon.classList.replace("text-black", "text-white");
+
+            moonWrap.classList.remove("bg-black", "w-[60px]");
+            moonWrap.classList.add("w-[32px]");
+            moonIcon.classList.replace("text-white", "text-black");
+          }
+        });
+      }
+
+      const isDark = document.documentElement.classList.contains("dark");
+      setToggleUI(isDark);
+
+      themeToggleDesktop?.addEventListener("click", () => {
+        document.documentElement.classList.toggle("dark");
+        setToggleUI(document.documentElement.classList.contains("dark"));
+      });
+
+      themeToggleMobile?.addEventListener("click", () => {
+        document.documentElement.classList.toggle("dark");
+        setToggleUI(document.documentElement.classList.contains("dark"));
+      });
+
+      const hamburger = document.getElementById("hamburger");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const openIcon = document.getElementById("open-icon");
+      const closeIcon = document.getElementById("close-icon");
+
+      hamburger.addEventListener("click", () => {
+        const isOpen = mobileMenu.classList.contains("-translate-x-full");
+        mobileMenu.classList.toggle("-translate-x-full");
+        openIcon.classList.toggle("hidden");
+        closeIcon.classList.toggle("hidden");
+      });
+
+
+
+      // Language and Culture Image Sliders
+      const languageImages = ['../images/Language.png', '../images/Culture.png'];
+      const cultureImages = ['../images/Culture.png', '../images/Language.png'];
+      let languageIndex = 0;
+      let cultureIndex = 0;
+
+      function nextLanguageSlide() {
+        languageIndex = (languageIndex + 1) % languageImages.length;
+        document.getElementById('languageImage').src =
+          languageImages[languageIndex];
+      }
+
+      function nextCultureSlide() {
+        cultureIndex = (cultureIndex + 1) % cultureImages.length;
+        document.getElementById('cultureImage').src =
+          cultureImages[cultureIndex];
+      }
+
+
+      //   Slider JavaScript
+
+    
+        const sliderTrack = document.getElementById('sliderTrack');
+        let currentSlide = 0;
+        let autoSlideTimer;
+        const totalSlides = 3;
+
+        function getSlideWidth() {
+        // Use fixed width on large screens, percentage on smaller screens
+        return window.innerWidth >= 1264 ? 1264 : 100;
+        }
+
+        function updateSlide() {
+        const slideWidth = getSlideWidth();
+        const translateValue = window.innerWidth >= 1264 
+            ? `translateX(-${currentSlide * slideWidth}px)`
+            : `translateX(-${currentSlide * slideWidth}%)`;
+        sliderTrack.style.transform = translateValue;
+        }
+
+        function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateSlide();
+        }
+
+        function startAutoSlide() {
+        autoSlideTimer = setInterval(() => {
+            nextSlide();
+        }, 5000); // 5 seconds
+        }
+
+        function resetAutoSlide() {
+        clearInterval(autoSlideTimer);
+        startAutoSlide();
+        }
+
+        function manualNextSlide() {
+        nextSlide();
+        resetAutoSlide();
+        }
+
+        // Touch events for mobile swipe
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        sliderTrack.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+
+        sliderTrack.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+        resetAutoSlide();
+        }, {passive: true});
+
+        function handleSwipe() {
+        const threshold = 50; // Minimum swipe distance
+        if (touchEndX < touchStartX - threshold) {
+            // Swipe left - next slide
+            nextSlide();
+        } else if (touchEndX > touchStartX + threshold) {
+            // Swipe right - previous slide
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlide();
+        }
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+        updateSlide();
+        });
+
+        // Initial setup
+        startAutoSlide();
+
+        // Pause on hover
+        const sliderContainer = document.querySelector('.slider-container');
+        sliderContainer.addEventListener('mouseenter', () => {
+        clearInterval(autoSlideTimer);
+        });
+        sliderContainer.addEventListener('mouseleave', () => {
+        resetAutoSlide();
+        });
+
+    </script>
+  </body>
+</html>

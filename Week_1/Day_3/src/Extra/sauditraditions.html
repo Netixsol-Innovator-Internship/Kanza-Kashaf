@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Traditions of Saudi Arabia</title>
+    <link href="../output.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-black text-white font-[Poppins]">
+    <!-- ========== TRADITIONS SECTION (Updated & Responsive) ========== -->
+    <section class="max-w-[1320px] mx-auto px-4 pt-12 pb-24">
+      <!-- Title -->
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-16">
+        Traditions of Saudi Arabia
+      </h1>
+
+      <!-- Grid wrapper -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-16 gap-x-12 items-start">
+        <!-- Language Image -->
+        <div class="w-full max-w-[520px] mx-auto aspect-[5/4] rounded-[28px] overflow-hidden">
+          <img
+            id="languageImage"
+            src="../images/Language.png"
+            alt="Language"
+            class="w-full h-full object-cover"
+          />
+        </div>
+
+        <!-- Language Text -->
+        <div class="relative">
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4">Language</h2>
+          <p class="text-base sm:text-lg md:text-xl leading-relaxed text-justify mb-10">
+            Arabic is the official language of Saudi Arabia and the primary language used in all dealings and public transactions. English serves as an informal second language in the Kingdom and is spoken by a large section of its society. All road signs are bilingual, showing information in both Arabic and English.
+          </p>
+
+          <!-- Language Arrow -->
+          <button
+            onclick="nextLanguageSlide()"
+            class="absolute -bottom-2 right-0 translate-y-[50%] w-16 h-16 sm:w-[72px] sm:h-[72px] text-white"
+          >
+            <!-- SVG Arrow -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="0.7"
+              stroke="currentColor"
+              class="w-full h-full"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Culture Text -->
+        <div class="relative self-start">
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4">Culture</h2>
+          <p class="text-base sm:text-lg md:text-xl leading-relaxed text-justify mb-10">
+            Saudi Arabia's rich heritage and traditions have been shaped by its position as a historic trade hub and the birthplace of Islam. In recent years, the Kingdom has undergone a significant cultural transformation, evolving century-old customs to fit the contemporary world we live in today.
+          </p>
+
+          <!-- Culture Arrow -->
+          <button
+            onclick="nextCultureSlide()"
+            class="absolute -bottom-14 -right-4 w-16 h-16 sm:w-[72px] sm:h-[72px] text-white"
+          >
+            <!-- SVG Arrow -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="0.7"
+              stroke="currentColor"
+              class="w-full h-full"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Culture Image -->
+        <div class="w-full max-w-[520px] mx-auto aspect-[5/4] rounded-[28px] overflow-hidden self-end">
+          <img
+            id="cultureImage"
+            src="../images/Culture.png"
+            alt="Culture"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+    </section>
+
+
+    <script>
+      const languageImages = ['../images/Language.png', '../images/Culture.png'];
+      const cultureImages = ['../images/Culture.png', '../images/Language.png'];
+      let languageIndex = 0;
+      let cultureIndex = 0;
+
+      function nextLanguageSlide() {
+        languageIndex = (languageIndex + 1) % languageImages.length;
+        document.getElementById('languageImage').src =
+          languageImages[languageIndex];
+      }
+
+      function nextCultureSlide() {
+        cultureIndex = (cultureIndex + 1) % cultureImages.length;
+        document.getElementById('cultureImage').src =
+          cultureImages[cultureIndex];
+      }
+    </script>
+  </body>
+</html>
