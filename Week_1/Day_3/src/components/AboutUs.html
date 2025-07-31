@@ -34,6 +34,63 @@
         .font-poppins {
             font-family: 'Poppins', sans-serif;
         }
+
+        /* Scroll animation styles */
+        .fade-in {
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .fade-in.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        
+        .slide-in-left {
+          opacity: 0;
+          transform: translateX(-50px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .slide-in-left.visible {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        
+        .slide-in-right {
+          opacity: 0;
+          transform: translateX(50px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .slide-in-right.visible {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        
+        .scale-up {
+          opacity: 0;
+          transform: scale(0.95);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .scale-up.visible {
+          opacity: 1;
+          transform: scale(1);
+        }
+        
+        .delay-100 {
+          transition-delay: 100ms;
+        }
+        
+        .delay-200 {
+          transition-delay: 200ms;
+        }
+        
+        .delay-300 {
+          transition-delay: 300ms;
+        }
         }
 
         /* Custom responsive adjustments */
@@ -51,14 +108,13 @@
   <body>
 
     <!-- NavBar -->
-
-
     <div class="min-h-screen text-white overflow-x-hidden">
-        <div class="relative bg-cover bg-center font-[Poppins] bg-[url('../images/About.png')]">
-            <img src="../images/Logo.png" alt="Logo" class="absolute w-[213px] h-[118px] top-[83px] left-[79px] lg:block hidden" />
-            <img src="../images/Logo.png" alt="Logo" class="absolute w-[80px] h-[45px] top-[20px] left-[20px] block lg:hidden z-50" />
+        <div class="relative w-screen h-screen bg-cover bg-center overflow-hidden font-[Poppins]">
+            <img src="../images/About.png" alt="Destination" class="absolute inset-0 w-full h-full object-cover -z-10" />
+            <img src="../images/Logo.png" alt="Logo" class="absolute w-[213px] h-[118px] top-[83px] left-[79px] lg:block hidden fade-in delay-100" />
+            <img src="../images/Logo.png" alt="Logo" class="absolute w-[80px] h-[45px] top-[20px] left-[20px] block lg:hidden z-50 fade-in delay-100" />
 
-            <div class="absolute top-[22px] right-[20px] flex items-center gap-3 z-30 lg:hidden">
+            <div class="absolute top-[22px] right-[20px] flex items-center gap-3 z-30 lg:hidden fade-in delay-200">
             <button id="theme-toggle-mobile" class="flex items-center bg-white rounded-[20px] w-[50px] h-[22px] p-[2px]" aria-label="Toggle dark mode" type="button">
                 <span id="moon-wrap-mobile" class="flex items-center justify-center h-[18px] rounded-[16px] transition-all">
                 <svg id="moon-icon-mobile" class="w-3.5 h-3.5 text-black transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -83,7 +139,7 @@
             </button>
             </div>
 
-            <div class="absolute top-[87px] left-[864px] gap-[55px] h-[36px] items-center hidden lg:flex z-50">
+            <div class="absolute top-[87px] left-[864px] gap-[55px] h-[36px] items-center hidden lg:flex z-50 fade-in delay-200">
             <button id="theme-toggle" class="flex items-center bg-white rounded-[20px] w-[76px] h-[32px] p-[2px]" aria-label="Toggle dark mode" type="button">
                 <span id="moon-wrap" class="flex items-center justify-center h-[28px] rounded-[16px] transition-all">
                 <svg id="moon-icon" class="w-5 h-5 text-black transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -122,7 +178,7 @@
             <!-- Page Content -->
             <div class="relative flex flex-col items-center pt-[267px] space-y-[122px] pb-[200px] w-full">
                 <!-- Hero Section -->
-                <div class="w-[752px] h-[278px] flex flex-col items-center gap-[4px] text-center text-white z-30">
+                <div class="w-[752px] h-[278px] flex flex-col items-center gap-[4px] text-center text-white z-30 fade-in delay-300">
                 <h1 class="text-[98px] font-bold leading-[116%] mt-[175px]">About Us</h1>
                 <p class="text-[20px] font-normal leading-[116%] w-full">
                     Discover the country's hidden gems and breathtaking landscapes
@@ -135,13 +191,9 @@
         </div>
     </div>
 
-
-
     <!-- Text Section -->
-    
-
     <div class="bg-white text-black font-poppins dark:bg-black dark:text-white">
-        <div class="text-black text-center px-4 py-10 sm:py-14 md:py-16 dark:text-white">
+        <div class="text-black text-center px-4 py-10 sm:py-14 md:py-16 dark:text-white fade-in">
             <h2 class="text-3xl sm:text-4xl md:text-5xl leading-[116%] font-semibold font-[Poppins]">
                 Saudi, a kingdom that inspires
             </h2>
@@ -151,22 +203,18 @@
         </div>
     </div>
 
-
-
     <!-- Tradition of Saudi -->
-
-
     <div class="bg-white text-black font-[Poppins] dark:bg-black dark:text-white">
         <div class="max-w-[1320px] mx-auto px-4 pt-12 pb-24">
             <!-- Title -->
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-16">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-16 fade-in">
                 Traditions of Saudi Arabia
             </h1>
 
             <!-- Grid wrapper -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-16 gap-x-12 items-start">
                 <!-- Language Image -->
-                <div class="w-full max-w-[520px] mx-auto aspect-[5/4] rounded-[28px] overflow-hidden">
+                <div class="w-full max-w-[520px] mx-auto aspect-[5/4] rounded-[28px] overflow-hidden slide-in-left delay-100">
                     <img
                         id="languageImage"
                         src="../images/Language.png"
@@ -176,7 +224,7 @@
                 </div>
 
                 <!-- Language Text -->
-                <div class="relative">
+                <div class="relative slide-in-right delay-100">
                     <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4">Language</h2>
                     <p class="text-base sm:text-lg md:text-xl leading-relaxed text-justify mb-10">
                         Arabic is the official language of Saudi Arabia and the primary language used in all dealings and public transactions. English serves as an informal second language in the Kingdom and is spoken by a large section of its society. All road signs are bilingual, showing information in both Arabic and English.
@@ -206,7 +254,7 @@
                 </div>
 
                 <!-- Culture Text -->
-                <div class="relative self-start">
+                <div class="relative self-start slide-in-left delay-200">
                     <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4">Culture</h2>
                     <p class="text-base sm:text-lg md:text-xl leading-relaxed text-justify mb-10">
                         Saudi Arabia's rich heritage and traditions have been shaped by its position as a historic trade hub and the birthplace of Islam. In recent years, the Kingdom has undergone a significant cultural transformation, evolving century-old customs to fit the contemporary world we live in today.
@@ -236,7 +284,7 @@
                 </div>
 
                 <!-- Culture Image -->
-                <div class="w-full max-w-[520px] mx-auto aspect-[5/4] rounded-[28px] overflow-hidden self-end">
+                <div class="w-full max-w-[520px] mx-auto aspect-[5/4] rounded-[28px] overflow-hidden self-end slide-in-right delay-200">
                     <img
                         id="cultureImage"
                         src="../images/Culture.png"
@@ -247,11 +295,9 @@
         </div>
     </div>
 
-
     <!-- WhatsApp Contact -->
-
     <div class="flex items-center justify-center p-4 bg-white dark:bg-black">
-        <div class="w-full max-w-[1393px] h-auto min-h-[80px] sm:h-[140px] md:h-[180px] lg:h-[200px] bg-gradient-to-r from-[#047F01] to-[#047E01] rounded-pill shadow-whatsappShine px-4 sm:px-6 md:px-10 flex flex-col sm:flex-row items-center justify-between py-4 sm:py-2 whatsapp-cta">
+        <div class="w-full max-w-[1393px] h-auto min-h-[80px] sm:h-[140px] md:h-[180px] lg:h-[200px] bg-gradient-to-r from-[#047F01] to-[#047E01] rounded-pill shadow-whatsappShine px-4 sm:px-6 md:px-10 flex flex-col sm:flex-row items-center justify-between py-4 sm:py-2 whatsapp-cta fade-in">
             <h2 class="text-white text-xl sm:text-2xl lg:text-[28px] font-semibold tracking-tightCustom px-2 sm:px-0">Contact us on Whatsapp</h2>
             <button class="w-[140px] sm:w-[160px] md:w-[180px] lg:w-[200px] h-[40px] sm:h-[50px] md:h-[55px] lg:h-[60px] bg-white rounded-button flex items-center justify-center hover:bg-gray-100 transition-colors">
                 <span class="text-[#047E01] text-base sm:text-lg lg:text-[18px] font-normal tracking-tightCustom">Start Chat</span>
@@ -259,13 +305,9 @@
         </div>
     </div>
 
-
-
     <!-- Slider -->
-
-
     <div class="bg-white flex items-center justify-center pt-[120px] pb-[120px] dark:bg-black">
-        <div class="slider-container relative w-full max-w-[1264px] overflow-hidden mx-auto">
+        <div class="slider-container relative w-full max-w-[1264px] overflow-hidden mx-auto fade-in">
             <!-- SLIDE TRACK -->
             <div id="sliderTrack" class="slider-track flex transition-transform duration-700 ease-in-out h-full">
             <!-- Slide 1 -->
@@ -308,14 +350,10 @@
         </div>
     </div>
 
-
     <!-- Footer Section -->
-    
-    
     <div class="bg-black m-0 p-0 font-poppins">
         <footer class="w-full bg-[#222222] px-6 py-10">
-            <div class="max-w-[1512px] mx-auto flex flex-wrap sm:flex-nowrap justify-start sm:justify-between items-start gap-y-10">
-
+            <div class="max-w-[1512px] mx-auto flex flex-wrap sm:flex-nowrap justify-start sm:justify-between items-start gap-y-10 fade-in">
                 <!-- Logo -->
                 <div class="w-full sm:w-auto flex justify-center sm:justify-start mb-6 sm:mb-0 sm:mr-20">
                     <img src="../images/Logo.png" alt="Saudi Logo" class="w-[200px] sm:w-[267px] h-auto object-contain" />
@@ -323,9 +361,8 @@
 
                 <!-- Columns Wrapper -->
                 <div class="flex flex-wrap sm:flex-nowrap gap-x-10 sm:gap-x-16 text-white">
-
                     <!-- About -->
-                    <div class="flex flex-col gap-2 min-w-[120px]">
+                    <div class="flex flex-col gap-2 min-w-[120px] slide-in-left delay-100">
                         <h3 class="font-semibold text-custom">About</h3>
                         <a href="AboutUs.html" class="font-normal text-custom hover:underline">About Us</a>
                         <a href="#" class="font-normal text-custom hover:underline">Features</a>
@@ -333,7 +370,7 @@
                     </div>
 
                     <!-- Contact -->
-                    <div class="flex flex-col gap-2 min-w-[120px]">
+                    <div class="flex flex-col gap-2 min-w-[120px] slide-in-left delay-200">
                         <h3 class="font-semibold text-custom">Contact</h3>
                         <a href="#" class="font-normal text-custom hover:underline">Instagram</a>
                         <a href="#" class="font-normal text-custom hover:underline">Twitter</a>
@@ -341,7 +378,7 @@
                     </div>
 
                     <!-- Support -->
-                    <div class="flex flex-col gap-2 min-w-[120px]">
+                    <div class="flex flex-col gap-2 min-w-[120px] slide-in-left delay-300">
                         <h3 class="font-semibold text-custom">Support</h3>
                         <a href="#" class="font-normal text-custom hover:underline">FAQs</a>
                         <a href="#" class="font-normal text-custom hover:underline">Support Centre</a>
@@ -353,6 +390,38 @@
     </div>
 
     <script>
+      // Intersection Observer for scroll animations
+      const animateOnScroll = () => {
+        const elements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-up');
+        
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px'
+        });
+
+        elements.forEach(element => {
+          observer.observe(element);
+        });
+      };
+
+      // Run after page loads
+      document.addEventListener('DOMContentLoaded', () => {
+        animateOnScroll();
+        
+        // Re-run when dynamic content loads
+        new MutationObserver(animateOnScroll).observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+      });
+
       const themeToggleDesktop = document.getElementById("theme-toggle");
       const themeToggleMobile = document.getElementById("theme-toggle-mobile");
 
@@ -420,8 +489,6 @@
         closeIcon.classList.toggle("hidden");
       });
 
-
-
       // Language and Culture Image Sliders
       const languageImages = ['../images/Language.png', '../images/Culture.png'];
       const cultureImages = ['../images/Culture.png', '../images/Language.png'];
@@ -440,92 +507,81 @@
           cultureImages[cultureIndex];
       }
 
+      // Slider JavaScript
+      const sliderTrack = document.getElementById('sliderTrack');
+      let currentSlide = 0;
+      let autoSlideTimer;
+      const totalSlides = 3;
 
-      //   Slider JavaScript
-
-    
-        const sliderTrack = document.getElementById('sliderTrack');
-        let currentSlide = 0;
-        let autoSlideTimer;
-        const totalSlides = 3;
-
-        function getSlideWidth() {
-        // Use fixed width on large screens, percentage on smaller screens
+      function getSlideWidth() {
         return window.innerWidth >= 1264 ? 1264 : 100;
-        }
+      }
 
-        function updateSlide() {
+      function updateSlide() {
         const slideWidth = getSlideWidth();
         const translateValue = window.innerWidth >= 1264 
             ? `translateX(-${currentSlide * slideWidth}px)`
             : `translateX(-${currentSlide * slideWidth}%)`;
         sliderTrack.style.transform = translateValue;
-        }
+      }
 
-        function nextSlide() {
+      function nextSlide() {
         currentSlide = (currentSlide + 1) % totalSlides;
         updateSlide();
-        }
+      }
 
-        function startAutoSlide() {
+      function startAutoSlide() {
         autoSlideTimer = setInterval(() => {
             nextSlide();
-        }, 5000); // 5 seconds
-        }
+        }, 5000);
+      }
 
-        function resetAutoSlide() {
+      function resetAutoSlide() {
         clearInterval(autoSlideTimer);
         startAutoSlide();
-        }
+      }
 
-        function manualNextSlide() {
+      function manualNextSlide() {
         nextSlide();
         resetAutoSlide();
-        }
+      }
 
-        // Touch events for mobile swipe
-        let touchStartX = 0;
-        let touchEndX = 0;
+      let touchStartX = 0;
+      let touchEndX = 0;
 
-        sliderTrack.addEventListener('touchstart', (e) => {
+      sliderTrack.addEventListener('touchstart', (e) => {
         touchStartX = e.changedTouches[0].screenX;
-        }, {passive: true});
+      }, {passive: true});
 
-        sliderTrack.addEventListener('touchend', (e) => {
+      sliderTrack.addEventListener('touchend', (e) => {
         touchEndX = e.changedTouches[0].screenX;
         handleSwipe();
         resetAutoSlide();
-        }, {passive: true});
+      }, {passive: true});
 
-        function handleSwipe() {
-        const threshold = 50; // Minimum swipe distance
+      function handleSwipe() {
+        const threshold = 50;
         if (touchEndX < touchStartX - threshold) {
-            // Swipe left - next slide
             nextSlide();
         } else if (touchEndX > touchStartX + threshold) {
-            // Swipe right - previous slide
             currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
             updateSlide();
         }
-        }
+      }
 
-        // Handle window resize
-        window.addEventListener('resize', () => {
+      window.addEventListener('resize', () => {
         updateSlide();
-        });
+      });
 
-        // Initial setup
-        startAutoSlide();
+      startAutoSlide();
 
-        // Pause on hover
-        const sliderContainer = document.querySelector('.slider-container');
-        sliderContainer.addEventListener('mouseenter', () => {
+      const sliderContainer = document.querySelector('.slider-container');
+      sliderContainer.addEventListener('mouseenter', () => {
         clearInterval(autoSlideTimer);
-        });
-        sliderContainer.addEventListener('mouseleave', () => {
+      });
+      sliderContainer.addEventListener('mouseleave', () => {
         resetAutoSlide();
-        });
-
+      });
     </script>
   </body>
 </html>
