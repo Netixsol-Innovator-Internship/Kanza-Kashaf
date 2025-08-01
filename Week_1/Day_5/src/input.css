@@ -1,0 +1,15 @@
+@import "tailwindcss";
+@theme{
+    --breakpoint-3xl: 108rem;
+}
+@layer utilities {
+  .border-gradient-radial {
+    border-width: 1px;
+    border-style: solid;
+    border-image: radial-gradient(
+      95.62% 92.46% at 4.25% 7.62%,
+      rgba(232, 142, 14, 0.87) 12.9%,
+      rgba(255, 255, 255, 0.45) 100%
+    ) 1;
+  }
+}
