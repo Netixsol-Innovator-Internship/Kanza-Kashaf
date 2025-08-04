@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Age Calculator</title>
+    <link href="./output.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        font-family: 'Poppins', sans-serif;
+      }
+      input::-webkit-inner-spin-button {
+        display: none;
+      }
+      /* Added transition classes */
+      .transition-all-slow {
+        transition: all 0.5s ease-in-out;
+      }
+      .transition-transform {
+        transition: transform 0.3s ease-in-out;
+      }
+      .fade-in {
+        animation: fadeIn 0.5s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 p-4 sm:p-6 md:p-10 transition-all-slow min-h-screen flex items-center justify-center">
+  <div class="bg-gray-100 rounded md:shadow-2xl flex items-center justify-center py-10 sm:py-16 md:py-14 md:w-full transition-all-slow">
+    <div class="bg-white rounded-2xl p-6 sm:p-8 w-full max-w-xl shadow-xl rounded-br-[100px] sm:rounded-br-[120px] md:rounded-br-[150px] transition-all-slow">
+      
+      <!-- Input Fields -->
+      <form id="age-form" class="flex gap-4 sm:gap-20 md:flex-row md:items-start md:gap-5 transition-all-slow">
+        <!-- Day -->
+        <div class="mb-4 md:mb-0 md:w-[104px] transition-all-slow">
+          <label class="block text-gray-500 text-xs font-bold tracking-widest mb-1 transition-all-slow" for="day">DAY</label>
+          <input
+            type="number"
+            id="day"
+            class="w-[70px] font-bold sm:w-full border border-gray-300 rounded-lg p-2 text-xl sm:text-2xl pl-3 focus:outline-[#845EF7] focus:ring-1 focus:ring-[#845EF7] transition-all-slow"
+            placeholder="DD"
+            min="1"
+            max="31"
+          />
+          <p class="text-red-500 text-xs mt-1 hidden transition-all-slow" id="day-error"></p>
+        </div>
+
+        <!-- Month -->
+        <div class="mb-4 md:mb-0 md:w-[104px] transition-all-slow">
+          <label class="block text-gray-500 text-xs font-bold tracking-widest mb-1 transition-all-slow" for="month">MONTH</label>
+          <input
+            type="number"
+            id="month"
+            class="w-[70px] font-bold sm:w-full border border-gray-300 rounded-lg p-2 text-xl sm:text-2xl pl-3 focus:outline-[#845EF7] focus:ring-1 focus:ring-[#845EF7] transition-all-slow"
+            placeholder="MM"
+            min="1"
+            max="12"
+          />
+          <p class="text-red-500 text-xs mt-1 hidden transition-all-slow" id="month-error"></p>
+        </div>
+
+        <!-- Year -->
+        <div class="md:w-[104px] transition-all-slow">
+          <label class="block text-gray-500 text-xs font-bold tracking-widest mb-1 transition-all-slow" for="year">YEAR</label>
+          <input
+            type="number"
+            id="year"
+            class="w-[80px] font-bold sm:w-[106px] border border-gray-300 rounded-lg p-2 text-xl sm:text-2xl pl-3 focus:outline-[#845EF7] focus:ring-1 focus:ring-[#845EF7] transition-all-slow"
+            placeholder="YYYY"
+          />
+          <p class="text-red-500 text-xs mt-1 hidden transition-all-slow" id="year-error"></p>
+        </div>
+      </form>
+
+      <!-- Submit Button -->
+      <div class="flex items-center transition-all-slow">
+        <hr class="w-[50%] md:w-full sm:w-[50%] border-gray-300 transition-all-slow" />
+        <div class="flex justify-end -ml-6 transition-transform hover:scale-105">
+          <button
+            id="submit-btn"
+            class="bg-[#845EF7] hover:bg-black duration-300 text-white p-4 rounded-full focus:outline-none focus:ring-2 focus:ring-[#6C3EF3] transition-transform hover:scale-110"
+          >
+            <img src="./assets/images/icon-arrow.svg" alt="arrow" class="transition-transform hover:rotate-45"/>
+          </button>
+        </div>
+        <hr class="md:hidden w-[50%] border-gray-300 transition-all-slow" />
+      </div>
+
+      <!-- Result -->
+      <div class="text-4xl sm:text-5xl md:text-6xl font-extrabold italic leading-tight mt-8 sm:mt-10 transition-all-slow">
+        <p class="fade-in"><span id="years" class="text-[#845EF7] transition-all-slow">--</span><span class="text-black transition-all-slow"> years</span></p>
+        <p class="fade-in"><span id="months" class="text-[#845EF7] transition-all-slow">--</span><span class="text-black transition-all-slow"> months</span></p>
+        <p class="fade-in"><span id="days" class="text-[#845EF7] transition-all-slow">--</span><span class="text-black transition-all-slow"> days</span></p>
+      </div>
+      <!-- Extra Info -->
+      <div class="mt-6 text-base sm:text-lg text-gray-600 fade-in transition-all-slow">
+        <p id="birthday-msg" class="mb-1"></p>
+        <p id="zodiac-msg"></p>
+      </div>
+    </div>
+  </div>
+
+    <!-- Script -->
+    <script>
+      const form = document.getElementById("age-form");
+      const submitBtn = document.getElementById("submit-btn");
+
+      const dayInput = document.getElementById("day");
+      const monthInput = document.getElementById("month");
+      const yearInput = document.getElementById("year");
+
+      const yearsOutput = document.getElementById("years");
+      const monthsOutput = document.getElementById("months");
+      const daysOutput = document.getElementById("days");
+
+      const dayError = document.getElementById("day-error");
+      const monthError = document.getElementById("month-error");
+      const yearError = document.getElementById("year-error");
+
+      function showError(inputEl, errorEl, message) {
+        errorEl.textContent = message;
+        errorEl.classList.remove("hidden");
+        inputEl.classList.add("border-red-400");
+        // Add shake animation to error inputs
+        inputEl.classList.add("animate-shake");
+        setTimeout(() => {
+          inputEl.classList.remove("animate-shake");
+        }, 500);
+      }
+
+      function clearErrors() {
+        [dayError, monthError, yearError].forEach((el) => {
+          el.classList.add("hidden");
+          el.classList.remove("fade-in");
+        });
+        [dayInput, monthInput, yearInput].forEach((el) => el.classList.remove("border-red-400"));
+      }
+
+      function isValidDate(d, m, y) {
+        const date = new Date(`${y}-${m}-${d}`);
+        return date.getDate() == d && date.getMonth() + 1 == m && date.getFullYear() == y;
+      }
+
+      function calculateAge(d, m, y) {
+        const today = new Date();
+        const birthDate = new Date(y, m - 1, d);
+
+        let years = today.getFullYear() - y;
+        let months = today.getMonth() - (m - 1);
+        let days = today.getDate() - d;
+
+        if (days < 0) {
+          months -= 1;
+          days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+        }
+
+        if (months < 0) {
+          years -= 1;
+          months += 12;
+        }
+
+        return { years, months, days };
+      }
+
+      function animateValue(id, start, end) {
+        const duration = 1000;
+        const range = end - start;
+        let current = start;
+        const increment = end > start ? 1 : -1;
+        const stepTime = Math.abs(Math.floor(duration / range));
+
+        const obj = document.getElementById(id);
+        const timer = setInterval(() => {
+          current += increment;
+          obj.textContent = current;
+          if (current == end) {
+            clearInterval(timer);
+          }
+        }, stepTime);
+      }
+
+      function getDaysUntilNextBirthday(day, month) {
+        const today = new Date();
+        const nextBirthday = new Date(today.getFullYear(), month - 1, day);
+
+        if (nextBirthday < today) {
+          nextBirthday.setFullYear(today.getFullYear() + 1);
+        }
+
+        const diff = nextBirthday - today;
+        return Math.ceil(diff / (1000 * 60 * 60 * 24));
+      }
+
+      function getZodiacSign(day, month) {
+        const zodiac = [
+          { sign: "Capricorn", lastDay: 19 },
+          { sign: "Aquarius", lastDay: 18 },
+          { sign: "Pisces", lastDay: 20 },
+          { sign: "Aries", lastDay: 19 },
+          { sign: "Taurus", lastDay: 20 },
+          { sign: "Gemini", lastDay: 20 },
+          { sign: "Cancer", lastDay: 22 },
+          { sign: "Leo", lastDay: 22 },
+          { sign: "Virgo", lastDay: 22 },
+          { sign: "Libra", lastDay: 22 },
+          { sign: "Scorpio", lastDay: 21 },
+          { sign: "Sagittarius", lastDay: 21 },
+          { sign: "Capricorn", lastDay: 31 }
+        ];
+
+        return day <= zodiac[month - 1].lastDay
+          ? zodiac[month - 1].sign
+          : zodiac[month].sign;
+      }
+
+      submitBtn.addEventListener("click", () => {
+        clearErrors();
+        const d = parseInt(dayInput.value);
+        const m = parseInt(monthInput.value);
+        const y = parseInt(yearInput.value);
+        const today = new Date();
+
+        let hasError = false;
+
+        if (!d) {
+          showError(dayInput, dayError, "This field is required");
+          hasError = true;
+        } else if (d < 1 || d > 31) {
+          showError(dayInput, dayError, "Must be a valid day");
+          hasError = true;
+        }
+
+        if (!m) {
+          showError(monthInput, monthError, "This field is required");
+          hasError = true;
+        } else if (m < 1 || m > 12) {
+          showError(monthInput, monthError, "Must be a valid month");
+          hasError = true;
+        }
+
+        if (!y) {
+          showError(yearInput, yearError, "This field is required");
+          hasError = true;
+        } else if (y > today.getFullYear()) {
+          showError(yearInput, yearError, "Must be in the past");
+          hasError = true;
+        }
+
+        if (!hasError && !isValidDate(d, m, y)) {
+          showError(dayInput, dayError, "Invalid date");
+          hasError = true;
+        }
+
+        if (!hasError) {
+          const { years, months, days } = calculateAge(d, m, y);
+          animateValue("years", 0, years);
+          animateValue("months", 0, months);
+          animateValue("days", 0, days);
+          
+          // Add fade-in animation to results
+          document.querySelectorAll('#years, #months, #days').forEach(el => {
+            el.classList.add('fade-in');
+          });
+
+          const daysUntil = getDaysUntilNextBirthday(d, m);
+          const zodiac = getZodiacSign(d, m);
+
+          document.getElementById("birthday-msg").textContent = `🎉 Your next birthday is in ${daysUntil} day${daysUntil === 1 ? '' : 's'}!`;
+          document.getElementById("zodiac-msg").textContent = `♈ Your zodiac sign is ${zodiac}`;
+
+        } else {
+          yearsOutput.textContent = "--";
+          monthsOutput.textContent = "--";
+          daysOutput.textContent = "--";
+          document.getElementById("birthday-msg").textContent = "";
+          document.getElementById("zodiac-msg").textContent = "";
+        }
+      });
+    </script>
+  </body>
+</html>
