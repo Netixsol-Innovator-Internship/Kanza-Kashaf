@@ -13,7 +13,6 @@
       input::-webkit-inner-spin-button {
         display: none;
       }
-      /* Added transition classes */
       .transition-all-slow {
         transition: all 0.5s ease-in-out;
       }
@@ -27,11 +26,26 @@
         from { opacity: 0; }
         to { opacity: 1; }
       }
+      @keyframes graffiti {
+        0% { transform: scale(0.8) rotate(-5deg); opacity: 0; }
+        50% { transform: scale(1.1) rotate(5deg); }
+        100% { transform: scale(1) rotate(0); opacity: 1; }
+      }
+      .graffiti-animation {
+        animation: graffiti 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      }
+      .inner-div-transition {
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      }
+      .inner-div-hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(132, 94, 247, 0.3);
+      }
     </style>
   </head>
-  <body class="bg-gray-100 p-4 sm:p-6 md:p-10 transition-all-slow min-h-screen flex items-center justify-center">
+  <body class="bg-gray-100 p-4 transition-all-slow min-h-screen flex items-center justify-center">
   <div class="bg-gray-100 rounded md:shadow-2xl flex items-center justify-center py-10 sm:py-16 md:py-14 md:w-full transition-all-slow">
-    <div class="bg-white rounded-2xl p-6 sm:p-8 w-full max-w-xl shadow-xl rounded-br-[100px] sm:rounded-br-[120px] md:rounded-br-[150px] transition-all-slow">
+    <div class="bg-white rounded-2xl p-6 sm:p-8 w-full max-w-xl shadow-xl rounded-br-[100px] sm:rounded-br-[120px] md:rounded-br-[150px] transition-all-slow inner-div-transition hover:inner-div-hover">
       
       <!-- Input Fields -->
       <form id="age-form" class="flex gap-4 sm:gap-20 md:flex-row md:items-start md:gap-5 transition-all-slow">
@@ -41,7 +55,7 @@
           <input
             type="number"
             id="day"
-            class="w-[70px] font-bold sm:w-full border border-gray-300 rounded-lg p-2 text-xl sm:text-2xl pl-3 focus:outline-[#845EF7] focus:ring-1 focus:ring-[#845EF7] transition-all-slow"
+            class="w-[70px] font-bold sm:w-full border border-gray-300 rounded-lg p-2 text-xl sm:text-2xl pl-3 focus:outline-[#845EF7] focus:ring-1 focus:ring-[#845EF7] transition-all-slow hover:border-[#845EF7]"
             placeholder="DD"
             min="1"
             max="31"
@@ -55,7 +69,7 @@
           <input
             type="number"
             id="month"
-            class="w-[70px] font-bold sm:w-full border border-gray-300 rounded-lg p-2 text-xl sm:text-2xl pl-3 focus:outline-[#845EF7] focus:ring-1 focus:ring-[#845EF7] transition-all-slow"
+            class="w-[70px] font-bold sm:w-full border border-gray-300 rounded-lg p-2 text-xl sm:text-2xl pl-3 focus:outline-[#845EF7] focus:ring-1 focus:ring-[#845EF7] transition-all-slow hover:border-[#845EF7]"
             placeholder="MM"
             min="1"
             max="12"
@@ -69,7 +83,7 @@
           <input
             type="number"
             id="year"
-            class="w-[80px] font-bold sm:w-[106px] border border-gray-300 rounded-lg p-2 text-xl sm:text-2xl pl-3 focus:outline-[#845EF7] focus:ring-1 focus:ring-[#845EF7] transition-all-slow"
+            class="w-[80px] font-bold sm:w-[106px] border border-gray-300 rounded-lg p-2 text-xl sm:text-2xl pl-3 focus:outline-[#845EF7] focus:ring-1 focus:ring-[#845EF7] transition-all-slow hover:border-[#845EF7]"
             placeholder="YYYY"
           />
           <p class="text-red-500 text-xs mt-1 hidden transition-all-slow" id="year-error"></p>
@@ -79,12 +93,12 @@
       <!-- Submit Button -->
       <div class="flex items-center transition-all-slow">
         <hr class="w-[50%] md:w-full sm:w-[50%] border-gray-300 transition-all-slow" />
-        <div class="flex justify-end -ml-6 transition-transform hover:scale-105">
+        <div class="flex justify-end -ml-6">
           <button
             id="submit-btn"
-            class="bg-[#845EF7] hover:bg-black duration-300 text-white p-4 rounded-full focus:outline-none focus:ring-2 focus:ring-[#6C3EF3] transition-transform hover:scale-110"
+            class="bg-[#845EF7] hover:bg-black text-white p-4 rounded-full focus:outline-none focus:ring-2 focus:ring-[#6C3EF3]"
           >
-            <img src="./assets/images/icon-arrow.svg" alt="arrow" class="transition-transform hover:rotate-45"/>
+            <img src="./assets/images/icon-arrow.svg" alt="arrow" id="arrow-icon"/>
           </button>
         </div>
         <hr class="md:hidden w-[50%] border-gray-300 transition-all-slow" />
@@ -108,6 +122,8 @@
     <script>
       const form = document.getElementById("age-form");
       const submitBtn = document.getElementById("submit-btn");
+      const arrowIcon = document.getElementById("arrow-icon");
+      const calculatorDiv = document.querySelector(".bg-white");
 
       const dayInput = document.getElementById("day");
       const monthInput = document.getElementById("month");
@@ -125,7 +141,6 @@
         errorEl.textContent = message;
         errorEl.classList.remove("hidden");
         inputEl.classList.add("border-red-400");
-        // Add shake animation to error inputs
         inputEl.classList.add("animate-shake");
         setTimeout(() => {
           inputEl.classList.remove("animate-shake");
@@ -218,6 +233,20 @@
       }
 
       submitBtn.addEventListener("click", () => {
+        // Add graffiti animation to button
+        submitBtn.classList.add("graffiti-animation");
+        arrowIcon.classList.add("graffiti-animation");
+        
+        // Add bounce effect to calculator div
+        calculatorDiv.classList.add("inner-div-hover");
+        
+        // Remove animations after they complete
+        setTimeout(() => {
+          submitBtn.classList.remove("graffiti-animation");
+          arrowIcon.classList.remove("graffiti-animation");
+          calculatorDiv.classList.remove("inner-div-hover");
+        }, 800);
+
         clearErrors();
         const d = parseInt(dayInput.value);
         const m = parseInt(monthInput.value);
@@ -261,7 +290,6 @@
           animateValue("months", 0, months);
           animateValue("days", 0, days);
           
-          // Add fade-in animation to results
           document.querySelectorAll('#years, #months, #days').forEach(el => {
             el.classList.add('fade-in');
           });
