@@ -152,47 +152,59 @@
           el.classList.add("hidden");
           el.classList.remove("fade-in");
         });
-        [dayInput, monthInput, yearInput].forEach((el) => el.classList.remove("border-red-400"));
+        [dayInput, monthInput, yearInput].forEach((el) =>
+          el.classList.remove("border-red-400")
+        );
       }
 
       function isValidDate(d, m, y) {
-        const date = new Date(`${y}-${m}-${d}`);
-        return date.getDate() == d && date.getMonth() + 1 == m && date.getFullYear() == y;
+        const date = new Date(y, m - 1, d);
+        return (
+          date.getDate() === d &&
+          date.getMonth() === m - 1 &&
+          date.getFullYear() === y
+        );
       }
 
       function calculateAge(d, m, y) {
         const today = new Date();
-        const birthDate = new Date(y, m - 1, d);
+        const currentYear = today.getFullYear();
+        const currentMonth = today.getMonth() + 1;
+        const currentDay = today.getDate();
 
-        let years = today.getFullYear() - y;
-        let months = today.getMonth() - (m - 1);
-        let days = today.getDate() - d;
+        let ageYear = currentYear - y;
+        let ageMonth = currentMonth - m;
+        let ageDay = currentDay - d;
 
-        if (days < 0) {
-          months -= 1;
-          days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+        if (ageDay < 0) {
+          ageMonth -= 1;
+          const daysInPrevMonth = new Date(currentYear, currentMonth - 1, 0).getDate();
+          ageDay += daysInPrevMonth;
         }
 
-        if (months < 0) {
-          years -= 1;
-          months += 12;
+        if (ageMonth < 0) {
+          ageYear -= 1;
+          ageMonth += 12;
         }
 
-        return { years, months, days };
+        return { years: ageYear, months: ageMonth, days: ageDay };
       }
 
       function animateValue(id, start, end) {
         const duration = 1000;
         const range = end - start;
+        if (range === 0) {
+          document.getElementById(id).textContent = end;
+          return;
+        }
         let current = start;
         const increment = end > start ? 1 : -1;
         const stepTime = Math.abs(Math.floor(duration / range));
-
         const obj = document.getElementById(id);
         const timer = setInterval(() => {
           current += increment;
           obj.textContent = current;
-          if (current == end) {
+          if (current === end) {
             clearInterval(timer);
           }
         }, stepTime);
@@ -201,11 +213,12 @@
       function getDaysUntilNextBirthday(day, month) {
         const today = new Date();
         const nextBirthday = new Date(today.getFullYear(), month - 1, day);
-
-        if (nextBirthday < today) {
+        if (
+          nextBirthday < today &&
+          !(today.getDate() === day && today.getMonth() === month - 1)
+        ) {
           nextBirthday.setFullYear(today.getFullYear() + 1);
         }
-
         const diff = nextBirthday - today;
         return Math.ceil(diff / (1000 * 60 * 60 * 24));
       }
@@ -224,7 +237,7 @@
           { sign: "Libra", lastDay: 22 },
           { sign: "Scorpio", lastDay: 21 },
           { sign: "Sagittarius", lastDay: 21 },
-          { sign: "Capricorn", lastDay: 31 }
+          { sign: "Capricorn", lastDay: 31 },
         ];
 
         return day <= zodiac[month - 1].lastDay
@@ -233,14 +246,10 @@
       }
 
       submitBtn.addEventListener("click", () => {
-        // Add graffiti animation to button
         submitBtn.classList.add("graffiti-animation");
         arrowIcon.classList.add("graffiti-animation");
-        
-        // Add bounce effect to calculator div
         calculatorDiv.classList.add("inner-div-hover");
-        
-        // Remove animations after they complete
+
         setTimeout(() => {
           submitBtn.classList.remove("graffiti-animation");
           arrowIcon.classList.remove("graffiti-animation");
@@ -284,22 +293,33 @@
           hasError = true;
         }
 
+        // Check if the birthdate is in the future
+        if (
+          !hasError &&
+          (y > today.getFullYear() ||
+            (y === today.getFullYear() && m > today.getMonth() + 1) ||
+            (y === today.getFullYear() && m === today.getMonth() + 1 && d > today.getDate()))
+        ) {
+          showError(dayInput, dayError, "Must be in the past");
+          hasError = true;
+        }
+
         if (!hasError) {
           const { years, months, days } = calculateAge(d, m, y);
+
           animateValue("years", 0, years);
           animateValue("months", 0, months);
           animateValue("days", 0, days);
-          
-          document.querySelectorAll('#years, #months, #days').forEach(el => {
-            el.classList.add('fade-in');
+
+          document.querySelectorAll("#years, #months, #days").forEach((el) => {
+            el.classList.add("fade-in");
           });
 
           const daysUntil = getDaysUntilNextBirthday(d, m);
           const zodiac = getZodiacSign(d, m);
 
-          document.getElementById("birthday-msg").textContent = `🎉 Your next birthday is in ${daysUntil} day${daysUntil === 1 ? '' : 's'}!`;
+          document.getElementById("birthday-msg").textContent = `🎉 Your next birthday is in ${daysUntil} day${daysUntil === 1 ? "" : "s"}!`;
           document.getElementById("zodiac-msg").textContent = `♈ Your zodiac sign is ${zodiac}`;
-
         } else {
           yearsOutput.textContent = "--";
           monthsOutput.textContent = "--";
