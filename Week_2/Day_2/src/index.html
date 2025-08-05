@@ -1,51 +1,873 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
-
-  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
-  
-  <title>Frontend Mentor | Notifications page</title>
-
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+    <title>Notifications Page</title>
+    <link href="./output.css" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'jakarta': ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        'red': {
+                            500: '#FF5757',
+                        },
+                        'blue': {
+                            600: '#0A317B',
+                        },
+                        'gray': {
+                            50: '#F7FAFD',
+                            100: '#E5EFFA',
+                            200: '#DDD7F0',
+                            500: '#939CAD',
+                            600: '#5E6778',
+                            700: '#2E3A59',
+                            900: '#1C202B',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.4s ease-in-out',
+                        'fade-out': 'fadeOut 0.3s ease-in-out',
+                        'graffiti': 'graffiti 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+                        'ripple': 'ripple 0.6s linear forwards',
+                        'pulse-up': 'pulseUp 0.5s ease forwards',
+                        'slide-in': 'slideIn 0.4s ease-out forwards',
+                        'slide-out': 'slideOut 0.3s ease-in forwards',
+                        'slide-left': 'slideLeft 0.4s ease-in forwards',
+                        'archive-slide': 'archiveSlide 0.5s ease-in-out forwards',
+                        'scale-bounce': 'scaleBounce 0.3s ease-out forwards',
+                        'shake': 'shake 0.5s ease-in-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        fadeOut: {
+                            '0%': { opacity: '1', transform: 'translateY(0)' },
+                            '100%': { opacity: '0', transform: 'translateY(-10px)' }
+                        },
+                        graffiti: {
+                            '0%': { transform: 'scale(0.8) rotate(-5deg)', opacity: '0' },
+                            '50%': { transform: 'scale(1.1) rotate(5deg)' },
+                            '100%': { transform: 'scale(1) rotate(0)', opacity: '1' }
+                        },
+                        ripple: {
+                            '0%': { transform: 'scale(1)', opacity: '0.6' },
+                            '100%': { transform: 'scale(50)', opacity: '0' }
+                        },
+                        pulseUp: {
+                            '0%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-3px)' },
+                            '100%': { transform: 'translateY(0)' }
+                        },
+                        slideIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        slideOut: {
+                            '0%': { opacity: '1', transform: 'translateY(0)' },
+                            '100%': { opacity: '0', transform: 'translateY(-10px)' }
+                        },
+                        slideLeft: {
+                            '0%': { opacity: '1', transform: 'translateX(0) scale(1)' },
+                            '100%': { opacity: '0', transform: 'translateX(-100%) scale(0.8)' }
+                        },
+                        archiveSlide: {
+                            '0%': { opacity: '1', transform: 'translateX(0) scale(1)' },
+                            '50%': { opacity: '0.7', transform: 'translateX(20px) scale(0.95)' },
+                            '100%': { opacity: '0.8', transform: 'translateX(0) scale(0.95)' }
+                        },
+                        scaleBounce: {
+                            '0%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.05)' },
+                            '100%': { transform: 'scale(1)' }
+                        },
+                        shake: {
+                            '0%, 100%': { transform: 'translateX(0)' },
+                            '10%, 30%, 50%, 70%, 90%': { transform: 'translateX(-2px)' },
+                            '20%, 40%, 60%, 80%': { transform: 'translateX(2px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="bg-gray-50 dark:bg-gray-900 font-jakarta min-h-screen transition-colors duration-300">
+    <main class="max-w-3xl mx-auto p-2 sm:p-6 md:p-8 md:py-20">
+        <div class="px-2 pt-2 sm:px-8 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-colors duration-300">
+            <!-- Header -->
+            <header class="flex items-center justify-between p-2 sm:p-6">
+                <div class="flex items-center gap-1 sm:gap-3">
+                    <h1 class="text-base sm:text-3xl font-bold text-gray-900 dark:text-white">Notifications</h1>
+                    <span id="unread-count" class="bg-[#143D81] dark:bg-blue-600 text-white text-[10px] py-[2px] sm:text-sm font-semibold sm:py-0.5 rounded-md min-w-[28px] text-center hover:scale-110 transition-transform duration-300">3</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <!-- Dark Mode Toggle Button -->
+                    <button id="dark-mode-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 hover:scale-110 transition-transform duration-300" aria-label="Toggle dark mode">
+                        <svg id="sun-icon" class="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500 hidden dark:block hover:rotate-12 transition-transform duration-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <svg id="moon-icon" class="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:hidden hover:rotate-12 transition-transform duration-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+                    <button id="mark-all-read" class="text-[#81818a] dark:text-gray-400 hover:text-[#143D81] dark:hover:text-blue-400 text-xs sm:text-base font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 rounded-md sm:px-2 sm:py-1 relative overflow-hidden after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left">
+                        Mark all as read
+                    </button>
+                </div>
+            </header>
+            <!-- Filter Bar -->
+            <div class="px-2 sm:px-6 py-4 border-b border-gray-100 dark:border-gray-700">
+                <div class="flex items-center justify-between flex-wrap gap-3">
+                    <div class="flex items-center gap-2 sm:gap-4">
+                        <div class="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+                            <button id="filter-all" class="filter-btn px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium rounded-md transition-all duration-300 ease-in-out bg-blue-600 text-white shadow-sm" data-filter="all">
+                                All
+                            </button>
+                            <button id="filter-unread" class="filter-btn px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium rounded-md transition-all duration-300 ease-in-out text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-600 hover:-translate-y-0.5 hover:shadow-md" data-filter="unread">
+                                Unread
+                            </button>
+                            <button id="filter-read" class="filter-btn px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium rounded-md transition-all duration-300 ease-in-out text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-600 hover:-translate-y-0.5 hover:shadow-md" data-filter="read">
+                                Read
+                            </button>
+                            <button id="filter-archived" class="filter-btn px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium rounded-md transition-all duration-300 ease-in-out text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-600 hover:-translate-y-0.5 hover:shadow-md" data-filter="archived">
+                                Archived
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Results Counter -->
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs sm:text-sm text-gray-500 dark:text-gray-400" id="results-count">
+                            Showing <span id="visible-count">7</span> of <span id="total-count">7</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+                                                
+            <!-- Notifications Container -->
+            <div id="notifications-container" class="flex flex-col gap-2 p-2 sm:p-6">
+                                                                
+                <!-- Notification 1 -->
+                <div class="notification-item p-4 md:p-6 rounded-xl cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)] hover:-translate-y-1 hover:shadow-lg group hover:ring-1 hover:ring-blue-200 dark:hover:ring-blue-800 bg-blue-50 dark:bg-blue-900/30" data-id="1" data-read="false" data-archived="false" data-deleted="false">
+                    <div class="flex items-start gap-3 md:gap-4">
+                        <img src="./assets/images/avatar-mark-webber.webp" alt="Mark Webber" class="w-10 h-10 md:w-12 md:h-12 rounded-full flex-shrink-0 cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:shadow-md">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-start justify-between gap-3">
+                                <div class="flex-1">
+                                    <p class="text-sm md:text-base text-[#81818a] dark:text-gray-300 leading-relaxed">
+                                        <span class="font-bold text-gray-900 dark:text-white hover:text-[#304c83] dark:hover:text-blue-400 cursor-pointer transition-colors">Mark Webber</span>
+                                        <span> reacted to your recent post</span>
+                                        <span class="font-bold text-[#6e747e] dark:text-gray-400 hover:text-[#304c83] dark:hover:text-blue-400 cursor-pointer transition-colors"> My first tournament today!</span>
+                                        <span class="w-2 h-2 bg-red-500 rounded-full inline-block ml-1 mb-[1px]"></span>
+                                    </p>
+                                    <p class="text-xs md:text-sm text-[#a8adb8] dark:text-gray-500">1m ago</p>
+                                </div>
+                                <!-- Action Buttons -->
+                                <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <button class="archive-btn p-1.5 rounded-lg hover:bg-yellow-100 dark:hover:bg-yellow-900/30 transition-all duration-200 group/archive" data-id="1" title="Archive notification">
+                                        <svg class="w-4 h-4 text-yellow-600 dark:text-yellow-400 group-hover/archive:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                                        </svg>
+                                    </button>
+                                    <button class="delete-btn p-1.5 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-all duration-200 group/delete" data-id="1" title="Delete notification">
+                                        <svg class="w-4 h-4 text-red-600 dark:text-red-400 group-hover/delete:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                                
+                <!-- Notification 2 -->
+                <div class="notification-item p-4 md:p-6 rounded-xl cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)] hover:-translate-y-1 hover:shadow-lg group hover:ring-1 hover:ring-blue-200 dark:hover:ring-blue-800 bg-blue-50 dark:bg-blue-900/30" data-id="2" data-read="false" data-archived="false" data-deleted="false">
+                    <div class="flex items-start gap-3 md:gap-4">
+                        <img src="./assets/images/avatar-angela-gray.webp" alt="Angela Gray" class="w-10 h-10 md:w-12 md:h-12 rounded-full flex-shrink-0 cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:shadow-md">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-start justify-between gap-3">
+                                <div class="flex-1">
+                                    <p class="text-sm md:text-base text-[#81818a] dark:text-gray-300 leading-relaxed">
+                                        <span class="font-bold text-gray-900 dark:text-white hover:text-[#304c83] dark:hover:text-blue-400 cursor-pointer transition-colors">Angela Gray</span>
+                                        <span> followed you</span>
+                                        <span class="w-2 h-2 bg-red-500 rounded-full inline-block ml-1 mb-[1px]"></span>
+                                    </p>
+                                    <p class="text-xs md:text-sm text-[#a8adb8] dark:text-gray-500">5m ago</p>
+                                </div>
+                                <!-- Action Buttons -->
+                                <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <button class="archive-btn p-1.5 rounded-lg hover:bg-yellow-100 dark:hover:bg-yellow-900/30 transition-all duration-200 group/archive" data-id="2" title="Archive notification">
+                                        <svg class="w-4 h-4 text-yellow-600 dark:text-yellow-400 group-hover/archive:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                                        </svg>
+                                    </button>
+                                    <button class="delete-btn p-1.5 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-all duration-200 group/delete" data-id="2" title="Delete notification">
+                                        <svg class="w-4 h-4 text-red-600 dark:text-red-400 group-hover/delete:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                                
+                <!-- Notification 3 -->
+                <div class="notification-item p-4 md:p-6 rounded-xl cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)] hover:-translate-y-1 hover:shadow-lg group hover:ring-1 hover:ring-blue-200 dark:hover:ring-blue-800 bg-blue-50 dark:bg-blue-900/30" data-id="3" data-read="false" data-archived="false" data-deleted="false">
+                    <div class="flex items-start gap-3 md:gap-4">
+                        <img src="./assets/images/avatar-jacob-thompson.webp" alt="Jacob Thompson" class="w-10 h-10 md:w-12 md:h-12 rounded-full flex-shrink-0 cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:shadow-md">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-start justify-between gap-3">
+                                <div class="flex-1">
+                                    <p class="text-sm md:text-base text-[#81818a] dark:text-gray-300 leading-relaxed">
+                                        <span class="font-bold text-gray-900 dark:text-white hover:text-[#304c83] dark:hover:text-blue-400 cursor-pointer transition-colors">Jacob Thompson</span>
+                                        <span> has joined your group</span>
+                                        <span class="font-bold text-[#304c83] dark:text-blue-400 cursor-pointer transition-colors"> Chess Club</span>
+                                        <span class="w-2 h-2 bg-red-500 rounded-full inline-block ml-1 mb-[1px]"></span>
+                                    </p>
+                                    <p class="text-xs md:text-sm text-[#a8adb8] dark:text-gray-500">1 day ago</p>
+                                </div>
+                                <!-- Action Buttons -->
+                                <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <button class="archive-btn p-1.5 rounded-lg hover:bg-yellow-100 dark:hover:bg-yellow-900/30 transition-all duration-200 group/archive" data-id="3" title="Archive notification">
+                                        <svg class="w-4 h-4 text-yellow-600 dark:text-yellow-400 group-hover/archive:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                                        </svg>
+                                    </button>
+                                    <button class="delete-btn p-1.5 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-all duration-200 group/delete" data-id="3" title="Delete notification">
+                                        <svg class="w-4 h-4 text-red-600 dark:text-red-400 group-hover/delete:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                                
+                <!-- Notification 4 -->
+                <div class="notification-item p-4 md:p-6 rounded-xl cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)] hover:-translate-y-1 hover:shadow-lg group hover:ring-1 hover:ring-blue-200 dark:hover:ring-blue-800" data-id="4" data-read="true" data-archived="false" data-deleted="false">
+                    <div class="flex items-start gap-3 md:gap-4">
+                        <img src="./assets/images/avatar-rizky-hasanuddin.webp" alt="Rizky Hasanuddin" class="w-10 h-10 md:w-12 md:h-12 rounded-full flex-shrink-0 cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:shadow-md">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-start justify-between gap-3">
+                                <div class="flex-1">
+                                    <p class="text-sm md:text-base text-[#81818a] dark:text-gray-300 leading-relaxed">
+                                        <span class="font-bold text-gray-900 dark:text-white hover:text-[#304c83] dark:hover:text-blue-400 cursor-pointer transition-colors">Rizky Hasanuddin</span>
+                                        <span> sent you a private message</span>
+                                    </p>
+                                    <p class="text-xs md:text-sm text-[#a8adb8] dark:text-gray-500">5 days ago</p>
+                                </div>
+                                <!-- Action Buttons -->
+                                <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <button class="archive-btn p-1.5 rounded-lg hover:bg-yellow-100 dark:hover:bg-yellow-900/30 transition-all duration-200 group/archive" data-id="4" title="Archive notification">
+                                        <svg class="w-4 h-4 text-yellow-600 dark:text-yellow-400 group-hover/archive:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                                        </svg>
+                                    </button>
+                                    <button class="delete-btn p-1.5 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-all duration-200 group/delete" data-id="4" title="Delete notification">
+                                        <svg class="w-4 h-4 text-red-600 dark:text-red-400 group-hover/delete:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="mt-3 p-4 border border-gray-200 dark:border-gray-600 rounded-lg transition-all duration-300 group-hover:border-blue-400 group-hover:shadow-sm">
+                                <p class="text-gray-700 dark:text-gray-300 text-xs sm:text-base leading-relaxed">Hello, thanks for setting up the Chess Club. I've been a member for a few weeks now and I'm already having lots of fun and improving my game.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                                
+                <!-- Notification 5 -->
+                <div class="notification-item p-4 md:p-6 rounded-xl cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)] hover:-translate-y-1 hover:shadow-lg group hover:ring-1 hover:ring-blue-200 dark:hover:ring-blue-800" data-id="5" data-read="true" data-archived="false" data-deleted="false">
+                    <div class="flex items-start gap-3 md:gap-4">
+                        <img src="./assets/images/avatar-kimberly-smith.webp" alt="Kimberly Smith" class="w-10 h-10 md:w-12 md:h-12 rounded-full flex-shrink-0 cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:shadow-md">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-start justify-between gap-3">
+                                <div class="flex-1">
+                                    <p class="text-sm md:text-base text-[#81818a] dark:text-gray-300 leading-relaxed">
+                                        <span class="font-bold text-gray-900 dark:text-white hover:text-[#304c83] dark:hover:text-blue-400 cursor-pointer transition-colors">Kimberly Smith</span>
+                                        <span> commented on your picture</span>
+                                    </p>
+                                    <p class="text-xs md:text-sm text-[#a8adb8] dark:text-gray-500">1 week ago</p>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <div class="ml-auto flex-shrink-0">
+                                        <img src="./assets/images/image-chess.webp" alt="Commented image" class="w-11 h-11 md:w-12 md:h-12 rounded border-2 border-gray-200 dark:border-gray-600 hover:border-blue-600 dark:hover:border-blue-400 cursor-pointer transition-all duration-300 group-hover:scale-105">
+                                    </div>
+                                    <!-- Action Buttons -->
+                                    <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <button class="archive-btn p-1.5 rounded-lg hover:bg-yellow-100 dark:hover:bg-yellow-900/30 transition-all duration-200 group/archive" data-id="5" title="Archive notification">
+                                            <svg class="w-4 h-4 text-yellow-600 dark:text-yellow-400 group-hover/archive:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                                            </svg>
+                                        </button>
+                                        <button class="delete-btn p-1.5 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-all duration-200 group/delete" data-id="5" title="Delete notification">
+                                            <svg class="w-4 h-4 text-red-600 dark:text-red-400 group-hover/delete:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                                
+                <!-- Notification 6 -->
+                <div class="notification-item p-4 md:p-6 rounded-xl cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)] hover:-translate-y-1 hover:shadow-lg group hover:ring-1 hover:ring-blue-200 dark:hover:ring-blue-800" data-id="6" data-read="true" data-archived="false" data-deleted="false">
+                    <div class="flex items-start gap-3 md:gap-4">
+                        <img src="./assets/images/avatar-nathan-peterson.webp" alt="Nathan Peterson" class="w-10 h-10 md:w-12 md:h-12 rounded-full flex-shrink-0 cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:shadow-md">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-start justify-between gap-3">
+                                <div class="flex-1">
+                                    <p class="text-sm md:text-base text-[#81818a] dark:text-gray-300 leading-relaxed">
+                                        <span class="font-bold text-gray-900 dark:text-white hover:text-[#304c83] dark:hover:text-blue-400 cursor-pointer transition-colors">Nathan Peterson</span>
+                                        <span> reacted to your recent post</span>
+                                        <span class="font-bold text-[#6e747e] dark:text-gray-400 hover:text-[#304c83] dark:hover:text-blue-400 cursor-pointer transition-colors"> 5 end-game strategies to increase your win rate</span>
+                                    </p>
+                                    <p class="text-xs md:text-sm text-[#a8adb8] dark:text-gray-500">2 weeks ago</p>
+                                </div>
+                                <!-- Action Buttons -->
+                                <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <button class="archive-btn p-1.5 rounded-lg hover:bg-yellow-100 dark:hover:bg-yellow-900/30 transition-all duration-200 group/archive" data-id="6" title="Archive notification">
+                                            <svg class="w-4 h-4 text-yellow-600 dark:text-yellow-400 group-hover/archive:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                                            </svg>
+                                        </button>
+                                        <button class="delete-btn p-1.5 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-all duration-200 group/delete" data-id="6" title="Delete notification">
+                                            <svg class="w-4 h-4 text-red-600 dark:text-red-400 group-hover/delete:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                                
+                <!-- Notification 7 -->
+                <div class="notification-item p-4 md:p-6 rounded-xl cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)] hover:-translate-y-1 hover:shadow-lg group hover:ring-1 hover:ring-blue-200 dark:hover:ring-blue-800" data-id="7" data-read="true" data-archived="false" data-deleted="false">
+                    <div class="flex items-start gap-3 md:gap-4">
+                        <img src="./assets/images/avatar-anna-kim.webp" alt="Anna Kim" class="w-10 h-10 md:w-12 md:h-12 rounded-full flex-shrink-0 cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:shadow-md">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-start justify-between gap-3">
+                                <div class="flex-1">
+                                    <p class="text-sm md:text-base text-[#81818a] dark:text-gray-300 leading-relaxed">
+                                        <span class="font-bold text-gray-900 dark:text-white hover:text-[#304c83] dark:hover:text-blue-400 cursor-pointer transition-colors">Anna Kim</span>
+                                        <span> left the group</span>
+                                        <span class="font-bold text-[#304c83] dark:text-blue-400 cursor-pointer transition-colors"> Chess Club</span>
+                                    </p>
+                                    <p class="text-xs md:text-sm text-[#a8adb8] dark:text-gray-500">2 weeks ago</p>
+                                </div>
+                                <!-- Action Buttons -->
+                                <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <button class="archive-btn p-1.5 rounded-lg hover:bg-yellow-100 dark:hover:bg-yellow-900/30 transition-all duration-200 group/archive" data-id="7" title="Archive notification">
+                                        <svg class="w-4 h-4 text-yellow-600 dark:text-yellow-400 group-hover/archive:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                                        </svg>
+                                    </button>
+                                    <button class="delete-btn p-1.5 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-all duration-200 group/delete" data-id="7" title="Delete notification">
+                                        <svg class="w-4 h-4 text-red-600 dark:text-red-400 group-hover/delete:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                                
+        <div class="text-[11px] text-center mt-8 text-gray-500 dark:text-gray-400">
+            Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-300">Frontend Mentor</a>. 
+            Coded by <a href="#" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-300">Kanza Kashaf</a>.
+        </div>
+    </main>
+    <script>
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const html = document.documentElement;
+    
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+        html.classList.add('dark');
+    }
+    
+    // Toggle dark mode
+    darkModeToggle.addEventListener('click', () => {
+        html.classList.toggle('dark');
+        
+        if (html.classList.contains('dark')) {
+            localStorage.setItem('theme', 'dark');
+        } else {
+            localStorage.setItem('theme', 'light');
+        }
+    });
+    
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            if (e.matches) {
+                html.classList.add('dark');
+            } else {
+                html.classList.remove('dark');
+            }
+        }
+    });
 
-  Notifications 3
+    const notifications = [
+        {
+            id: 1,
+            user: { name: "Mark Webber", avatar: "./assets/images/avatar-mark-webber.webp" },
+            action: "reacted to your recent post",
+            target: "My first tournament today!",
+            targetType: "post",
+            timestamp: "1m ago",
+            isUnread: true,
+            isArchived: false,
+            isDeleted: false,
+            type: "reaction"
+        },
+        {
+            id: 2,
+            user: { name: "Angela Gray", avatar: "./assets/images/avatar-angela-gray.webp" },
+            action: "followed you",
+            target: "",
+            targetType: "",
+            timestamp: "5m ago",
+            isUnread: true,
+            isArchived: false,
+            isDeleted: false,
+            type: "follow"
+        },
+        {
+            id: 3,
+            user: { name: "Jacob Thompson", avatar: "./assets/images/avatar-jacob-thompson.webp" },
+            action: "has joined your group",
+            target: "Chess Club",
+            targetType: "group",
+            timestamp: "1 day ago",
+            isUnread: true,
+            isArchived: false,
+            isDeleted: false,
+            type: "group_join"
+        },
+        {
+            id: 4,
+            user: { name: "Rizky Hasanuddin", avatar: "./assets/images/avatar-rizky-hasanuddin.webp" },
+            action: "sent you a private message",
+            target: "",
+            targetType: "",
+            timestamp: "5 days ago",
+            isUnread: false,
+            isArchived: false,
+            isDeleted: false,
+            type: "private_message",
+            message: "Hello, thanks for setting up the Chess Club. I've been a member for a few weeks now and I'm already having lots of fun and improving my game."
+        },
+        {
+            id: 5,
+            user: { name: "Kimberly Smith", avatar: "./assets/images/avatar-kimberly-smith.webp" },
+            action: "commented on your picture",
+            target: "",
+            targetType: "",
+            timestamp: "1 week ago",
+            isUnread: false,
+            isArchived: false,
+            isDeleted: false,
+            type: "comment",
+            commentImage: "./assets/images/image-chess.webp"
+        },
+        {
+            id: 6,
+            user: { name: "Nathan Peterson", avatar: "./assets/images/avatar-nathan-peterson.webp" },
+            action: "reacted to your recent post",
+            target: "5 end-game strategies to increase your win rate",
+            targetType: "post",
+            timestamp: "2 weeks ago",
+            isUnread: false,
+            isArchived: false,
+            isDeleted: false,
+            type: "reaction"
+        },
+        {
+            id: 7,
+            user: { name: "Anna Kim", avatar: "./assets/images/avatar-anna-kim.webp" },
+            action: "left the group",
+            target: "Chess Club",
+            targetType: "group",
+            timestamp: "2 weeks ago",
+            isUnread: false,
+            isArchived: false,
+            isDeleted: false,
+            type: "group_leave"
+        }
+    ];
 
-  Mark all as read
+    const unreadCountElement = document.getElementById("unread-count");
+    const markAllReadButton = document.getElementById("mark-all-read");
+    const notificationItems = document.querySelectorAll("[data-id]");
+    
+    let currentFilter = 'all';
 
-  Mark Webber reacted to your recent post My first tournament today!
-  1m ago
+    function updateUnreadCount() {
+        const unreadCount = notifications.filter(n => n.isUnread && !n.isArchived && !n.isDeleted).length;
+        unreadCountElement.textContent = unreadCount;
+        
+        if (unreadCount === 0) {
+            unreadCountElement.style.display = "none";
+        } else {
+            unreadCountElement.style.display = "inline-block";
+        }
+    }
 
-  Angela Gray followed you
-  5m ago
+    function updateFilterButtonStyles() {
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(btn => {
+            const filter = btn.getAttribute('data-filter');
+            if (filter === currentFilter) {
+                btn.className = 'filter-btn px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium rounded-md transition-all duration-300 ease-in-out bg-blue-600 text-white shadow-sm';
+            } else {
+                btn.className = 'filter-btn px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium rounded-md transition-all duration-300 ease-in-out text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-600 hover:-translate-y-0.5 hover:shadow-md';
+            }
+        });
+    }
 
-  Jacob Thompson has joined your group Chess Club
-  1 day ago
+    function filterNotifications(filter) {
+        currentFilter = filter;
+        const notificationItems = document.querySelectorAll('.notification-item');
+        let visibleCount = 0;
+        let totalCount = 0;
 
-  Rizky Hasanuddin sent you a private message
-  5 days ago
-  Hello, thanks for setting up the Chess Club. I've been a member for a few weeks now and 
-  I'm already having lots of fun and improving my game.
+        notificationItems.forEach((item, index) => {
+            const isRead = item.getAttribute('data-read') === 'true';
+            const isArchived = item.getAttribute('data-archived') === 'true';
+            const isDeleted = item.getAttribute('data-deleted') === 'true';
+            let shouldShow = false;
 
-  Kimberly Smith commented on your picture
-  1 week ago
+            if (isDeleted) {
+                item.style.display = 'none';
+                return;
+            }
 
-  Nathan Peterson reacted to your recent post 5 end-game strategies to increase your win rate
-  2 weeks ago
+            switch (filter) {
+                case 'all':
+                    shouldShow = !isArchived;
+                    break;
+                case 'unread':
+                    shouldShow = !isRead && !isArchived;
+                    break;
+                case 'read':
+                    shouldShow = isRead && !isArchived;
+                    break;
+                case 'archived':
+                    shouldShow = isArchived;
+                    break;
+            }
 
-  Anna Kim left the group Chess Club
-  2 weeks ago
-  
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
-  </div>
+        if (shouldShow) {
+            item.style.display = 'block';
+            item.classList.add('animate-fade-in');
+            setTimeout(() => {
+                item.classList.remove('animate-fade-in');
+            }, 400);
+            visibleCount++;
+
+            const archiveBtn = item.querySelector('.archive-btn');
+            const archiveSvg = archiveBtn.querySelector('svg');
+            
+            if (filter === 'archived') {
+                archiveBtn.setAttribute('title', 'Unarchive notification');
+                archiveSvg.innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l3-3m0 0l3 3m-3-3v6m0-6V4a1 1 0 011-1h4a1 1 0 011 1v3M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4"></path>
+                `;
+            } else {
+                archiveBtn.setAttribute('title', 'Archive notification');
+                archiveSvg.innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                `;
+            }
+            } else {
+                item.classList.add('animate-fade-out');
+                setTimeout(() => {
+                    item.style.display = 'none';
+                    item.classList.remove('animate-fade-out');
+                }, 300);
+            }
+        });
+
+        // Calculate total count based on current filter
+        switch (filter) {
+            case 'all':
+                totalCount = notifications.filter(n => !n.isArchived && !n.isDeleted).length;
+                break;
+            case 'unread':
+                totalCount = notifications.filter(n => n.isUnread && !n.isArchived && !n.isDeleted).length;
+                break;
+            case 'read':
+                totalCount = notifications.filter(n => !n.isUnread && !n.isArchived && !n.isDeleted).length;
+                break;
+            case 'archived':
+                totalCount = notifications.filter(n => n.isArchived && !n.isDeleted).length;
+                break;
+        }
+
+        document.getElementById('visible-count').textContent = visibleCount;
+        document.getElementById('total-count').textContent = totalCount;
+        updateFilterButtonStyles();
+    }
+
+        // Mark a single notification as read
+        function markNotificationAsRead(id) {
+            const notification = notifications.find(n => n.id === id);
+            const notificationElement = document.querySelector(`[data-id="${id}"]`);
+            
+            if (notification && notification.isUnread) {
+                notification.isUnread = false;
+                notificationElement.setAttribute('data-read', 'true');
+                
+                notificationElement.classList.remove("bg-blue-50", "dark:bg-blue-900/30");
+                
+                const redDot = notificationElement.querySelector(".w-2.h-2.bg-red-500");
+                if (redDot) {
+                    redDot.remove();
+                }
+                
+                updateUnreadCount();
+                
+                setTimeout(() => {
+                    filterNotifications(currentFilter);
+                }, 100);
+            }
+        }
+
+        // Archive notification function
+        function archiveNotification(id) {
+            const notification = notifications.find(n => n.id === id);
+            const notificationElement = document.querySelector(`[data-id="${id}"]`);
+            
+            if (notification && !notification.isArchived && !notification.isDeleted) {
+                notification.isArchived = true;
+                notificationElement.setAttribute('data-archived', 'true');
+                
+                notificationElement.classList.add('animate-archive-slide');
+                
+                setTimeout(() => {
+                    notificationElement.classList.remove('animate-archive-slide');
+                    
+                    updateUnreadCount();
+                    filterNotifications(currentFilter);
+                }, 500);
+            }
+        }
+
+        // Delete notification function
+        function deleteNotification(id) {
+            const notification = notifications.find(n => n.id === id);
+            const notificationElement = document.querySelector(`[data-id="${id}"]`);
+            
+            if (notification && !notification.isDeleted) {
+                const userName = notification.user.name;
+                if (confirm(`Are you sure you want to delete the notification from ${userName}? This action cannot be undone.`)) {
+                    notification.isDeleted = true;
+                    notificationElement.setAttribute('data-deleted', 'true');
+                    
+                    notificationElement.classList.add('animate-slide-left');
+                    
+                    setTimeout(() => {
+                        notificationElement.style.display = 'none';
+                        
+                        updateUnreadCount(); 
+                        filterNotifications(currentFilter);
+                    }, 400);
+                }
+            }
+        }
+
+        // Restore archived notification function
+        function restoreNotification(id) {
+            const notification = notifications.find(n => n.id === id);
+            const notificationElement = document.querySelector(`[data-id="${id}"]`);
+            
+            if (notification && notification.isArchived) {
+                notification.isArchived = false;
+                notificationElement.setAttribute('data-archived', 'false');
+                
+                notificationElement.classList.add('animate-scale-bounce');
+                setTimeout(() => {
+                    notificationElement.classList.remove('animate-scale-bounce');
+                }, 300);
+                
+                updateUnreadCount();
+                filterNotifications(currentFilter);
+            }
+        }
+
+        // Mark all notifications as read
+        function markAllAsRead() {
+            let hasChanges = false;
+            
+            notifications.forEach(notification => {
+                let shouldMarkAsRead = false;
+                
+                switch (currentFilter) {
+                    case 'all':
+                        shouldMarkAsRead = notification.isUnread && !notification.isArchived && !notification.isDeleted;
+                        break;
+                    case 'unread':
+                        shouldMarkAsRead = notification.isUnread && !notification.isArchived && !notification.isDeleted;
+                        break;
+                    case 'archived':
+                        shouldMarkAsRead = notification.isUnread && notification.isArchived && !notification.isDeleted;
+                        break;
+                    case 'read':
+                        shouldMarkAsRead = false;
+                        break;
+                }
+                
+                if (shouldMarkAsRead) {
+                    notification.isUnread = false;
+                    hasChanges = true;
+                    
+                    const notificationElement = document.querySelector(`[data-id="${notification.id}"]`);
+                    if (notificationElement) {
+                        notificationElement.setAttribute('data-read', 'true');
+                        notificationElement.classList.remove("bg-blue-50", "dark:bg-blue-900/30");
+                        
+                        const redDot = notificationElement.querySelector(".w-2.h-2.bg-red-500");
+                        if (redDot) {
+                            redDot.remove();
+                        }
+                    }
+                }
+            });
+            
+            if (hasChanges) {
+                updateUnreadCount();
+                
+                setTimeout(() => {
+                    filterNotifications(currentFilter);
+                }, 100);
+            }
+        }
+
+        // Event listeners
+        markAllReadButton.addEventListener("click", markAllAsRead);
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.getAttribute('data-filter');
+                filterNotifications(filter);
+            });
+        });
+
+        notificationItems.forEach(item => {
+            item.addEventListener("click", (e) => {
+                if (e.target.closest('.archive-btn') || e.target.closest('.delete-btn')) {
+                    return;
+                }
+                
+                const id = parseInt(item.getAttribute("data-id"));
+                const isArchived = item.getAttribute('data-archived') === 'true';
+                
+                if (isArchived) {
+                    markNotificationAsRead(id);
+                } else {
+                    markNotificationAsRead(id);
+                }
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.archive-btn')) {
+                e.stopPropagation();
+                const btn = e.target.closest('.archive-btn');
+                const id = parseInt(btn.getAttribute('data-id'));
+                const notificationElement = document.querySelector(`[data-id="${id}"]`);
+                const isArchived = notificationElement.getAttribute('data-archived') === 'true';
+                
+                btn.classList.add('animate-scale-bounce');
+                setTimeout(() => {
+                    btn.classList.remove('animate-scale-bounce');
+                }, 300);
+                
+                if (isArchived) {
+                    restoreNotification(id);
+                } else {
+                    archiveNotification(id);
+                }
+            }
+            
+            if (e.target.closest('.delete-btn')) {
+                e.stopPropagation();
+                const btn = e.target.closest('.delete-btn');
+                const id = parseInt(btn.getAttribute('data-id'));
+                
+                btn.classList.add('animate-shake');
+                setTimeout(() => {
+                    btn.classList.remove('animate-shake');
+                }, 500);
+                
+                deleteNotification(id);
+            }
+        });
+
+        notificationItems.forEach(item => {
+            item.setAttribute("tabindex", "0");
+            
+            item.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    const id = parseInt(item.getAttribute("data-id"));
+                    const isArchived = item.getAttribute('data-archived') === 'true';
+                    
+                    if (isArchived) {
+                        markNotificationAsRead(id);
+                    } else {
+                        markNotificationAsRead(id);
+                    }
+                }
+                
+                if (e.key === 'a' || e.key === 'A') {
+                    e.preventDefault();
+                    const id = parseInt(item.getAttribute("data-id"));
+                    const isArchived = item.getAttribute('data-archived') === 'true';
+                    
+                    if (isArchived) {
+                        restoreNotification(id);
+                    } else {
+                        archiveNotification(id);
+                    }
+                }
+                
+                if (e.key === 'd' || e.key === 'D') {
+                    e.preventDefault();
+                    const id = parseInt(item.getAttribute("data-id"));
+                    deleteNotification(id);
+                }
+            });
+        });
+
+        function init() {
+            updateUnreadCount();
+            filterNotifications('all');
+        }
+
+        init();
+    </script>
 </body>
 </html>
