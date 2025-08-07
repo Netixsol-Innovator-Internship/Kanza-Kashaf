@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+    <title>Tip Calculator</title>
+    <link href="./output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        
+        .input-focus:focus:not(:disabled) {
+            outline: none;
+            border-color: hsl(172, 67%, 45%);
+            box-shadow: 0 0 0 2px hsl(172, 67%, 45%, 0.2);
+        }
+        
+        .tip-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .tip-btn:hover:not(:disabled) {
+            background-color: hsl(172, 67%, 45%);
+            color: hsl(183, 100%, 15%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tip-btn.active {
+            background-color: hsl(172, 67%, 45%);
+            color: hsl(183, 100%, 15%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tip-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .error {
+            border-color: #ef4444;
+        }
+        
+        .error:focus {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+        }
+
+        .bg-primary-green { background-color: hsl(172, 67%, 45%); }
+        .bg-dark-green { background-color: hsl(183, 100%, 15%); }
+        .bg-grey-500 { background-color: hsl(186, 14%, 43%); }
+        .bg-grey-400 { background-color: hsl(184, 14%, 56%); }
+        .bg-grey-200 { background-color: hsl(185, 41%, 84%); }
+        .bg-grey-50 { background-color: hsl(189, 47%, 97%); }
+        
+        .text-primary-green { color: hsl(172, 67%, 45%); }
+        .text-dark-green { color: hsl(183, 100%, 15%); }
+        .text-grey-500 { color: hsl(186, 14%, 43%); }
+        .text-grey-400 { color: hsl(184, 14%, 56%); }
+        .text-grey-200 { color: hsl(185, 41%, 84%); }
+        .text-grey-50 { color: hsl(189, 47%, 97%); }
+        
+        .font-space-mono { font-family: 'Space Mono', monospace; }
+
+        .dark .bg-grey-200 { background-color: hsl(220, 13%, 18%); }
+        .dark .bg-grey-50 { background-color: hsl(220, 13%, 25%); }
+        .dark .text-grey-500 { color: hsl(186, 14%, 70%); }
+        .dark .text-grey-400 { color: hsl(184, 14%, 60%); }
+
+        * {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dark-mode-toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: hsl(186, 14%, 43%);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .dark-mode-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dark-mode-toggle.active {
+            background: hsl(172, 67%, 45%);
+        }
+        
+        .dark-mode-toggle::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .dark-mode-toggle.active::before {
+            transform: translateX(30px);
+        }
+
+        input, button {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        input:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        input:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        #reset-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .calculator-container {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .calculator-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark .calculator-container:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .dark input:hover:not(:disabled) {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .dark .tip-btn:hover:not(:disabled) {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .dark input {
+            color: white !important;
+        }
+
+        .dark input::placeholder {
+            color: hsl(184, 14%, 60%) !important;
+        }
+
+        .dark .text-dark-green {
+            color: white !important;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .animate-slide-up {
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        .animate-delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .animate-delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        .animate-delay-3 {
+            animation-delay: 0.6s;
+        }
+
+        .animate-delay-4 {
+            animation-delay: 0.8s;
+        }
+
+        .animate-delay-5 {
+            animation-delay: 1s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        [data-animate] {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="bg-grey-200 dark:bg-gray-900 min-h-screen font-space-mono transition-colors duration-500">
+    <!-- Background Div -->
+    <div class="min-h-screen flex flex-col items-center justify-center p-4 relative">
+        <div class="mb-8 md:mb-12 transform transition-all duration-500 hover:scale-105" data-animate="slideDown">
+            <div class="text-dark-green dark:text-primary-green text-2xl font-bold tracking-[0.5em] text-center">
+                <img src="./images/logo.svg" alt="logo">
+            </div>
+        </div>
+        
+        <!-- Calculator Container -->
+        <div class="relative">
+            <div class="absolute -top-12 right-0 z-10" data-animate="fadeIn">
+                <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+                </button>
+            </div>
+
+            <div class="calculator-container bg-white dark:bg-gray-800 rounded-3xl shadow-xl w-full max-w-4xl overflow-hidden" data-animate="scaleIn">
+                <div class="flex flex-col lg:flex-row">
+                    <!-- Input Section -->
+                    <div class="p-6 md:p-8 lg:p-10 flex-1">
+                        <!-- Bill Input -->
+                        <div class="mb-6 md:mb-8" data-animate="slideUp">
+                            <label for="bill" class="block text-grey-500 dark:text-grey-400 text-sm font-bold mb-2">
+                                Bill
+                            </label>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-grey-400 dark:text-grey-500 text-xl">
+                                    <img src="./images/icon-dollar.svg" alt="dollar">
+                                </span>
+                                <input 
+                                    type="number" 
+                                    id="bill" 
+                                    placeholder="0" 
+                                    class="w-full bg-grey-50 dark:bg-gray-700 border-2 border-transparent rounded-lg px-4 py-3 pl-8 text-right text-2xl font-bold text-dark-green input-focus"
+                                    step="0.01"
+                                    min="0"
+                                >
+                            </div>
+                            <div id="bill-error" class="text-red-500 text-sm mt-1 hidden">Can't be zero</div>
+                        </div>
+                        
+                        <!-- Tip Selection -->
+                        <div class="mb-6 md:mb-8" data-animate="slideUp">
+                            <label class="block text-grey-500 dark:text-grey-400 text-sm font-bold mb-4">
+                                Select Tip %
+                            </label>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+                                <button class="tip-btn bg-dark-green dark:bg-gray-600 text-white rounded-lg py-3 px-4 text-xl font-bold animate-delay-1" data-tip="5" disabled>
+                                    5%
+                                </button>
+                                <button class="tip-btn bg-dark-green dark:bg-gray-600 text-white rounded-lg py-3 px-4 text-xl font-bold animate-delay-1" data-tip="10" disabled>
+                                    10%
+                                </button>
+                                <button class="tip-btn bg-dark-green dark:bg-gray-600 text-white rounded-lg py-3 px-4 text-xl font-bold animate-delay-2" data-tip="15" disabled>
+                                    15%
+                                </button>
+                                <button class="tip-btn bg-dark-green dark:bg-gray-600 text-white rounded-lg py-3 px-4 text-xl font-bold animate-delay-2" data-tip="25" disabled>
+                                    25%
+                                </button>
+                                <button class="tip-btn bg-dark-green dark:bg-gray-600 text-white rounded-lg py-3 px-4 text-xl font-bold animate-delay-3" data-tip="50" disabled>
+                                    50%
+                                </button>
+                                <input 
+                                    type="number" 
+                                    id="custom-tip" 
+                                    placeholder="Custom" 
+                                    class="bg-grey-50 dark:bg-gray-700 border-2 border-transparent rounded-lg py-3 px-1 text-xl font-bold text-dark-green text-center input-focus animate-delay-3"
+                                    min="0"
+                                    max="100"
+                                    disabled
+                                >
+                                <div id="custom-tip-error" class="text-red-500 text-sm mt-1 hidden">Must be 100 or less</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Number of People -->
+                        <div class="mb-6 md:mb-8" data-animate="slideUp">
+                            <div class="flex justify-between items-center mb-2">
+                                <label for="people" class="text-grey-500 dark:text-grey-400 text-sm font-bold">
+                                    Number of People
+                                </label>
+                            </div>
+                            <div class="relative">
+                                <img src="./images/icon-person.svg" alt="person" class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-grey-400 dark:text-grey-500" fill="currentColor" viewBox="0 0 20 20">
+                                <input 
+                                    type="number" 
+                                    id="people" 
+                                    placeholder="0" 
+                                    class="w-full bg-grey-50 dark:bg-gray-700 border-2 border-transparent rounded-lg px-4 py-3 pl-12 text-right text-2xl font-bold text-dark-green input-focus animate-delay-4"
+                                    min="1"
+                                    disabled
+                                >
+                            </div>
+                            <div id="people-error" class="text-red-500 text-sm hidden">Number of people must be 20 or less</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Results Section -->
+                    <div class="bg-dark-green dark:bg-gray-700 p-6 md:p-8 lg:p-10 lg:rounded-2xl lg:m-6 flex-1 lg:max-w-md" data-animate="slideUp">
+                        <!-- Tip Amount -->
+                        <div class="flex justify-between items-center mb-6 md:mb-8">
+                            <div>
+                                <div class="text-white text-sm md:text-base font-bold">Tip Amount</div>
+                                <div class="text-grey-400 dark:text-grey-500 text-xs md:text-sm">/ person</div>
+                            </div>
+                            <div id="tip-amount" class="text-primary-green text-3xl md:text-4xl lg:text-5xl font-bold">
+                                $0.00
+                            </div>
+                        </div>
+                        
+                        <!-- Total Amount -->
+                        <div class="flex justify-between items-center lg:mb-40 md:mb-12">
+                            <div>
+                                <div class="text-white text-sm md:text-base mb-8 font-bold">Total</div>
+                                <div class="text-grey-400 dark:text-grey-500 text-xs md:text-sm">/ person</div>
+                            </div>
+                            <div id="total-amount" class="text-primary-green text-3xl md:text-4xl lg:text-5xl font-bold">
+                                $0.00
+                            </div>
+                        </div>
+                        
+                        <!-- Reset Button -->
+                        <button 
+                            id="reset-btn" 
+                            class="w-full bg-primary-green text-dark-green py-3 rounded-lg text-xl font-bold hover:bg-opacity-80 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed animate-delay-5 cursor-pointer"
+                            disabled
+                        >
+                            RESET
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const calculator = {
+            bill: 0,
+            tipPercentage: 0,
+            numberOfPeople: 0,
+            customTip: 0
+        };
+
+        const billInput = document.getElementById('bill');
+        const customTipInput = document.getElementById('custom-tip');
+        const peopleInput = document.getElementById('people');
+        const tipButtons = document.querySelectorAll('.tip-btn');
+        const tipAmountDisplay = document.getElementById('tip-amount');
+        const totalAmountDisplay = document.getElementById('total-amount');
+        const resetButton = document.getElementById('reset-btn');
+        const billError = document.getElementById('bill-error');
+        const peopleError = document.getElementById('people-error');
+        const customTipError = document.getElementById('custom-tip-error');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+
+        // Animation on load
+        function animateOnLoad() {
+            const animatedElements = document.querySelectorAll('[data-animate]');
+            
+            animatedElements.forEach((element, index) => {
+                const animationType = element.getAttribute('data-animate');
+                element.style.animationName = animationType;
+                element.style.animationDuration = '0.8s';
+                element.style.animationFillMode = 'forwards';
+                element.style.animationTimingFunction = 'ease-out';
+                
+                if (index > 0) {
+                    element.style.animationDelay = `${index * 0.1}s`;
+                }
+                
+                element.addEventListener('animationend', () => {
+                    element.removeAttribute('data-animate');
+                });
+            });
+        }
+
+        // Dark mode functionality
+        let isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+        function initDarkMode() {
+            if (isDarkMode) {
+                document.documentElement.classList.add('dark');
+                darkModeToggle.classList.add('active');
+            }
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.documentElement.classList.toggle('dark');
+            darkModeToggle.classList.toggle('active');
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+
+        // Utility functions
+        const formatCurrency = (amount) => {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(amount);
+        };
+
+        const validateInput = (input, errorElement, canBeZero = false, maxValue = null) => {
+            const value = parseFloat(input.value);
+            const isValid = !isNaN(value) && (canBeZero ? value >= 0 : value > 0) && (maxValue ? value <= maxValue : true);
+            
+            if (!isValid && input.value !== '') {
+                input.classList.add('error');
+                errorElement.classList.remove('hidden');
+                return false;
+            } else {
+                input.classList.remove('error');
+                errorElement.classList.add('hidden');
+                return true;
+            }
+        };
+
+        const validateDivision = () => {
+            if (calculator.bill > 0 && calculator.tipPercentage > 0 && calculator.numberOfPeople > 0) {
+                const tipAmount = (calculator.bill * calculator.tipPercentage) / 100;
+                const tipPerPerson = tipAmount / calculator.numberOfPeople;
+                const totalPerPerson = (calculator.bill + tipAmount) / calculator.numberOfPeople;
+            }
+            return true;
+        };
+
+        const validatePeopleCount = () => {
+            const peopleCount = parseInt(peopleInput.value) || 0;
+            
+            if (peopleCount > 20 && peopleInput.value !== '') {
+                peopleInput.classList.add('error');
+                peopleError.classList.remove('hidden');
+                peopleError.textContent = 'Number of people must be 20 or less';
+                return false;
+            } else if (peopleCount <= 0 && peopleInput.value !== '') {
+                peopleInput.classList.add('error');
+                peopleError.classList.remove('hidden');
+                peopleError.textContent = "Can't be zero";
+                return false;
+            } else {
+                peopleInput.classList.remove('error');
+                peopleError.classList.add('hidden');
+                return true;
+            }
+        };
+
+        const resetTipAndPeopleInputs = () => {
+            calculator.tipPercentage = 0;
+            calculator.customTip = 0;
+            customTipInput.value = '';
+            tipButtons.forEach(btn => btn.classList.remove('active'));
+            
+            calculator.numberOfPeople = 0;
+            peopleInput.value = '';
+            
+            customTipInput.classList.remove('error');
+            peopleInput.classList.remove('error');
+            customTipError.classList.add('hidden');
+            peopleError.classList.add('hidden');
+        };
+
+        const updateInputStates = () => {
+            const hasBill = calculator.bill > 0;
+            const hasTip = calculator.tipPercentage > 0;
+            
+            if (!hasBill) {
+                resetTipAndPeopleInputs();
+            }
+            
+            tipButtons.forEach(btn => {
+                btn.disabled = !hasBill;
+            });
+            customTipInput.disabled = !hasBill;
+            
+            peopleInput.disabled = !hasBill || !hasTip;
+        };
+
+        const calculateTip = () => {
+            if (calculator.bill <= 0 || calculator.tipPercentage <= 0 || calculator.numberOfPeople <= 0 || calculator.numberOfPeople > 20 || !validateDivision()) {
+                tipAmountDisplay.textContent = '$0.00';
+                totalAmountDisplay.textContent = '$0.00';
+                resetButton.disabled = true;
+                return;
+            }
+
+            const tipAmount = (calculator.bill * calculator.tipPercentage) / 100;
+            const tipPerPerson = tipAmount / calculator.numberOfPeople;
+            const totalPerPerson = (calculator.bill + tipAmount) / calculator.numberOfPeople;
+
+            setTimeout(() => {
+                tipAmountDisplay.textContent = formatCurrency(tipPerPerson);
+                totalAmountDisplay.textContent = formatCurrency(totalPerPerson);
+            }, 100);
+            
+            resetButton.disabled = false;
+        };
+
+        const resetCalculator = () => {
+            calculator.bill = 0;
+            calculator.tipPercentage = 0;
+            calculator.numberOfPeople = 0;
+            calculator.customTip = 0;
+
+            billInput.value = '';
+            customTipInput.value = '';
+            peopleInput.value = '';
+            
+            tipButtons.forEach(btn => btn.classList.remove('active'));
+            
+            tipAmountDisplay.textContent = '$0.00';
+            totalAmountDisplay.textContent = '$0.00';
+            
+            resetButton.disabled = true;
+            
+            billInput.classList.remove('error');
+            peopleInput.classList.remove('error');
+            customTipInput.classList.remove('error');
+            billError.classList.add('hidden');
+            peopleError.classList.add('hidden');
+            customTipError.classList.add('hidden');
+
+            updateInputStates();
+        };
+
+        // Event listeners
+        billInput.addEventListener('input', (e) => {
+            calculator.bill = parseFloat(e.target.value) || 0;
+            updateInputStates();
+            calculateTip();
+        });
+
+        customTipInput.addEventListener('input', (e) => {
+            const customValue = parseFloat(e.target.value) || 0;
+            
+            const isValidCustomTip = validateInput(customTipInput, customTipError, true, 100);
+            
+            if (isValidCustomTip) {
+                calculator.customTip = customValue;
+                calculator.tipPercentage = customValue;
+                
+                if (e.target.value !== '') {
+                    tipButtons.forEach(btn => btn.classList.remove('active'));
+                }
+                
+                updateInputStates();
+                calculateTip();
+            }
+        });
+
+        peopleInput.addEventListener('input', (e) => {
+            const isValidPeople = validatePeopleCount();
+            if (isValidPeople) {
+                calculator.numberOfPeople = parseInt(e.target.value) || 0;
+                calculateTip();
+            }
+        });
+
+        // Tip button event listeners
+        tipButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                if (button.disabled) return;
+                
+                const tipValue = parseInt(e.target.dataset.tip);
+                
+                if (tipValue) {
+                    calculator.tipPercentage = tipValue;
+                    
+                    tipButtons.forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    
+                    customTipInput.value = '';
+                    calculator.customTip = 0;
+                    
+                    updateInputStates();
+                    calculateTip();
+                }
+            });
+        });
+
+        resetButton.addEventListener('click', resetCalculator);
+
+        billInput.addEventListener('blur', () => {
+            validateInput(billInput, billError);
+        });
+
+        peopleInput.addEventListener('blur', () => {
+            validatePeopleCount();
+            validateDivision();
+        });
+
+        customTipInput.addEventListener('blur', () => {
+            validateInput(customTipInput, customTipError, true, 100);
+        });
+
+        // Prevent negative values
+        [billInput, customTipInput, peopleInput].forEach(input => {
+            input.addEventListener('keydown', (e) => {
+                if ([46, 8, 9, 27, 13].indexOf(e.keyCode) !== -1 ||
+                    (e.keyCode === 65 && e.ctrlKey === true) ||
+                    (e.keyCode === 67 && e.ctrlKey === true) ||
+                    (e.keyCode === 86 && e.ctrlKey === true) ||
+                    (e.keyCode === 88 && e.ctrlKey === true) ||
+                    (e.keyCode >= 35 && e.keyCode <= 40)) {
+                    return;
+                }
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            });
+        });
+
+        // Initialize calculator
+        document.addEventListener('DOMContentLoaded', () => {
+            initDarkMode();
+            animateOnLoad();
+            updateInputStates();
+            calculateTip();
+        });
+    </script>
+</body>
+</html>
