@@ -14,7 +14,6 @@
     --color-orange-600: oklch(64.6% 0.222 41.116);
     --color-green-600: oklch(62.7% 0.194 149.214);
     --color-green-700: oklch(52.7% 0.154 150.069);
-    --color-gray-50: oklch(98.5% 0.002 247.839);
     --color-gray-100: oklch(96.7% 0.003 264.542);
     --color-gray-200: oklch(92.8% 0.006 264.531);
     --color-gray-300: oklch(87.2% 0.01 258.338);
@@ -331,9 +330,6 @@
   .mt-12 {
     margin-top: calc(var(--spacing) * 12);
   }
-  .mt-16 {
-    margin-top: calc(var(--spacing) * 16);
-  }
   .mr-3 {
     margin-right: calc(var(--spacing) * 3);
   }
@@ -412,9 +408,6 @@
   .h-10 {
     height: calc(var(--spacing) * 10);
   }
-  .h-18 {
-    height: calc(var(--spacing) * 18);
-  }
   .h-20 {
     height: calc(var(--spacing) * 20);
   }
@@ -469,9 +462,6 @@
   .w-16 {
     width: calc(var(--spacing) * 16);
   }
-  .w-18 {
-    width: calc(var(--spacing) * 18);
-  }
   .w-20 {
     width: calc(var(--spacing) * 20);
   }
@@ -496,9 +486,6 @@
   .max-w-2xl {
     max-width: var(--container-2xl);
   }
-  .max-w-7xl {
-    max-width: var(--container-7xl);
-  }
   .max-w-\[1491px\] {
     max-width: 1491px;
   }
@@ -513,9 +500,6 @@
   }
   .max-w-xs {
     max-width: var(--container-xs);
-  }
-  .min-w-0 {
-    min-width: calc(var(--spacing) * 0);
   }
   .min-w-\[100px\] {
     min-width: 100px;
@@ -1099,6 +1083,10 @@
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
+  .duration-100 {
+    --tw-duration: 100ms;
+    transition-duration: 100ms;
+  }
   .duration-200 {
     --tw-duration: 200ms;
     transition-duration: 200ms;
@@ -1114,6 +1102,10 @@
   .duration-600 {
     --tw-duration: 600ms;
     transition-duration: 600ms;
+  }
+  .duration-1000 {
+    --tw-duration: 1000ms;
+    transition-duration: 1000ms;
   }
   .ease-in-out {
     --tw-ease: var(--ease-in-out);
@@ -1243,11 +1235,6 @@
   .sm\:mx-6 {
     @media (width >= 40rem) {
       margin-inline: calc(var(--spacing) * 6);
-    }
-  }
-  .sm\:mt-12 {
-    @media (width >= 40rem) {
-      margin-top: calc(var(--spacing) * 12);
     }
   }
   .sm\:mt-16 {
@@ -1993,6 +1980,11 @@
   .dark\:bg-\[\#1a1a1a\] {
     &:where(.dark, .dark *) {
       background-color: #1a1a1a;
+    }
+  }
+  .dark\:bg-\[gray-900\] {
+    &:where(.dark, .dark *) {
+      background-color: gray-900;
     }
   }
   .dark\:bg-gray-500 {

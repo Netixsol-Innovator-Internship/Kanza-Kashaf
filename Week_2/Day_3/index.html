@@ -9,11 +9,24 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-      body {
-        font-family: 'Poppins', sans-serif;
-        transition: background-color 0.3s ease, color 0.3s ease;
+      
+      * {
+        transition: background-color 0.1ms cubic-bezier(1, 1, 1, 1), 
+                    color 0.1ms cubic-bezier(1, 1, 1, 1), 
+                    border-color 0.1ms cubic-bezier(1, 1, 1, 1),
+                    box-shadow 0.1ms cubic-bezier(1, 1, 1, 1);
       }
       
+      body {
+        font-family: 'Poppins', sans-serif;
+        transition: background-color 0.1ms cubic-bezier(1, 1, 1, 1), 
+                    color 0.1ms cubic-bezier(1, 1, 1, 1);
+      }
+      
+      html {
+        transition: background-color 0.1ms cubic-bezier(1, 1, 1, 1);
+      }
+            
       .dark {
         background-color: #1a1a1a;
         color: #ffffff;
@@ -55,6 +68,11 @@
       .dark .shadow-md {
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
       }
+      
+      .logo-img, .cart-img, .social-icon {
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
+      }
+      
       .dark .logo-img,
       .dark .cart-img,
       .dark .social-icon {
@@ -62,11 +80,41 @@
         border-radius: 8px;
         padding: 4px;
       }
+      
       .dark .logo-img {
         background-color: rgba(255, 255, 255, 0.05);
         padding: 8px;
         border-radius: 12px;
       }
+      
+      nav a, .nav-link {
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
+      }
+      
+      .card-hover, .restaurant-card, .product-card {
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
+      }
+      
+      button, .btn-animate {
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
+      }
+      
+      input, textarea, select {
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
+      }
+      
+      .cart-modal-content, .cart-items-container, .cart-modal-footer {
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
+      }
+      
+      #mobile-menu {
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
+      }
+      
+      #line1, #line2, #line3 {
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
+      }
+      
       @media (min-width: 1024px) and (max-width: 1440px) {
         .card-1440 {
           width: calc(33.333% - 16px) !important;
@@ -78,7 +126,7 @@
           width: 496px !important;
         }
       }
-      
+            
       @keyframes slideFade {
         0% {
           opacity: 0.6;
@@ -89,7 +137,7 @@
           transform: translateX(0px);
         }
       }
-      
+            
       @keyframes fadeInUp {
         0% {
           opacity: 0;
@@ -100,7 +148,7 @@
           transform: translateY(0);
         }
       }
-      
+            
       @keyframes slideInLeft {
         0% {
           opacity: 0;
@@ -111,7 +159,7 @@
           transform: translateX(0);
         }
       }
-      
+            
       @keyframes slideInRight {
         0% {
           opacity: 0;
@@ -122,7 +170,7 @@
           transform: translateX(0);
         }
       }
-      
+            
       @keyframes scaleIn {
         0% {
           opacity: 0;
@@ -133,7 +181,7 @@
           transform: scale(1);
         }
       }
-      
+            
       @keyframes bounce {
         0%, 20%, 53%, 80%, 100% {
           transform: translate3d(0,0,0);
@@ -148,54 +196,54 @@
           transform: translate3d(0, -4px, 0);
         }
       }
-      
+            
       .animate-on-scroll {
         opacity: 0;
         transition: all 0.6s ease-out;
       }
-      
+            
       .animate-on-scroll.animate-fade-up {
         animation: fadeInUp 0.6s ease-out forwards;
       }
-      
+            
       .animate-on-scroll.animate-slide-left {
         animation: slideInLeft 0.6s ease-out forwards;
       }
-      
+            
       .animate-on-scroll.animate-slide-right {
         animation: slideInRight 0.6s ease-out forwards;
       }
-      
+            
       .animate-on-scroll.animate-scale-in {
         animation: scaleIn 0.6s ease-out forwards;
       }
-      
+            
       .card-hover {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.4s cubic-bezier(1, 1, 1, 1);
       }
-      
+            
       .card-hover:hover {
         transform: scale(1.05);
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
       }
-      
+            
       .dark .card-hover:hover {
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
       }
-      
+            
       .restaurant-card {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
       }
-      
+            
       .restaurant-card:hover {
         transform: translateY(-8px) scale(1.02);
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
       }
-      
+            
       .dark .restaurant-card:hover {
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
       }
-      
+            
       .notification {
         position: fixed;
         top: 20px;
@@ -206,19 +254,19 @@
         border-radius: 12px;
         box-shadow: 0 8px 32px rgba(252, 138, 6, 0.3);
         transform: translateX(400px);
-        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        transition: all 0.1ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
         z-index: 1000;
         display: flex;
         align-items: center;
         gap: 12px;
         backdrop-filter: blur(10px);
       }
-      
+            
       .notification.show {
         transform: translateX(0);
         animation: bounce 0.6s ease-out;
       }
-      
+            
       .notification .icon {
         width: 24px;
         height: 24px;
@@ -228,32 +276,37 @@
         align-items: center;
         justify-content: center;
       }
+      
       #slider {
-        transition: transform 0.5s ease-in-out;
+        transition: transform 0.1ms ease-in-out;
         will-change: transform;
       }
+      
       .card-animate {
-        animation: slideFade 0.5s ease-in-out;
+        animation: slideFade 0.1ms ease-in-out;
       }
+      
       .btn-animate {
-        transition: transform 0.2s ease;
+        transition: transform 0.1ms cubic-bezier(1, 1, 1, 1);
       }
+      
       .btn-animate:hover {
         transform: scale(1.1);
       }
+      
       .btn-animate:active {
         transform: scale(0.95);
       }
-      
+            
       .plus-button {
-        transition: all 0.3s ease;
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
         cursor: pointer;
       }
-      
+            
       .plus-button:hover {
         transform: scale(1.1);
       }
-      
+            
       .dark-mode-toggle {
         position: relative;
         width: 60px;
@@ -261,13 +314,13 @@
         background: #ccc;
         border-radius: 15px;
         cursor: pointer;
-        transition: background 0.3s ease;
+        transition: 0.1ms cubic-bezier(1, 1, 1, 1);
       }
-      
+            
       .dark-mode-toggle.active {
         background: #FC8A06;
       }
-      
+            
       .dark-mode-toggle::before {
         content: '';
         position: absolute;
@@ -277,71 +330,80 @@
         height: 24px;
         background: white;
         border-radius: 50%;
-        transition: transform 0.3s ease;
+        transition: transform 0.1ms cubic-bezier(1, 1, 1, 1);
       }
-      
+            
       .dark-mode-toggle.active::before {
         transform: translateX(30px);
       }
+      
       html {
         scroll-behavior: smooth;
       }
+      
       .cart-modal-content {
         display: flex;
         flex-direction: column;
         height: 100%;
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
       }
-      
+            
       .cart-items-container {
         flex: 1;
         overflow-y: auto;
         padding: 1rem;
         padding-bottom: 2rem;
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
       }
-      
+            
       .cart-modal-footer {
         flex-shrink: 0;
         border-top: 1px solid rgba(0, 0, 0, 0.1);
         background: inherit;
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
       }
-      
+            
       .dark .cart-modal-footer {
         border-top-color: rgba(255, 255, 255, 0.1);
       }
-
+      
       .product-card {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
       }
-
+      
       .product-content {
         flex: 1;
         padding-right: 1rem;
         text-align: left;
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
       }
-
+      
       .product-image-container {
         position: relative;
         flex-shrink: 0;
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
       }
-
+      
       .plus-btn-container {
         position: absolute;
         bottom: -0.5rem;
         right: -0.5rem;
         width: 4.5rem;
         height: 4.5rem;
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
       }
-
+      
       @media (max-width: 639px) {
         .product-card {
           flex-direction: column !important;
           text-align: center !important;
           align-items: center !important;
         }
-        
+                
         .product-image-container {
           order: -1 !important;
           width: 100% !important;
@@ -350,20 +412,20 @@
           align-items: center !important;
           margin-bottom: 1rem !important;
         }
-        
+                
         .product-image {
           width: 200px !important;
           height: 200px !important;
           margin: 0 auto !important;
         }
-        
+                
         .product-content {
           padding-right: 0 !important;
           width: 100% !important;
           text-align: center !important;
           order: 1 !important;
         }
-        
+                
         .plus-btn-container {
           position: absolute !important;
           bottom: -1rem !important;
@@ -371,78 +433,99 @@
           width: 3rem !important;
           height: 3rem !important;
         }
-
+        
         .plus-btn-container img:first-child {
           width: 100% !important;
           height: 100% !important;
         }
-
+        
         .plus-btn-container img:last-child {
           width: 1.5rem !important;
           height: 1.5rem !important;
         }
       }
-
+      
       @media (min-width: 640px) and (max-width: 768px) {
         .product-image {
           width: 140px !important;
           height: 140px !important;
         }
       }
-
+      
       .day-label {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-style: normal;
-            font-size: 32px;
-            line-height: 48px;
-            letter-spacing: 0%;
-            vertical-align: middle;
-        }
-        
-        .timing-text {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-style: normal;
-            font-size: 18px;
-            line-height: 100%;
-            letter-spacing: 0%;
-            vertical-align: middle;
-        }
-        
-        .main-container {
-            width: 1200px;
-            height: 500px;
-            border-radius: 12px;
-        }
-
-        .tab-button.active {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        font-style: normal;
+        font-size: 32px;
+        line-height: 48px;
+        letter-spacing: 0%;
+        vertical-align: middle;
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
+      }
+                
+      .timing-text {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        font-style: normal;
+        font-size: 18px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        vertical-align: middle;
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
+      }
+                
+      .main-container {
+        width: 1200px;
+        height: 500px;
+        border-radius: 12px;
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
+      }
+      
+      .tab-button.active {
         background-color: transparent;
         color: #FC8A06;
         border: 2px solid #FC8A06;
         font-weight: 600;
-        }
-
-        .tab-button {
-        transition: all 0.3s ease;
-        }
-
-        .tab-button:hover:not(.active) {
-        color: #FC8A06;
-        }
+      }
+      
+      .tab-button {
+        transition: all 0.1ms cubic-bezier(1, 1, 1, 1);
+      }
+      
+      .tab-button:hover:not(.active) {
+        color: #FC8A06;
+      }
+      
+      h1, h2, h3, h4, h5, h6, p, span, div {
+        transition: color 0.1ms cubic-bezier(1, 1, 1, 1);
+      }
+      
+      .dark input, .dark textarea, .dark select {
+        background-color: #374151;
+        border-color: #4B5563;
+        color: #F9FAFB;
+      }
+      
+      .border, .border-gray-100, .border-gray-200, .border-gray-300 {
+        transition: border-color 0.1ms cubic-bezier(1, 1, 1, 1);
+      }
+      
+      .shadow, .shadow-sm, .shadow-md, .shadow-lg, .shadow-xl {
+        transition: box-shadow 0.1ms cubic-bezier(1, 1, 1, 1);
+      }
     </style>
 </head>
-<body class="w-full font-[Poppins] min-h-screen transition-colors duration-300">
+<body class="w-full font-[Poppins] min-h-screen transition-all duration-500 ease-in-out">
     
     <!-- Notification Container -->
     <div id="notification-container"></div>
     
     <!-- NavBar Section -->
-    <header class="w-full bg-transparent pt-4 sm:py-4 animate-on-scroll">
+    <header class="w-full bg-transparent pt-4 sm:py-4 animate-on-scroll transition-all duration-100 ease-in-out">
         <div class="mx-auto min-w-[320px] max-w-[1491px] flex items-center justify-between px-2 sm:px-6 lg:px-0">
             <div class="flex-shrink-0">
                 <img src="./images/Logo.png" alt="Order UK"
-                    class="object-contain w-20 sm:w-24 md:w-28 lg:w-32 xl:w-40 h-auto sm:ml-0 lg:ml-4 logo-img transition-all duration-300 card-hover"
+                    class="object-contain w-20 sm:w-24 md:w-28 lg:w-32 xl:w-40 h-auto sm:ml-0 lg:ml-4 logo-img transition-all duration-100 ease-in-out card-hover"
                 />
             </div>
             <div class="flex items-center gap-2 card-hover">
@@ -451,28 +534,28 @@
                 </button>
                 <button aria-label="button" id="menu-btn" class="sm:hidden focus:outline-none z-50 relative p-3 order-2">
                     <div class="w-4 h-4 flex flex-col justify-center items-center space-y-0.5">
-                    <span id="line1" class="block w-4 h-0.5 bg-black dark:bg-white transition-all duration-300 ease-in-out origin-center"></span>
-                    <span id="line2" class="block w-4 h-0.5 bg-black dark:bg-white transition-all duration-300 ease-in-out"></span>
-                    <span id="line3" class="block w-4 h-0.5 bg-black dark:bg-white transition-all duration-300 ease-in-out origin-center"></span>
+                    <span id="line1" class="block w-4 h-0.5 bg-black dark:bg-white transition-all duration-100 ease-in-out origin-center"></span>
+                    <span id="line2" class="block w-4 h-0.5 bg-black dark:bg-white transition-all duration-100 ease-in-out"></span>
+                    <span id="line3" class="block w-4 h-0.5 bg-black dark:bg-white transition-all duration-100 ease-in-out origin-center"></span>
                     </div>
                 </button>
             </div>
             <nav id="menu" class="hidden sm:flex items-center space-x-0 md:space-x-2 lg:space-x-4 xl:space-x-6"></nav>
-            
+                        
             <div class="hidden sm:flex items-center flex-shrink-0 mr-4 lg:mr-6">
                 <div class="relative">
-                    <img id="desktop-cart" src="./images/Cart.png" alt="cart" class="w-16 sm:w-20 md:w-22 h-10 object-contain cursor-pointer cart-img transition-all duration-300 card-hover">
-                    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold hidden">0</span>
+                    <img id="desktop-cart" src="./images/Cart.png" alt="cart" class="w-16 sm:w-20 md:w-22 h-10 object-contain cursor-pointer cart-img transition-all duration-500 ease-in-out card-hover">
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold hidden transition-all duration-300 ease-in-out">0</span>
                 </div>
             </div>
         </div>
-        
-        <div id="mobile-menu" class="sm:hidden transition-all duration-300 ease-in-out transform origin-top scale-y-0 opacity-0 max-h-0 overflow-hidden mx-4 mt-4 bg-white dark:bg-gray-800 shadow-lg rounded-xl border dark:border-gray-600">
+                
+        <div id="mobile-menu" class="sm:hidden transition-all duration-100 ease-in-out transform origin-top scale-y-0 opacity-0 max-h-0 overflow-hidden mx-4 mt-4 bg-white dark:bg-gray-800 shadow-lg rounded-xl border dark:border-gray-600">
             <nav id="mobile-nav" class="flex flex-col p-4 space-y-2"></nav>
             <div class="flex justify-center items-center gap-4 pb-4">
                 <div class="relative">
-                    <img id="mobile-cart" src="./images/Cart.png" alt="cart" class="w-20 h-10 object-contain cursor-pointer cart-img transition-all duration-300 card-hover">
-                    <span id="mobile-cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold hidden">0</span>
+                    <img id="mobile-cart" src="./images/Cart.png" alt="cart" class="w-20 h-10 object-contain cursor-pointer cart-img transition-all duration-500 ease-in-out card-hover">
+                    <span id="mobile-cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold hidden transition-all duration-300 ease-in-out">0</span>
                 </div>
             </div>
         </div>
@@ -481,37 +564,37 @@
     <!-- Order Cart Modal -->
     <div id="cartModal" class="fixed inset-0 z-50 hidden transition-all duration-600 ease-in-out">
         <div id="modalOverlay" class="absolute inset-0 bg-black bg-opacity-10 transition-opacity duration-600 ease-in-out opacity-40"></div>
-        <div id="modalContent" class="relative flex items-center justify-center min-h-screen p-2 sm:p-4 transition-all duration-300 ease-in-out transform scale-95 opacity-0">
+        <div id="modalContent" class="relative flex items-center justify-center min-h-screen p-2 sm:p-4 transition-all duration-500 ease-in-out transform scale-95 opacity-0">
             <div class="relative">
-                <button id="closeModal" aria-label="Close" class="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 bg-orange-500 text-white rounded-full w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 flex items-center justify-center hover:bg-orange-600 transition-colors z-20 cursor-pointer">
+                <button id="closeModal" aria-label="Close" class="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 bg-orange-500 text-white rounded-full w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 flex items-center justify-center hover:bg-orange-600 transition-all duration-300 ease-in-out z-20 cursor-pointer">
                     <i class="fas fa-times text-xs sm:text-sm"></i>
                 </button>
-                
+                                
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl relative overflow-hidden w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-2xl 2xl:max-w-4xl cart-modal-content" style="height: min(90vh, 600px);">
                     <div class="relative h-20 sm:h-24 md:h-32 flex-shrink-0">
                         <img src="./images/PizzaBackground.png" alt="Pizza" class="w-full h-full object-cover">
                     </div>
-                    
+                                        
                     <div class="cart-items-container">
                         <div id="cartItems">
                             <!-- Dynamic cart items -->
                         </div>
                     </div>
-                    
+                                        
                     <div class="cart-modal-footer p-4 sm:p-6 md:p-8">
                         <div class="flex items-center justify-between mb-6">
-                            <button id="addToPayBtn" class="bg-[#FC8A06CC] text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-600 transition-colors text-sm sm:text-base card-hover cursor-pointer">
+                            <button id="addToPayBtn" class="bg-[#FC8A06CC] text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-600 transition-all duration-300 ease-in-out text-sm sm:text-base card-hover cursor-pointer">
                                 Total to pay <span id="totalPrice" class="font-bold">£0.00</span>
                             </button>
-                            <p class="text-gray-600 dark:text-gray-300 text-xs sm:text-sm ml-4">Delivery & Tax will be calculated in the next step</p>
+                            <p class="text-gray-600 dark:text-gray-300 text-xs sm:text-sm ml-4 transition-all duration-300 ease-in-out">Delivery & Tax will be calculated in the next step</p>
                         </div>
-                        
+                                                
                         <div class="flex gap-4 justify-end items-center">
-                            <button id="takeBackBtn" class="text-gray-800 dark:text-gray-200 hover:text-gray-600 transition-colors text-sm sm:text-base font-medium underline cursor-pointer">Take me back</button>
+                            <button id="takeBackBtn" class="text-gray-800 dark:text-gray-200 hover:text-gray-600 transition-all duration-300 ease-in-out text-sm sm:text-base font-medium underline cursor-pointer">Take me back</button>
                             <button
                                 id="nextStepBtn"
                                 disabled
-                                class="bg-gray-400 text-white px-6 py-3 rounded-lg transition-colors text-sm sm:text-base font-semibold flex items-center card-hover cursor-not-allowed"
+                                class="bg-gray-400 text-white px-6 py-3 rounded-lg transition-all duration-300 ease-in-out text-sm sm:text-base font-semibold flex items-center card-hover cursor-not-allowed"
                             >
                                 <div class="w-6 h-6 bg-white rounded-full flex items-center justify-center mr-3">
                                     <i class="fas fa-arrow-right text-gray-400 text-xs"></i>
@@ -526,28 +609,28 @@
     </div>
 
     <!-- Hero Section -->
-    <section id="home" class="w-full flex items-center justify-center p-2 pt-0 sm:p-6 animate-on-scroll">
+    <section id="home" class="w-full flex items-center justify-center p-2 pt-0 sm:p-6 animate-on-scroll transition-all duration-100 ease-in-out">
         <div class="w-full max-w-[1491px] mx-auto">
             <div class="relative rounded-2xl overflow-hidden h-[400px] w-full">
-                <img
+                <img 
                      src="./images/Burger.png"
                      alt="Background"
                      class="absolute inset-0 w-full h-full object-cover card-hover"
                 />
-                
+                                
                 <div class="absolute inset-0 bg-[#03081FE5] opacity-100"></div>
-                
+                                
                 <div class="relative flex flex-col sm:flex-row h-full">
-                    
+                                        
                     <div class="flex-1 pb-0 pt-[15px] p-6 sm:p-6 lg:p-12 text-white flex flex-col justify-center lg:justify-end lg:pb-16 animate-on-scroll animate-slide-left">
-                        <p class="text-sm text-gray-300 mb-4">I'm lovin' it!</p>
-                        
-                        <h1 class="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-6 lg:mb-8 leading-tight">
+                        <p class="text-sm text-gray-300 mb-4 transition-all duration-100 ease-in-out">I'm lovin' it!</p>
+                                                
+                        <h1 class="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-6 lg:mb-8 leading-tight transition-all duration-100 ease-in-out">
                             McDonald's East London
                         </h1>
-                        
+                                                
                         <div class="flex flex-col sm:flex-row gap-3 lg:gap-4 mb-6 lg:mb-8">
-                            <div class="flex items-center gap-3 border border-gray-600 rounded-full px-4 lg:px-5 py-2 lg:py-3 card-hover">
+                            <div class="flex items-center gap-3 border border-gray-600 rounded-full px-4 lg:px-5 py-2 lg:py-3 card-hover transition-all duration-300 ease-in-out">
                                 <div class="w-5 h-5 lg:w-6 lg:h-6 flex items-center justify-center flex-shrink-0">
                                     <img
                                          src="./images/OrderCompleted.png"
@@ -557,8 +640,8 @@
                                 </div>
                                 <span class="text-xs lg:text-sm font-medium">Minimum Order: 12 GBP</span>
                             </div>
-                            
-                            <div class="flex items-center gap-3 border border-gray-600 rounded-full px-4 lg:px-5 py-2 lg:py-3 card-hover">
+                                                        
+                            <div class="flex items-center gap-3 border border-gray-600 rounded-full px-4 lg:px-5 py-2 lg:py-3 card-hover transition-all duration-300 ease-in-out">
                                 <div class="w-5 h-5 lg:w-6 lg:h-6 flex items-center justify-center flex-shrink-0">
                                     <img
                                          src="./images/Bike.png"
@@ -570,7 +653,7 @@
                             </div>
                         </div>
                     </div>
-                    
+                                        
                     <div class="flex-1 relative flex items-center justify-center pt-0 pb-10 md:p-8 animate-on-scroll animate-slide-right">
                         <div class="relative">
                             <div class="absolute -bottom-2 -left-4 lg:-bottom-4 lg:-left-6 z-10">
@@ -589,10 +672,10 @@
                     </div>
                 </div>
             </div>
-            
+                        
             <div class="relative">
                 <div class="absolute -top-4 lg:-top-6 left-4 lg:left-8 animate-on-scroll animate-scale-in">
-                    <div class="bg-orange-500 text-white px-4 lg:px-6 py-2 lg:py-3 rounded-lg flex items-center gap-2 shadow-lg card-hover">
+                    <div class="bg-orange-500 text-white px-4 lg:px-6 py-2 lg:py-3 rounded-lg flex items-center gap-2 shadow-lg card-hover transition-all duration-300 ease-in-out">
                         <img
                              src="./images/Clock.png"
                              alt="Clock"
@@ -606,16 +689,16 @@
     </section>
 
     <!-- All Offers Section -->
-    <section id="special-offers" class="w-full bg-white dark:bg-gray-900 py-6 lg:py-8 mt-8 lg:mt-12 animate-on-scroll">
+    <section id="special-offers" class="w-full bg-white dark:bg-[#1a1a1a] py-6 lg:py-8 mt-8 lg:mt-12 animate-on-scroll transition-all duration-100 ease-in-out">
         <div class="mx-auto px-2 sm:px-6 max-w-[1491px]">
             <div class="flex flex-col sm:flex-row lg:items-center lg:justify-between gap-4 lg:gap-6">
-                
+                                
                 <div class="flex-1 animate-on-scroll animate-slide-left">
-                    <h2 class="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 dark:text-white">
+                    <h2 class="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 dark:text-white transition-all duration-100 ease-in-out">
                         All Offers from McDonald's East London
                     </h2>
                 </div>
-                
+                                
                 <div class="flex-shrink-0 w-full sm:w-60 md:w-50 lg:w-90 animate-on-scroll animate-slide-right">
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -628,7 +711,7 @@
                         <input
                              type="text"
                              placeholder="Search from menu..."
-                             class="w-full pl-10 lg:pl-12 pr-4 py-2 lg:py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-300 text-xs lg:text-sm placeholder:text-xs lg:placeholder:text-sm"
+                             class="w-full pl-10 lg:pl-12 pr-4 py-2 lg:py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-300 text-xs lg:text-sm placeholder:text-xs lg:placeholder:text-sm transition-all duration-300 ease-in-out"
                         />
                     </div>
                 </div>
@@ -637,40 +720,40 @@
     </section>
 
     <!-- Menu Section-->
-    <div class="w-full bg-[#FC8A06] animate-on-scroll">
+    <div class="w-full bg-[#FC8A06] animate-on-scroll transition-all duration-500 ease-in-out">
         <div class="max-w-[1530px] min-w-[320px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div class="flex flex-wrap gap-3 justify-start">
-            <a href="#offers" class="nav-link px-4 py-2 rounded-full bg-black text-white text-sm font-semibold transition-colors duration-200" data-section="special-offers">
+            <a href="#offers" class="nav-link px-4 py-2 rounded-full bg-black text-white text-sm font-semibold transition-all duration-300 ease-in-out" data-section="special-offers">
                 Offers
             </a>
-            <a href="#burgers" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-colors duration-200" data-section="burgers">
+            <a href="#burgers" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-all duration-300 ease-in-out" data-section="burgers">
                 Burgers
             </a>
-            <a href="#fries" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-colors duration-200" data-section="fries">
+            <a href="#fries" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-all duration-300 ease-in-out" data-section="fries">
                 Fries
             </a>
-            <a href="#snacks" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-colors duration-200">
+            <a href="#snacks" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-all duration-300 ease-in-out">
                 Snacks
             </a>
-            <a href="#salads" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-colors duration-200">
+            <a href="#salads" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-all duration-300 ease-in-out">
                 Salads
             </a>
-            <a href="#drinks" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-colors duration-200" data-section="drinks">
+            <a href="#drinks" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-all duration-300 ease-in-out" data-section="drinks">
                 Cold drinks
             </a>
-            <a href="#happy-meal" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-colors duration-200">
+            <a href="#happy-meal" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-all duration-300 ease-in-out">
                 Happy Meal®
             </a>
-            <a href="#desserts" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-colors duration-200">
+            <a href="#desserts" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-all duration-300 ease-in-out">
                 Desserts
             </a>
-            <a href="#hot-drinks" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-colors duration-200">
+            <a href="#hot-drinks" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-all duration-300 ease-in-out">
                 Hot drinks
             </a>
-            <a href="#sauces" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-colors duration-200">
+            <a href="#sauces" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-all duration-300 ease-in-out">
                 Sauces
             </a>
-            <a href="#orbit" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-colors duration-200">
+            <a href="#orbit" class="nav-link px-4 py-2 rounded-full text-white text-sm font-semibold hover:bg-black/20 transition-all duration-300 ease-in-out">
                 Orbit®
             </a>
             </div>
@@ -678,23 +761,23 @@
     </div>
 
     <!-- Content Section -->
-    <div class="max-w-[1530px] min-w-[320px] mx-auto pb-10 md:pb-20 lg:pb-30 px-2 sm:px-6 lg:px-8">
+    <div class="max-w-[1530px] min-w-[320px] mx-auto pb-10 md:pb-20 lg:pb-30 px-2 sm:px-6 lg:px-8 transition-all duration-500 ease-in-out">
         <section id="burgers" class="mt-10">
-            <h2 class="text-3xl font-bold text-black dark:text-white mb-8 mt-12 animate-on-scroll">Burgers</h2>
+            <h2 class="text-3xl font-bold text-black dark:text-white mb-8 mt-12 animate-on-scroll transition-all duration-300 ease-in-out">Burgers</h2>
             <div id="burger-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-on-scroll">
             <!-- Burger cards -->
             </div>
         </section>
-        
+                
         <section id="fries">
-            <h2 class="text-3xl font-bold text-[#FC8A06] mb-8 mt-12 animate-on-scroll">Fries</h2>
+            <h2 class="text-3xl font-bold text-[#FC8A06] mb-8 mt-12 animate-on-scroll transition-all duration-300 ease-in-out">Fries</h2>
             <div id="fries-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-on-scroll">
             <!-- Fries cards -->
             </div>
         </section>
-        
+                
         <section id="drinks">
-            <h2 class="text-3xl font-bold text-[#FC8A06] mb-8 mt-12 animate-on-scroll">Cold Drinks</h2>
+            <h2 class="text-3xl font-bold text-[#FC8A06] mb-8 mt-12 animate-on-scroll transition-all duration-300 ease-in-out">Cold Drinks</h2>
             <div id="drinks-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-on-scroll">
             <!-- Drinks cards -->
             </div>
@@ -702,190 +785,186 @@
     </div>
 
     <!-- Information Section -->
-     <div class="flex items-center justify-center">
-        <div class="w-full max-w-[1530px] h-auto lg:h-[500px] rounded-lg bg-white shadow-2xl flex flex-col lg:flex-row mx-2 sm:mx-6 transition-all duration-300 animate-on-scroll">
-            
+     <div class="flex items-center justify-center transition-all duration-500 ease-in-out">
+        <div class="w-full max-w-[1530px] h-auto lg:h-[500px] rounded-lg bg-white shadow-2xl flex flex-col lg:flex-row mx-2 sm:mx-6 transition-all duration-500 ease-in-out animate-on-scroll">
+                        
             <!-- Delivery Information Section -->
-            <div class="flex-1 p-6 text-left">
+            <div class="flex-1 p-6 text-left transition-all duration-300 ease-in-out">
                 <div class="flex items-center gap-3 my-8">
                     <img src="./images/Tracking.png" alt="Delivery truck" class="w-8 h-8">
-                    <h2 class="text-lg font-medium text-black">Delivery information</h2>
+                    <h2 class="text-lg font-medium text-black transition-all duration-300 ease-in-out">Delivery information</h2>
                 </div>
-                
+                                
                 <div class="space-y-2">
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                        <span class="text-black min-w-[100px] font-medium text-sm">Monday:</span>
-                        <span class="text-black font-normal text-xs">12:00 AM-3:00 AM, 8:00 AM-3:00 AM</span>
+                        <span class="text-black min-w-[100px] font-medium text-sm transition-all duration-300 ease-in-out">Monday:</span>
+                        <span class="text-black font-normal text-xs transition-all duration-300 ease-in-out">12:00 AM-3:00 AM, 8:00 AM-3:00 AM</span>
                     </div>
-                    
+                                        
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                        <span class="text-black min-w-[100px] font-medium text-sm">Tuesday:</span>
-                        <span class="text-black font-normal text-xs">8:00 AM-3:00 AM</span>
+                        <span class="text-black min-w-[100px] font-medium text-sm transition-all duration-300 ease-in-out">Tuesday:</span>
+                        <span class="text-black font-normal text-xs transition-all duration-300 ease-in-out">8:00 AM-3:00 AM</span>
                     </div>
-                    
+                                        
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                        <span class="text-black min-w-[100px] font-medium text-sm">Wednesday:</span>
-                        <span class="text-black font-normal text-xs">8:00 AM-3:00 AM</span>
+                        <span class="text-black min-w-[100px] font-medium text-sm transition-all duration-300 ease-in-out">Wednesday:</span>
+                        <span class="text-black font-normal text-xs transition-all duration-300 ease-in-out">8:00 AM-3:00 AM</span>
                     </div>
-                    
+                                        
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                        <span class="text-black min-w-[100px] font-medium text-sm">Thursday:</span>
-                        <span class="text-black font-normal text-xs">8:00 AM-3:00 AM</span>
+                        <span class="text-black min-w-[100px] font-medium text-sm transition-all duration-300 ease-in-out">Thursday:</span>
+                        <span class="text-black font-normal text-xs transition-all duration-300 ease-in-out">8:00 AM-3:00 AM</span>
                     </div>
-                    
+                                        
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                        <span class="text-black min-w-[100px] font-medium text-sm">Friday:</span>
-                        <span class="text-black font-normal text-xs">8:00 AM-3:00 AM</span>
+                        <span class="text-black min-w-[100px] font-medium text-sm transition-all duration-300 ease-in-out">Friday:</span>
+                        <span class="text-black font-normal text-xs transition-all duration-300 ease-in-out">8:00 AM-3:00 AM</span>
                     </div>
-                    
+                                        
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                        <span class="text-black min-w-[100px] font-medium text-sm">Saturday:</span>
-                        <span class="text-black font-normal text-xs">8:00 AM-3:00 AM</span>
+                        <span class="text-black min-w-[100px] font-medium text-sm transition-all duration-300 ease-in-out">Saturday:</span>
+                        <span class="text-black font-normal text-xs transition-all duration-300 ease-in-out">8:00 AM-3:00 AM</span>
                     </div>
-                    
+                                        
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                        <span class="text-black min-w-[100px] font-medium text-sm">Sunday:</span>
-                        <span class="text-black font-normal text-xs">8:00 AM-12:00 AM</span>
+                        <span class="text-black min-w-[100px] font-medium text-sm transition-all duration-300 ease-in-out">Sunday:</span>
+                        <span class="text-black font-normal text-xs transition-all duration-300 ease-in-out">8:00 AM-12:00 AM</span>
                     </div>
                 </div>
-                
+                                
                 <div class="mt-5 pt-3">
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                        <span class="text-black font-medium text-sm">Estimated time until delivery:</span>
-                        <span class="text-black font-normal text-xs">20 min</span>
+                        <span class="text-black font-medium text-sm transition-all duration-300 ease-in-out">Estimated time until delivery:</span>
+                        <span class="text-black font-normal text-xs transition-all duration-300 ease-in-out">20 min</span>
                     </div>
                 </div>
             </div>
-            
+                        
             <!-- Contact Information Section -->
-            <div class="flex-1 p-6 text-left">
+            <div class="flex-1 p-6 text-left transition-all duration-300 ease-in-out">
                 <div class="flex items-center gap-3 my-8">
                     <img src="./images/IDVerified.png" alt="Contact phone" class="w-8 h-8">
-                    <h2 class="text-lg font-medium text-black">Contact information</h2>
+                    <h2 class="text-lg font-medium text-black transition-all duration-300 ease-in-out">Contact information</h2>
                 </div>
-                
+                                
                 <div class="space-y-4">
-                    <p class="text-black leading-relaxed font-normal text-xs">
+                    <p class="text-black leading-relaxed font-normal text-xs transition-all duration-300 ease-in-out">
                         If you have allergies or other dietary restrictions, please contact the restaurant. The restaurant will provide food-specific information upon request.
                     </p>
-                    
+                                        
                     <div>
-                        <h3 class="text-black mb-1 font-medium text-sm">Phone number</h3>
-                        <p class="text-black font-normal text-xs">+934443-43</p>
+                        <h3 class="text-black mb-1 font-medium text-sm transition-all duration-300 ease-in-out">Phone number</h3>
+                        <p class="text-black font-normal text-xs transition-all duration-300 ease-in-out">+934443-43</p>
                     </div>
-                    
+                                        
                     <div>
-                        <h3 class="text-black mb-1 font-medium text-sm">Website</h3>
-                        <p class="text-black font-normal text-xs">http://mcdonalds.uk/</p>
+                        <h3 class="text-black mb-1 font-medium text-sm transition-all duration-300 ease-in-out">Website</h3>
+                        <p class="text-black font-normal text-xs transition-all duration-300 ease-in-out">http://mcdonalds.uk/</p>
                     </div>
                 </div>
             </div>
-            
+                        
             <!-- Operational Times Section -->
-            <div class="flex-1 bg-gray-900 p-6 text-left lg:rounded-r-lg">
+            <div class="flex-1 bg-gray-900 p-6 text-left lg:rounded-r-lg transition-all duration-500 ease-in-out">
                 <div class="flex items-center gap-3 my-8">
                     <img src="./images/Clock.png" alt="Clock" class="w-8 h-8 filter brightness-0 invert">
-                    <h2 class="text-lg font-medium text-white">Operational Times</h2>
+                    <h2 class="text-lg font-medium text-white transition-all duration-300 ease-in-out">Operational Times</h2>
                 </div>
-                
+                                
                 <div class="space-y-2">
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                        <span class="text-white min-w-[100px] font-medium text-sm">Monday:</span>
-                        <span class="text-white font-normal text-xs">8:00 AM-3:00 AM</span>
+                        <span class="text-white min-w-[100px] font-medium text-sm transition-all duration-300 ease-in-out">Monday:</span>
+                        <span class="text-white font-normal text-xs transition-all duration-300 ease-in-out">8:00 AM-3:00 AM</span>
                     </div>
-                    
+                                        
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                        <span class="text-white min-w-[100px] font-medium text-sm">Tuesday:</span>
-                        <span class="text-white font-normal text-xs">8:00 AM-3:00 AM</span>
+                        <span class="text-white min-w-[100px] font-medium text-sm transition-all duration-300 ease-in-out">Tuesday:</span>
+                        <span class="text-white font-normal text-xs transition-all duration-300 ease-in-out">8:00 AM-3:00 AM</span>
                     </div>
-                    
+                                        
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                        <span class="text-white min-w-[100px] font-medium text-sm">Wednesday:</span>
-                        <span class="text-white font-normal text-xs">8:00 AM-3:00 AM</span>
+                        <span class="text-white min-w-[100px] font-medium text-sm transition-all duration-300 ease-in-out">Wednesday:</span>
+                        <span class="text-white font-normal text-xs transition-all duration-300 ease-in-out">8:00 AM-3:00 AM</span>
                     </div>
-                    
+                                        
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                        <span class="text-white min-w-[100px] font-medium text-sm">Thursday:</span>
-                        <span class="text-white font-normal text-xs">6:00 AM-3:00 AM</span>
+                        <span class="text-white min-w-[100px] font-medium text-sm transition-all duration-300 ease-in-out">Thursday:</span>
+                        <span class="text-white font-normal text-xs transition-all duration-300 ease-in-out">6:00 AM-3:00 AM</span>
                     </div>
-                    
+                                        
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                        <span class="text-white min-w-[100px] font-medium text-sm">Friday:</span>
-                        <span class="text-white font-normal text-xs">8:00 AM-3:00 AM</span>
+                        <span class="text-white min-w-[100px] font-medium text-sm transition-all duration-300 ease-in-out">Friday:</span>
+                        <span class="text-white font-normal text-xs transition-all duration-300 ease-in-out">8:00 AM-3:00 AM</span>
                     </div>
-                    
+                                        
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                        <span class="text-white min-w-[100px] font-medium text-sm">Saturday:</span>
-                        <span class="text-white font-normal text-xs">8:00 AM-3:00 AM</span>
+                        <span class="text-white min-w-[100px] font-medium text-sm transition-all duration-300 ease-in-out">Saturday:</span>
+                        <span class="text-white font-normal text-xs transition-all duration-300 ease-in-out">8:00 AM-3:00 AM</span>
                     </div>
-                    
+                                        
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                        <span class="text-white min-w-[100px] font-medium text-sm">Sunday:</span>
-                        <span class="text-white font-normal text-xs">8:00 AM-3:00 AM</span>
+                        <span class="text-white min-w-[100px] font-medium text-sm transition-all duration-300 ease-in-out">Sunday:</span>
+                        <span class="text-white font-normal text-xs transition-all duration-300 ease-in-out">8:00 AM-3:00 AM</span>
                     </div>
                 </div>
             </div>
-            
+                    
         </div>
     </div>
 
     <!-- Know More About Us Section -->
-    <div class="w-full bg-[#D9D9D9] dark:bg-[#1a1a1a] mt-12 mb-0 sm:mb-16 px-2 sm:px-6 py-12">
+    <div class="w-full bg-[#D9D9D9] dark:bg-[#1a1a1a] mt-12 mb-0 sm:mb-16 px-2 sm:px-6 py-12 transition-all duration-500 ease-in-out">
         <div id="know-more-about-us-section" class="w-full max-w-[1530px] mx-auto">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-10">
-            <h2 class="text-3xl font-bold text-black">Know more about us!</h2>
+            <h2 class="text-3xl font-bold text-black transition-all duration-300 ease-in-out">Know more about us!</h2>
             <div class="flex flex-wrap gap-4">
-                <button class="tab-button active text-black hover:text-[#FC8A06] px-6 py-2 rounded-full font-semibold" data-tab="frequent-questions">
+                <button class="tab-button active text-black hover:text-[#FC8A06] px-6 py-2 rounded-full font-semibold transition-all duration-300 ease-in-out" data-tab="frequent-questions">
                 Frequent Questions
                 </button>
-                <button class="tab-button text-black hover:text-[#FC8A06] px-6 py-2 rounded-full font-medium cursor-pointer" data-tab="who-we-are">
+                <button class="tab-button text-black hover:text-[#FC8A06] px-6 py-2 rounded-full font-medium cursor-pointer transition-all duration-300 ease-in-out" data-tab="who-we-are">
                 Who we are?
                 </button>
-                <button class="tab-button text-black hover:text-[#FC8A06] px-6 py-2 rounded-full font-medium cursor-pointer" data-tab="partner-program">
+                <button class="tab-button text-black hover:text-[#FC8A06] px-6 py-2 rounded-full font-medium cursor-pointer transition-all duration-300 ease-in-out" data-tab="partner-program">
                 Partner Program
                 </button>
-                <button class="tab-button text-black hover:text-[#FC8A06] px-6 py-2 rounded-full font-medium cursor-pointer" data-tab="help-support">
+                <button class="tab-button text-black hover:text-[#FC8A06] px-6 py-2 rounded-full font-medium cursor-pointer transition-all duration-300 ease-in-out" data-tab="help-support">
                 Help & Support
                 </button>
             </div>
             </div>
-
             <!-- Tab Content Area -->
-            <div class="bg-[#0B0B1E] text-white rounded-2xl p-6 lg:p-12 animate-on-scroll">
+            <div class="bg-[#0B0B1E] text-white rounded-2xl p-6 lg:p-12 animate-on-scroll transition-all duration-500 ease-in-out">
                 <div id="frequent-questions" class="tab-content active-tab grid grid-cols-1 lg:grid-cols-2 gap-12">
-
                     <!-- Left Column -->
                     <div class="space-y-5">
-                    <button class="bg-[#FC8A06] text-white px-6 py-3 rounded-lg font-semibold text-left w-full card-hover">
+                    <button class="bg-[#FC8A06] text-white px-6 py-3 rounded-lg font-semibold text-left w-full card-hover transition-all duration-300 ease-in-out">
                         How does Order.UK work?
                     </button>
-                    <p class="text-white text-base card-hover hover:text-[#FC8A06]">What payment methods are accepted?</p>
-                    <p class="text-white text-base card-hover hover:text-[#FC8A06]">Can I track my order in real-time?</p>
-                    <p class="text-white text-base card-hover hover:text-[#FC8A06]">Are there any special discounts or promotions available?</p>
-                    <p class="text-white text-base card-hover hover:text-[#FC8A06]">Is Order.UK available in my area?</p>
+                    <p class="text-white text-base card-hover hover:text-[#FC8A06] transition-all duration-300 ease-in-out">What payment methods are accepted?</p>
+                    <p class="text-white text-base card-hover hover:text-[#FC8A06] transition-all duration-300 ease-in-out">Can I track my order in real-time?</p>
+                    <p class="text-white text-base card-hover hover:text-[#FC8A06] transition-all duration-300 ease-in-out">Are there any special discounts or promotions available?</p>
+                    <p class="text-white text-base card-hover hover:text-[#FC8A06] transition-all duration-300 ease-in-out">Is Order.UK available in my area?</p>
                     </div>
-
                     <!-- Right Column -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-white text-black rounded-xl px-5 py-6 flex flex-col items-center text-center shadow-md w-full card-hover">
+                    <div class="bg-white text-black rounded-xl px-5 py-6 flex flex-col items-center text-center shadow-md w-full card-hover transition-all duration-300 ease-in-out">
                         <img src="./images/Orderfood1.png" class="w-20 h-20 mb-4" alt="Place Order">
                         <h3 class="font-bold text-lg mb-1">Place an Order!</h3>
                         <p class="text-sm text-gray-600">Place order through our website or Mobile app</p>
                     </div>
-                    <div class="bg-white text-black rounded-xl px-5 py-6 flex flex-col items-center text-center shadow-md w-full card-hover">
+                    <div class="bg-white text-black rounded-xl px-5 py-6 flex flex-col items-center text-center shadow-md w-full card-hover transition-all duration-300 ease-in-out">
                         <img src="./images/Orderfood2.png" class="w-20 h-20 mb-4" alt="Track Progress">
                         <h3 class="font-bold text-lg mb-1">Track Progress</h3>
                         <p class="text-sm text-gray-600">You can track your order status with delivery time</p>
                     </div>
-                    <div class="bg-white text-black rounded-xl px-5 py-6 flex flex-col items-center text-center shadow-md w-full card-hover">
+                    <div class="bg-white text-black rounded-xl px-5 py-6 flex flex-col items-center text-center shadow-md w-full card-hover transition-all duration-300 ease-in-out">
                         <img src="./images/Orderfood3.png" class="w-20 h-20 mb-4" alt="Get Order">
                         <h3 class="font-bold text-lg mb-1">Get your Order!</h3>
                         <p class="text-sm text-gray-600">Receive your order at a lighting fast speed!</p>
                     </div>
                     </div>
                 </div>
-
-                <p class="text-gray-300 text-center text-sm sm:text-base mt-12 max-w-2xl mx-auto">
+                <p class="text-gray-300 text-center text-sm sm:text-base mt-12 max-w-2xl mx-auto transition-all duration-300 ease-in-out">
                     Order.UK simplifies the food ordering process. Browse through our diverse menu, select your favorite dishes, and proceed to checkout. Your delicious meal will be on its way to your doorstep in no time!
                 </p>
             </div>
@@ -893,10 +972,10 @@
     </div>
 
     <!-- Slider Section -->
-    <section class="w-full bg-[#D9D9D9] dark:bg-gray-800 py-6 sm:py-8 lg:py-12 pt-5 md:pt-10 lg:pt-20 pb-15 md:pb-20 lg:pb-30 animate-on-scroll">
+    <section class="w-full bg-[#D9D9D9] dark:bg-gray-800 py-6 sm:py-8 lg:py-12 pt-5 md:pt-10 lg:pt-20 pb-15 md:pb-20 lg:pb-30 animate-on-scroll transition-all duration-500 ease-in-out">
         <div class="mx-auto max-w-[1530px] min-w-[320px] px-2 sm:px-6 relative">
             <div class="flex justify-between items-center mb-6 sm:mb-8 animate-on-scroll animate-fade-up">
-            <h2 class="text-2xl sm:text-3xl lg:text-[44px] font-bold leading-[100%] dark:text-white">Customer Reviews</h2>
+            <h2 class="text-2xl sm:text-3xl lg:text-[44px] font-bold leading-[100%] dark:text-white transition-all duration-300 ease-in-out">Customer Reviews</h2>
             <div class="flex gap-2 sm:gap-4">
                 <button id="prev" class="btn-animate">
                     <img src="./images/ButtonLeft.png" alt="leftArrow" class="cursor-pointer w-8 h-8 sm:w-10 sm:h-10 lg:w-auto lg:h-auto">
@@ -911,22 +990,22 @@
                     id="slider"
                     class="flex transition-transform duration-500 gap-2 sm:gap-4 lg:gap-6 w-full"
                 >
-                    <div class="bg-white dark:bg-gray-700 w-full sm:w-[calc(50%-8px)] lg:w-[496px] card-1440 h-[200px] sm:h-[240px] lg:h-[274px] p-4 sm:p-5 lg:p-6 rounded shadow flex-shrink-0 card-hover">
+                    <div class="bg-white dark:bg-gray-700 w-full sm:w-[calc(50%-8px)] lg:w-[496px] card-1440 h-[200px] sm:h-[240px] lg:h-[274px] p-4 sm:p-5 lg:p-6 rounded shadow flex-shrink-0 card-hover transition-all duration-300 ease-in-out">
                     <img src="./images/SliderCard.png" alt="card" class="w-full h-full object-contain">
                     </div>
-                    <div class="bg-white dark:bg-gray-700 w-full sm:w-[calc(50%-8px)] lg:w-[496px] card-1440 h-[200px] sm:h-[240px] lg:h-[274px] p-4 sm:p-5 lg:p-6 rounded shadow flex-shrink-0 card-hover">
+                    <div class="bg-white dark:bg-gray-700 w-full sm:w-[calc(50%-8px)] lg:w-[496px] card-1440 h-[200px] sm:h-[240px] lg:h-[274px] p-4 sm:p-5 lg:p-6 rounded shadow flex-shrink-0 card-hover transition-all duration-300 ease-in-out">
                     <img src="./images/SliderCard.png" alt="card" class="w-full h-full object-contain">
                     </div>
-                    <div class="bg-white dark:bg-gray-700 w-full sm:w-[calc(50%-8px)] lg:w-[496px] card-1440 h-[200px] sm:h-[240px] lg:h-[274px] p-4 sm:p-5 lg:p-6 rounded shadow flex-shrink-0 card-hover">
+                    <div class="bg-white dark:bg-gray-700 w-full sm:w-[calc(50%-8px)] lg:w-[496px] card-1440 h-[200px] sm:h-[240px] lg:h-[274px] p-4 sm:p-5 lg:p-6 rounded shadow flex-shrink-0 card-hover transition-all duration-300 ease-in-out">
                     <img src="./images/SliderCard.png" alt="card" class="w-full h-full object-contain">
                     </div>
-                    <div class="bg-white dark:bg-gray-700 w-full sm:w-[calc(50%-8px)] lg:w-[496px] card-1440 h-[200px] sm:h-[240px] lg:h-[274px] p-4 sm:p-5 lg:p-6 rounded shadow flex-shrink-0 card-hover">
+                    <div class="bg-white dark:bg-gray-700 w-full sm:w-[calc(50%-8px)] lg:w-[496px] card-1440 h-[200px] sm:h-[240px] lg:h-[274px] p-4 sm:p-5 lg:p-6 rounded shadow flex-shrink-0 card-hover transition-all duration-300 ease-in-out">
                     <img src="./images/SliderCard.png" alt="card" class="w-full h-full object-contain">
                     </div>
-                    <div class="bg-white dark:bg-gray-700 w-full sm:w-[calc(50%-8px)] lg:w-[496px] card-1440 h-[200px] sm:h-[240px] lg:h-[274px] p-4 sm:p-5 lg:p-6 rounded shadow flex-shrink-0 card-hover">
+                    <div class="bg-white dark:bg-gray-700 w-full sm:w-[calc(50%-8px)] lg:w-[496px] card-1440 h-[200px] sm:h-[240px] lg:h-[274px] p-4 sm:p-5 lg:p-6 rounded shadow flex-shrink-0 card-hover transition-all duration-300 ease-in-out">
                     <img src="./images/SliderCard.png" alt="card" class="w-full h-full object-contain">
                     </div>
-                    <div class="bg-white dark:bg-gray-700 w-full sm:w-[calc(50%-8px)] lg:w-[496px] card-1440 h-[200px] sm:h-[240px] lg:h-[274px] p-4 sm:p-5 lg:p-6 rounded shadow flex-shrink-0 card-hover">
+                    <div class="bg-white dark:bg-gray-700 w-full sm:w-[calc(50%-8px)] lg:w-[496px] card-1440 h-[200px] sm:h-[240px] lg:h-[274px] p-4 sm:p-5 lg:p-6 rounded shadow flex-shrink-0 card-hover transition-all duration-300 ease-in-out">
                     <img src="./images/SliderCard.png" alt="card" class="w-full h-full object-contain">
                     </div>
                 </div>
@@ -940,14 +1019,14 @@
     </div>
 
     <!-- Similar Restaurants Section -->
-    <section id="restaurants" class="container pt-15 md:pt-20 lg:pt-30 mx-auto max-w-[1530px] min-w-[320px] px-2 sm:px-6 lg:px-8 pb-10 lg:pb-20 animate-on-scroll">
-        <h2 class="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold text-black dark:text-white mb-3 xs:mb-4 sm:mb-6 px-2 animate-on-scroll animate-fade-up">Similar Restaurants</h2>
-        
+    <section id="restaurants" class="container pt-15 md:pt-20 lg:pt-30 mx-auto max-w-[1530px] min-w-[320px] px-2 sm:px-6 lg:px-8 pb-10 lg:pb-20 animate-on-scroll transition-all duration-500 ease-in-out">
+        <h2 class="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold text-black dark:text-white mb-3 xs:mb-4 sm:mb-6 px-2 animate-on-scroll animate-fade-up transition-all duration-300 ease-in-out">Similar Restaurants</h2>
+                
         <div class="pb-4">
             <div class="grid grid-cols-2 gap-2 xs:gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 md:gap-4 lg:gap-6">
-                
+                                
                 <!-- Card 1 -->
-                <div class="restaurant-card bg-white dark:bg-gray-700 rounded-lg xs:rounded-xl sm:rounded-2xl overflow-hidden shadow-md cursor-pointer animate-on-scroll animate-scale-in">
+                <div class="restaurant-card bg-white dark:bg-gray-700 rounded-lg xs:rounded-xl sm:rounded-2xl overflow-hidden shadow-md cursor-pointer animate-on-scroll animate-scale-in transition-all duration-300 ease-in-out">
                     <div class="aspect-[3/2] xs:aspect-[4/3] sm:aspect-[5/4] md:aspect-[4/3] logo-container overflow-hidden">
                         <img src="./images/Mac.png"
                              alt="McDonald's Logo"
@@ -959,7 +1038,7 @@
                 </div>
 
                 <!-- Card 2 -->
-                <div class="restaurant-card bg-white dark:bg-gray-700 rounded-lg xs:rounded-xl sm:rounded-2xl overflow-hidden shadow-md cursor-pointer animate-on-scroll animate-scale-in">
+                <div class="restaurant-card bg-white dark:bg-gray-700 rounded-lg xs:rounded-xl sm:rounded-2xl overflow-hidden shadow-md cursor-pointer animate-on-scroll animate-scale-in transition-all duration-300 ease-in-out">
                     <div class="aspect-[3/2] xs:aspect-[4/3] sm:aspect-[5/4] md:aspect-[4/3] logo-container overflow-hidden">
                         <img src="./images/Papa.png"
                              alt="Papa Johns Logo"
@@ -971,7 +1050,7 @@
                 </div>
 
                 <!-- Card 3 -->
-                <div class="restaurant-card bg-white dark:bg-gray-700 rounded-lg xs:rounded-xl sm:rounded-2xl overflow-hidden shadow-md cursor-pointer animate-on-scroll animate-scale-in">
+                <div class="restaurant-card bg-white dark:bg-gray-700 rounded-lg xs:rounded-xl sm:rounded-2xl overflow-hidden shadow-md cursor-pointer animate-on-scroll animate-scale-in transition-all duration-300 ease-in-out">
                     <div class="aspect-[3/2] xs:aspect-[4/3] sm:aspect-[5/4] md:aspect-[4/3] logo-container overflow-hidden">
                         <img src="./images/KFC.png"
                              alt="KFC Logo"
@@ -983,7 +1062,7 @@
                 </div>
 
                 <!-- Card 4 -->
-                <div class="restaurant-card bg-white dark:bg-gray-700 rounded-lg xs:rounded-xl sm:rounded-2xl overflow-hidden shadow-md cursor-pointer animate-on-scroll animate-scale-in">
+                <div class="restaurant-card bg-white dark:bg-gray-700 rounded-lg xs:rounded-xl sm:rounded-2xl overflow-hidden shadow-md cursor-pointer animate-on-scroll animate-scale-in transition-all duration-300 ease-in-out">
                     <div class="aspect-[3/2] xs:aspect-[4/3] sm:aspect-[5/4] md:aspect-[4/3] logo-container overflow-hidden">
                         <img src="./images/Texas.png"
                              alt="Texas Chicken Logo"
@@ -995,7 +1074,7 @@
                 </div>
 
                 <!-- Card 5 -->
-                <div class="restaurant-card bg-white dark:bg-gray-700 rounded-lg xs:rounded-xl sm:rounded-2xl overflow-hidden shadow-md cursor-pointer animate-on-scroll animate-scale-in">
+                <div class="restaurant-card bg-white dark:bg-gray-700 rounded-lg xs:rounded-xl sm:rounded-2xl overflow-hidden shadow-md cursor-pointer animate-on-scroll animate-scale-in transition-all duration-300 ease-in-out">
                     <div class="aspect-[3/2] xs:aspect-[4/3] sm:aspect-[5/4] md:aspect-[4/3] logo-container overflow-hidden">
                         <img src="./images/King.png"
                             alt="Burger King Logo"
@@ -1007,7 +1086,7 @@
                 </div>
 
                 <!-- Card 6 -->
-                <div class="restaurant-card bg-white dark:bg-gray-700 rounded-lg xs:rounded-xl sm:rounded-2xl overflow-hidden shadow-md cursor-pointer animate-on-scroll animate-scale-in">
+                <div class="restaurant-card bg-white dark:bg-gray-700 rounded-lg xs:rounded-xl sm:rounded-2xl overflow-hidden shadow-md cursor-pointer animate-on-scroll animate-scale-in transition-all duration-300 ease-in-out">
                     <div class="aspect-[3/2] xs:aspect-[4/3] sm:aspect-[5/4] md:aspect-[4/3] logo-container overflow-hidden flex items-center justify-center">
                         <img src="./images/Shaurma.png"
                              alt="Shaurma 1 Logo"
@@ -1022,63 +1101,67 @@
     </section>
 
     <!-- Footer Section -->
-    <footer class="bg-[#F5F5F5] dark:bg-gray-900 text-[#1e1e1e] dark:text-white font-sans mt:0 sm:mt-16 -mb-18 pt-5 lg:pt-10 animate-on-scroll">
+    <footer class="bg-[#F5F5F5] dark:bg-gray-900 text-[#1e1e1e] dark:text-white font-sans mt:0 sm:mt-16 -mb-18 pt-5 lg:pt-10 animate-on-scroll transition-all duration-500 ease-in-out">
         <div class="max-w-[1530px] min-w-[320px] mx-auto px-2 sm:px-6 py-10 grid grid-cols-1 gap-8 items-start md:grid-cols-[1fr_1fr_0.5fr_0.5fr]">
             <!-- Column 1-->
             <div class="space-y-4 animate-on-scroll animate-slide-left">
-                <img src="./images/Logo2.png" alt="OrderUK Logo" class="w-32 logo-img transition-all duration-300">
+                <img src="./images/Logo2.png" alt="OrderUK Logo" class="w-32 logo-img transition-all duration-500 ease-in-out">
                 <img src="./images/Icons.png" alt="Store Badges" class="w-50">
-                <p class="text-sm text-gray-600 dark:text-gray-300 pt-2">
+                <p class="text-sm text-gray-600 dark:text-gray-300 pt-2 transition-all duration-300 ease-in-out">
                     Company # 490039-445, Registered with House of companies.
                 </p>
             </div>
+
             <!-- Column 2 -->
             <div class="space-y-4 animate-on-scroll animate-fade-up">
-                <h3 class="font-semibold">Get Exclusive Deals in your Inbox</h3>
+                <h3 class="font-semibold transition-all duration-300 ease-in-out">Get Exclusive Deals in your Inbox</h3>
                 <div class="flex items-center space-x-2 ">
                     <input type="email" placeholder="youremail@gmail.com"
-                    class="px-2 py-1 text-sm lg:px-4 lg:py-2 rounded-full bg-gray-300 dark:bg-gray-600 dark:text-white focus:outline-none w-full">
-                    <button class="bg-orange-500 hover:bg-orange-600 text-white px-2 py-1 text-sm lg:font-semibold lg:px-4 lg:py-2 rounded-full card-hover cursor-pointer">
+                    class="px-2 py-1 text-sm lg:px-4 lg:py-2 rounded-full bg-gray-300 dark:bg-gray-600 dark:text-white focus:outline-none w-full transition-all duration-300 ease-in-out">
+                    <button class="bg-orange-500 hover:bg-orange-600 text-white px-2 py-1 text-sm lg:font-semibold lg:px-4 lg:py-2 rounded-full card-hover cursor-pointer transition-all duration-300 ease-in-out">
                     Subscribe
                     </button>
                 </div>
-                <p class="text-xs text-gray-600 dark:text-gray-400">we won't spam, read our <a href="#" class="underline">email policy</a></p>
+                <p class="text-xs text-gray-600 dark:text-gray-400 transition-all duration-300 ease-in-out">we won't spam, read our <a href="#" class="underline">email policy</a></p>
                 <div class="flex space-x-2">
-                    <img src="./images/Facebook.png" alt="Facebook" class="w-10 h-10 social-icon transition-all duration-300 card-hover cursor-pointer">
-                    <img src="./images/Instagram.png" alt="Instagram" class="w-10 h-10 social-icon transition-all duration-300 card-hover cursor-pointer">
-                    <img src="./images/TikTok.png" alt="TikTok" class="w-10 h-10 social-icon transition-all duration-300 card-hover cursor-pointer">
-                    <img src="./images/Snapchat.png" alt="Snapchat" class="w-10 h-10 social-icon transition-all duration-300 card-hover cursor-pointer">
+                    <img src="./images/Facebook.png" alt="Facebook" class="w-10 h-10 social-icon transition-all duration-500 ease-in-out card-hover cursor-pointer">
+                    <img src="./images/Instagram.png" alt="Instagram" class="w-10 h-10 social-icon transition-all duration-500 ease-in-out card-hover cursor-pointer">
+                    <img src="./images/TikTok.png" alt="TikTok" class="w-10 h-10 social-icon transition-all duration-500 ease-in-out card-hover cursor-pointer">
+                    <img src="./images/Snapchat.png" alt="Snapchat" class="w-10 h-10 social-icon transition-all duration-500 ease-in-out card-hover cursor-pointer">
                 </div>
             </div>
+
             <!-- Column 3 -->
             <div class="space-y-2 animate-on-scroll animate-slide-right">
-                <h3 class="font-semibold">Legal Pages</h3>
+                <h3 class="font-semibold transition-all duration-300 ease-in-out">Legal Pages</h3>
                 <ul class="text-sm space-y-1">
-                    <li><a href="#" class="hover:underline">Terms and conditions</a></li>
-                    <li><a href="#" class="hover:underline">Privacy</a></li>
-                    <li><a href="#" class="hover:underline">Cookies</a></li>
-                    <li><a href="#" class="hover:underline">Modern Slavery Statement</a></li>
+                    <li><a href="#" class="hover:underline transition-all duration-300 ease-in-out">Terms and conditions</a></li>
+                    <li><a href="#" class="hover:underline transition-all duration-300 ease-in-out">Privacy</a></li>
+                    <li><a href="#" class="hover:underline transition-all duration-300 ease-in-out">Cookies</a></li>
+                    <li><a href="#" class="hover:underline transition-all duration-300 ease-in-out">Modern Slavery Statement</a></li>
                 </ul>
             </div>
+
             <!-- Column 4 -->
             <div class="space-y-2 animate-on-scroll animate-slide-right">
-                <h3 class="font-semibold">Important Links</h3>
+                <h3 class="font-semibold transition-all duration-300 ease-in-out">Important Links</h3>
                 <ul class="text-sm space-y-1">
-                    <li><a href="#" class="hover:underline">Get help</a></li>
-                    <li><a href="#" class="hover:underline">Add your restaurant</a></li>
-                    <li><a href="#" class="hover:underline">Sign up to deliver</a></li>
-                    <li><a href="#" class="hover:underline">Create a business account</a></li>
+                    <li><a href="#" class="hover:underline transition-all duration-300 ease-in-out">Get help</a></li>
+                    <li><a href="#" class="hover:underline transition-all duration-300 ease-in-out">Add your restaurant</a></li>
+                    <li><a href="#" class="hover:underline transition-all duration-300 ease-in-out">Sign up to deliver</a></li>
+                    <li><a href="#" class="hover:underline transition-all duration-300 ease-in-out">Create a business account</a></li>
                 </ul>
             </div>
         </div>
-        <div class="bg-[#0B0B1E] text-gray-300 text-xs md:text-sm py-4 px-4">
+
+        <div class="bg-[#0B0B1E] text-gray-300 text-xs md:text-sm py-4 px-4 transition-all duration-500 ease-in-out">
             <div class="max-w-screen-xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2 text-center">
-            <p>Order.uk Copyright 2025, All Rights Reserved.</p>
+            <p class="transition-all duration-300 ease-in-out">Order.uk Copyright 2025, All Rights Reserved.</p>
             <div class="flex flex-wrap justify-center md:justify-end gap-4">
-                <a href="#" class="hover:underline">Privacy Policy</a>
-                <a href="#" class="hover:underline">Terms</a>
-                <a href="#" class="hover:underline">Pricing</a>
-                <a href="#" class="hover:underline">Do not sell or share my personal information</a>
+                <a href="#" class="hover:underline transition-all duration-300 ease-in-out">Privacy Policy</a>
+                <a href="#" class="hover:underline transition-all duration-300 ease-in-out">Terms</a>
+                <a href="#" class="hover:underline transition-all duration-300 ease-in-out">Pricing</a>
+                <a href="#" class="hover:underline transition-all duration-300 ease-in-out">Do not sell or share my personal information</a>
             </div>
             </div>
         </div>
@@ -1099,6 +1182,7 @@
         const line1 = document.getElementById('line1');
         const line2 = document.getElementById('line2');
         const line3 = document.getElementById('line3');
+
         let selected = 'Restaurants';
         let isMenuOpen = false;
         let cartData = {};
@@ -1180,13 +1264,13 @@
                     <div class="text-sm opacity-90">${message}</div>
                 </div>
             `;
-            
+                        
             document.getElementById('notification-container').appendChild(notification);
-            
+                        
             setTimeout(() => {
                 notification.classList.add('show');
             }, 100);
-            
+                        
             setTimeout(() => {
                 notification.classList.remove('show');
                 setTimeout(() => {
@@ -1202,31 +1286,32 @@
                 const link = document.createElement('a');
                 link.href = `#${item.section}`;
                 link.textContent = item.name;
-                
-                let classes = 'whitespace-nowrap px-3 py-2 rounded-full transition-all duration-300 ease-in-out ';
-                
+                                
+                let classes = 'whitespace-nowrap px-3 py-2 rounded-full transition-all duration-500 ease-in-out ';
+                                
                 if (isMobile) {
                     classes += 'text-sm font-medium ';
                 } else {
                     classes += 'text-xs sm:text-sm lg:text-base xl:text-lg font-medium ';
                 }
-                
+                                
                 if (item.name === selected) {
                     classes += 'bg-[#FC8A06] text-white shadow-md';
                 } else {
                     classes += 'text-black dark:text-white hover:text-[#FC8A06] hover:bg-orange-50 dark:hover:bg-gray-700 hover:scale-105';
                 }
+
                 link.className = classes;
                 link.addEventListener('click', e => {
                     e.preventDefault();
                     selected = item.name;
                     renderMenus();
-                    
+                                        
                     const targetElement = document.getElementById(item.section);
                     if (targetElement) {
                         targetElement.scrollIntoView({ behavior: 'smooth' });
                     }
-                    
+                                        
                     if (isMobile && isMenuOpen) {
                         toggleMobileMenu();
                     }
@@ -1243,18 +1328,18 @@
         // Mobile menu functionality
         function toggleMobileMenu() {
             isMenuOpen = !isMenuOpen;
-            
+                        
             if (isMenuOpen) {
                 mobileMenu.classList.remove('scale-y-0', 'opacity-0', 'max-h-0');
                 mobileMenu.classList.add('scale-y-100', 'opacity-100', 'max-h-96');
-                
+                                
                 line1.classList.add('rotate-45', 'translate-y-1');
                 line2.classList.add('opacity-0', 'scale-x-0');
                 line3.classList.add('-rotate-45', '-translate-y-1');
             } else {
                 mobileMenu.classList.remove('scale-y-100', 'opacity-100', 'max-h-96');
                 mobileMenu.classList.add('scale-y-0', 'opacity-0', 'max-h-0');
-                
+                                
                 line1.classList.remove('rotate-45', 'translate-y-1');
                 line2.classList.remove('opacity-0', 'scale-x-0');
                 line3.classList.remove('-rotate-45', '-translate-y-1');
@@ -1267,15 +1352,15 @@
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                
+                                
                 document.querySelectorAll('.nav-link').forEach(l => {
                     l.classList.remove('bg-black');
                     l.classList.add('hover:bg-black/20');
                 });
-                
+                                
                 link.classList.add('bg-black');
                 link.classList.remove('hover:bg-black/20');
-                
+                                
                 const section = link.getAttribute('data-section');
                 const targetElement = document.getElementById(section);
                 if (targetElement) {
@@ -1288,7 +1373,7 @@
         function updateCartCount() {
             cartCount = Object.values(cartData).reduce((sum, item) => sum + item.qty, 0);
             updateNextStepButtonState();
-            
+                        
             if (cartCount > 0) {
                 cartCountElement.textContent = cartCount;
                 mobileCartCountElement.textContent = cartCount;
@@ -1326,7 +1411,7 @@
 
         function addToCart(item) {
             const itemId = item.id + '_' + item.category;
-            
+                        
             if (cartData[itemId]) {
                 cartData[itemId].qty += 1;
             } else {
@@ -1336,7 +1421,7 @@
                     id: itemId
                 };
             }
-            
+                        
             updateCartCount();
             updateNextStepButtonState();
             updateTotal();
@@ -1347,13 +1432,13 @@
         function renderCartItems() {
             const cartItemsContainer = document.getElementById('cartItems');
             cartItemsContainer.innerHTML = '';
-            
+                        
             Object.values(cartData).forEach(item => {
                 const cartItem = document.createElement('div');
-                cartItem.className = 'flex items-center justify-between p-2 sm:p-3 mb-2 sm:mb-3 bg-gray-100 dark:bg-gray-600 rounded-lg transition-colors cursor-pointer cart-item card-hover';
+                cartItem.className = 'flex items-center justify-between p-2 sm:p-3 mb-2 sm:mb-3 bg-gray-100 dark:bg-gray-600 rounded-lg transition-all duration-300 ease-in-out cursor-pointer cart-item card-hover';
                 cartItem.id = item.id + '-item';
                 cartItem.onclick = () => toggleItemSelection(item.id);
-                
+                                
                 cartItem.innerHTML = `
                     <div class="flex items-center space-x-2 sm:space-x-3">
                         <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-orange-200 flex items-center justify-center overflow-hidden">
@@ -1362,26 +1447,26 @@
                         <span class="font-medium text-gray-800 dark:text-white text-xs sm:text-sm md:text-base">${item.title}</span>
                     </div>
                     <div class="flex items-center space-x-2 sm:space-x-3">
-                        <button onclick="event.stopPropagation(); updateQuantity('${item.id}', -1)" class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border-2 border-gray-400 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-500 transition-colors">
+                        <button onclick="event.stopPropagation(); updateQuantity('${item.id}', -1)" class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border-2 border-gray-400 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-500 transition-all duration-300 ease-in-out">
                             <i class="fas fa-minus text-xs text-gray-600 dark:text-gray-300"></i>
                         </button>
                         <span id="${item.id}-qty" class="w-6 sm:w-7 md:w-8 text-center font-semibold text-gray-800 dark:text-white text-xs sm:text-sm md:text-base">${item.qty}</span>
-                        <button onclick="event.stopPropagation(); updateQuantity('${item.id}', 1)" class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border-2 border-gray-400 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-500 transition-colors">
+                        <button onclick="event.stopPropagation(); updateQuantity('${item.id}', 1)" class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border-2 border-gray-400 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-500 transition-all duration-300 ease-in-out">
                             <i class="fas fa-plus text-xs text-gray-600 dark:text-gray-300"></i>
                         </button>
                     </div>
                 `;
-                
+                                
                 cartItemsContainer.appendChild(cartItem);
             });
-            
+                        
             setupHoverListeners();
         }
 
         function updateQuantity(itemId, change) {
             if (cartData[itemId]) {
                 cartData[itemId].qty += change;
-                
+                                
                 if (cartData[itemId].qty <= 0) {
                     delete cartData[itemId];
                     document.getElementById(itemId + '-item').remove();
@@ -1391,7 +1476,7 @@
                 } else {
                     document.getElementById(itemId + '-qty').textContent = cartData[itemId].qty;
                 }
-                
+                                
                 updateCartCount();
                 updateNextStepButtonState();
                 updateTotal();
@@ -1406,7 +1491,7 @@
                     prevItem.classList.add('bg-gray-100', 'dark:bg-gray-600');
                 }
             }
-            
+                        
             selectedItem = itemId;
             const item = document.getElementById(itemId + '-item');
             if (item) {
@@ -1417,7 +1502,7 @@
 
         function setupHoverListeners() {
             const cartItems = document.querySelectorAll('.cart-item');
-            
+                        
             cartItems.forEach(item => {
                 item.addEventListener('mouseenter', function() {
                     if (!this.classList.contains('selected')) {
@@ -1425,7 +1510,7 @@
                         this.classList.add('bg-gray-200', 'dark:bg-gray-500');
                     }
                 });
-                
+                                
                 item.addEventListener('mouseleave', function() {
                     if (!this.classList.contains('selected')) {
                         this.classList.remove('bg-gray-200', 'dark:bg-gray-500');
@@ -1439,14 +1524,14 @@
         function openCart() {
             cartModal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
-            
+                        
             setTimeout(() => {
                 modalOverlay.classList.remove('opacity-0');
                 modalOverlay.classList.add('opacity-100');
                 modalContent.classList.remove('scale-95', 'opacity-0');
                 modalContent.classList.add('scale-100', 'opacity-100');
             }, 10);
-            
+                        
             renderCartItems();
             setupHoverListeners();
         }
@@ -1456,7 +1541,7 @@
             modalOverlay.classList.add('opacity-0');
             modalContent.classList.remove('scale-100', 'opacity-100');
             modalContent.classList.add('scale-95', 'opacity-0');
-            
+                        
             setTimeout(() => {
                 cartModal.classList.add('hidden');
                 document.body.style.overflow = 'auto';
@@ -1659,15 +1744,15 @@
             const container = document.getElementById(containerId);
             if (container) {
                 container.innerHTML = data.map(product => `
-                    <div class="product-card relative bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 border border-gray-100 dark:border-gray-600 animate-on-scroll animate-scale-in card-hover">
+                    <div class="product-card relative bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 border border-gray-100 dark:border-gray-600 animate-on-scroll animate-scale-in card-hover transition-all duration-300 ease-in-out">
                         <div class="product-content">
-                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1 leading-tight">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1 leading-tight transition-all duration-300 ease-in-out">
                                 ${product.title}
                             </h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-4 leading-snug">
+                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-4 leading-snug transition-all duration-300 ease-in-out">
                                 ${product.description}
                             </p>
-                            <span class="text-lg font-bold text-gray-900 dark:text-white">
+                            <span class="text-lg font-bold text-gray-900 dark:text-white transition-all duration-300 ease-in-out">
                                 £${product.price.toFixed(2)}
                             </span>
                         </div>
@@ -1675,10 +1760,10 @@
                             <img
                                 src="${product.image}"
                                 alt="${product.title}"
-                                class="product-image rounded-lg object-cover"
+                                class="product-image rounded-lg object-cover transition-all duration-300 ease-in-out"
                                 style="width: 150px; height: 150px;"
                             />
-                            
+                                                        
                             <div class="plus-btn-container plus-button" onclick="addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})">
                                 <div class="relative w-full h-full">
                                     <img
@@ -1744,6 +1829,7 @@
 
         next.addEventListener("click", () => slideTo(index + 1));
         prev.addEventListener("click", () => slideTo(index - 1));
+
         window.addEventListener("resize", () => {
             updateSliderPosition();
         });
@@ -1756,7 +1842,6 @@
             button.addEventListener('click', () => {
             tabButtons.forEach(btn => btn.classList.remove('active'));
             tabContents.forEach(content => content.classList.add('hidden'));
-
             button.classList.add('active');
             const target = button.dataset.tab;
             document.getElementById(target).classList.remove('hidden');
