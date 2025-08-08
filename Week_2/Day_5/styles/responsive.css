@@ -1,0 +1,62 @@
+/* Custom breakpoint at 900px */
+@media (min-width: 900px) {
+    .custom-lg\:block { display: block; }
+    .custom-lg\:flex { display: flex; }
+    .custom-lg\:hidden { display: none; }
+}
+
+@media (max-width: 899px) {
+    .custom-sm\:hidden { display: none; }
+    .custom-sm\:block { display: block; }
+}
+
+/* Hamburger menu animations */
+.hamburger-line {
+    transition: all 0.3s ease-in-out;
+}
+
+.hamburger-active .line1 {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger-active .line2 {
+    opacity: 0;
+}
+
+.hamburger-active .line3 {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .quiz-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .timer-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .hero-section {
+        padding: 2rem 1rem;
+    }
+    
+    .quiz-question {
+        font-size: 1.25rem;
+    }
+    
+    .nav-mobile {
+        display: block;
+    }
+    
+    .nav-desktop {
+        display: none;
+    }
+}

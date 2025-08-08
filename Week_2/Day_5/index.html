@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizMaster - Test Your Knowledge</title>
+    <link href="./output.css" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="./styles/responsive.css">
+</head>
+<body class="bg-white min-h-screen">
+    <!-- Navigation -->
+    <nav id="navbar" class="bg-white shadow-sm bg-gradient-to-br">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo Section -->
+                <div class="flex items-center flex-shrink-0">
+                    <div class="flex items-center">
+                        <div>
+                            <img src="./images/Logo.png" alt="logo" class="mr-2 mt-1">
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-900">QuizMaster</h1>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation (hidden below 900px) -->
+                <div class="custom-sm:hidden custom-lg:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#" id="nav-home" class="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="#" id="nav-quizzes" class="text-gray-500 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Quizzes</a>
+                        <a href="#" id="nav-leaderboard" class="text-gray-500 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Leaderboard</a>
+                        <a href="#" id="nav-profile" class="text-gray-500 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Profile</a>
+                    </div>
+                </div>
+                
+                <!-- Desktop Right Section (hidden below 900px) -->
+                <div class="custom-sm:hidden custom-lg:flex items-center space-x-4 flex-shrink-0">
+                    <div class="relative">
+                        <input type="text" id="search-input" placeholder="Search..." class="bg-gray-100 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <button class="p-2 rounded-lg bg-gray-100">
+                        <img src="./images/Bell.png" alt="bell">
+                    </button>
+                    <div class="relative">
+                        <button id="profile-button" class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-gray-100">
+                            <img id="profile-avatar" src="./images/ProfilePic.png" alt="Profile" class="w-8 h-8 rounded-full">
+                        </button>
+                    </div>
+                    <button id="signout-btn" class="text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium">
+                        Sign Out
+                    </button>
+                </div>
+
+                <!-- Mobile menu button (shown below 900px) -->
+                <div class="custom-lg:hidden custom-sm:block">
+                    <button id="mobile-menu-btn" class="p-2 rounded-lg hover:bg-gray-100">
+                        <div class="w-6 h-6 flex flex-col justify-center items-center">
+                            <span class="hamburger-line line1 block w-5 h-0.5 bg-gray-600 mb-1"></span>
+                            <span class="hamburger-line line2 block w-5 h-0.5 bg-gray-600 mb-1"></span>
+                            <span class="hamburger-line line3 block w-5 h-0.5 bg-gray-600"></span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu (shown below 900px when toggled) -->
+        <div id="mobile-menu" class="hidden custom-lg:hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#" id="mobile-nav-home" class="text-gray-900 hover:text-blue-600 hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#" id="mobile-nav-quizzes" class="text-gray-500 hover:text-blue-600 hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium">Quizzes</a>
+                <a href="#" id="mobile-nav-leaderboard" class="text-gray-500 hover:text-blue-600 hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium">Leaderboard</a>
+                <a href="#" id="mobile-nav-profile" class="text-gray-500 hover:text-blue-600 hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium">Profile</a>
+                <button id="mobile-signout-btn" class="text-gray-700 hover:text-red-600 hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium w-full text-left">
+                    Sign Out
+                </button>
+            </div>
+            
+            <div class="pt-4 pb-3 border-t border-gray-200 px-4">
+                <div class="flex items-center space-x-4 mb-4">
+                    <input type="text" id="mobile-search-input" placeholder="Search..." class="flex-1 bg-gray-100 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <button class="p-2 rounded-lg bg-gray-100 flex-shrink-0">
+                        <img src="./images/Bell.png" alt="bell" class="w-5 h-5">
+                    </button>
+                    <button id="mobile-profile-button" class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-gray-100 flex-shrink-0">
+                        <img id="mobile-profile-avatar" src="./images/ProfilePic.png" alt="Profile" class="w-8 h-8 rounded-full">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="min-h-screen"></main>
+
+    <!-- Scripts -->
+    <script src="./js/data.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/quiz.js"></script>
+    <script src="./js/profile.js"></script>
+    <script src="./js/navigation.js"></script>
+    <script src="./js/app.js"></script>
+</body>
+</html>
