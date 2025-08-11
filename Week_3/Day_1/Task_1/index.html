@@ -1,0 +1,172 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azaiza Design Studio</title>
+    <link href="./output.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen transition-colors duration-300">
+    <nav class="bg-white dark:bg-gray-800 shadow-sm transition-colors duration-300">
+        <div class="max-w-8xl mx-auto py-1 px-6 sm:px-14 xl:px-20 2xl:px-28">
+            <div class="flex justify-between items-center h-16 lg:h-20">
+                <div class="flex-shrink-0 dark:bg-white p-2 m-2">
+                    <div class="flex-shrink-0">
+                        <img src="./images/Logo.png" alt="logo" class="w-24 sm:w-28 h-auto">
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-200">Home</a>
+                    <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors duration-200">About Us</a>
+                    <div class="relative group">
+                        <button class="text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors duration-200 flex items-center">
+                            Features
+                            <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="relative group">
+                        <button class="text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors duration-200 flex items-center">
+                            Our Services
+                            <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors duration-200">Why ADS?</a>
+                </div>
+
+                <div class="hidden lg:flex items-center space-x-4">
+                    <button id="theme-toggle" class="p-2 rounded-md text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                        <svg id="sun-icon" class="h-5 w-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <svg id="moon-icon" class="h-5 w-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                    <button class="bg-gradient-to-r from-[#0165D1] to-[#00D0D0] text-white px-6 py-2 rounded-md transition-colors duration-200">
+                        Contact Us
+                    </button>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="lg:hidden flex items-center space-x-2">
+                    <button id="theme-toggle-mobile" class="p-2 rounded-md text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                        <svg id="sun-icon-mobile" class="h-5 w-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <svg id="moon-icon-mobile" class="h-5 w-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                    <div class="lg:hidden bg-[#E7F3FA] dark:bg-white-100 py-2 px-4 rounded-lg">
+                        <button id="mobile-menu-button" class="text-blue-600  hover:text-blue-700 focus:outline-none">
+                            <img src="./images/Menu.png" alt="menu" id="hamburger-icon" class="h-4 w-4">
+                            <img src="./images/Cross.png" alt="close" id="close-icon" class="h-4 w-4 hidden">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="lg:hidden hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
+            <div class="px-4 pt-4 pb-6 space-y-4">
+                <a href="#" class="block text-gray-700 dark:text-gray-300 text-center hover:text-black dark:hover:text-white py-2 border-b-2 border-blue-400 dark:border-gray-700 transition-colors duration-200">Home</a>
+                <a href="#" class="block text-gray-500 dark:text-gray-400 text-center hover:text-black dark:hover:text-white py-2 transition-colors duration-200">About Us</a>
+                <button class="block w-full text-center text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white py-2 transition-colors duration-200">
+                    Features
+                    <svg class="inline ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <button class="block w-full text-center text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white py-2 transition-colors duration-200">
+                    Our Services
+                    <svg class="inline ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <a href="#" class="block text-gray-500 dark:text-gray-400 text-center hover:text-black dark:hover:text-white py-2 transition-colors duration-200">Why ADS?</a>
+                
+                <div class="pt-4">
+                    <button class="w-full bg-gradient-to-r from-[#0165D1] to-[#00D0D0] text-white py-3 rounded-md transition-colors duration-200">
+                        Contact Us
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        // Dark mode toggle functionality
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        initTheme();
+
+        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+        document.getElementById('theme-toggle-mobile').addEventListener('click', toggleTheme);
+
+        // Mobile menu toggle functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const closeIcon = document.getElementById('close-icon');
+
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            hamburgerIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', function(event) {
+            const isClickInsideNav = mobileMenuButton.contains(event.target) || mobileMenu.contains(event.target);
+            if (!isClickInsideNav && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+                hamburgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            }
+        });
+
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) {
+                mobileMenu.classList.add('hidden');
+                hamburgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
