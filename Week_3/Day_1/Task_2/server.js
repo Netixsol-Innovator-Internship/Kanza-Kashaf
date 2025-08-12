@@ -26,7 +26,7 @@ const swaggerOptions = {
       description: "A simple in-memory Task Manager API built with Express"
     },
     servers: [
-      { url: "http://localhost:3000" }
+      { host: "kanzaweek3day1task2.vercel.app" }
     ]
   },
   apis: ["./server.js"], // files to read for API docs
