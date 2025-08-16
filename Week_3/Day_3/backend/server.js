@@ -20,9 +20,9 @@ connectDB();
 
 // CORS configuration — allow frontend origin(s)
 const allowedOrigins = [
-  "https://kanzaweek3day3backendtask.vercel.app",
+  'http://localhost:3000',
   'http://localhost:3001',
-  'https://your-production-domain.com'
+  'https://kanzaweek3day3backendtask.vercel.app'
 ];
 
 app.use(cors({
@@ -59,7 +59,7 @@ app.get("/health", (req, res) => {
 // ✅ API Routes FIRST
 app.use("/api/users", authRoutes);
 app.use("/api/tasks", taskRoutes);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 // ✅ Serve frontend in production (AFTER API routes)
 if (process.env.NODE_ENV === "production") {
@@ -76,7 +76,7 @@ app.use("*", (req, res) => {
     success: false,
     message: `Route ${req.originalUrl} not found`,
     availableRoutes: {
-      documentation: "/api-docs",
+      documentation: "/api/docs",
       health: "/health",
       authentication: "/api/users/*",
       tasks: "/api/tasks/*",
