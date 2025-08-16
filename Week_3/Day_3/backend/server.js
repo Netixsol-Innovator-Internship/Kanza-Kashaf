@@ -18,10 +18,10 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
-// ✅ CORS configuration — allow frontend origin(s)
+// CORS configuration — allow frontend origin(s)
 const allowedOrigins = [
-  'http://localhost:3000', // backend testing UI or other tools
-  'http://localhost:3001', // your React frontend in dev
+  "https://kanzaweek3day3backendtask.vercel.app",
+  'http://localhost:3001',
   'https://your-production-domain.com'
 ];
 
