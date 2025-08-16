@@ -9,12 +9,16 @@ const getProducts = async (req, res) => {
       category,
       collection,
       origin,
-      caffeineLevel,
+      caffeine,
       minPrice,
       maxPrice,
       search,
       sortBy = "createdAt",
       sortOrder = "desc",
+      flavour,
+      qualities,
+      allergens,
+      organic,
     } = req.query
 
     const filter = { isActive: true }
@@ -22,7 +26,20 @@ const getProducts = async (req, res) => {
     if (category) filter.category = category
     if (collection) filter.collection = collection
     if (origin) filter.origin = new RegExp(origin, "i")
-    if (caffeineLevel) filter.caffeineLevel = caffeineLevel
+    if (caffeine) filter.caffeine = caffeine
+
+    if (flavour) {
+      filter.flavour = { $in: Array.isArray(flavour) ? flavour : [flavour] }
+    }
+    if (qualities) {
+      filter.qualities = { $in: Array.isArray(qualities) ? qualities : [qualities] }
+    }
+    if (allergens) {
+      filter.allergens = { $in: Array.isArray(allergens) ? allergens : [allergens] }
+    }
+    if (organic !== undefined) {
+      filter.organic = organic === "true"
+    }
 
     if (minPrice || maxPrice) {
       filter.price = {}
@@ -114,61 +131,56 @@ const createProduct = async (req, res) => {
 // Update product (Admin only)
 const updateProduct = async (req, res) => {
   try {
-    const existingProduct = await Product.findById(req.params.id);
+    const existingProduct = await Product.findById(req.params.id)
 
     if (!existingProduct) {
       return res.status(404).json({
         success: false,
         message: "Product not found",
-      });
+      })
     }
 
-    const product = await Product.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );
+    const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
 
     res.status(200).json({
       success: true,
       message: "Product updated successfully",
       previousData: existingProduct,
       data: { product },
-    });
+    })
   } catch (error) {
     res.status(500).json({
       success: false,
       message: "Failed to update product",
       error: error.message,
-    });
+    })
   }
-};
-
+}
 
 // Delete product (Admin only)
 const deleteProduct = async (req, res) => {
   try {
-    const product = await Product.findByIdAndDelete(req.params.id);
+    const product = await Product.findByIdAndDelete(req.params.id)
 
     if (!product) {
       return res.status(404).json({
         success: false,
         message: "Product not found",
-      });
+      })
     }
 
     res.status(200).json({
       success: true,
       message: "Product deleted successfully",
-    });
+    })
   } catch (error) {
     res.status(500).json({
       success: false,
       message: "Failed to delete product",
       error: error.message,
-    });
+    })
   }
-};
+}
 
 module.exports = {
   getProducts,

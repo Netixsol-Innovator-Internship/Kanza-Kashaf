@@ -25,21 +25,21 @@ const productSchema = new mongoose.Schema(
     category: {
       type: String,
       required: [true, "Category is required"],
-      enum: ["black-tea", "green-tea", "herbal-tea", "oolong-tea", "white-tea", "chai"],
+      enum: ["black-tea", "green-tea", "herbal-tea", "oolong-tea", "white-tea", "chai", "matcha", "rooibos", "teaware"],
     },
     collection: {
       type: String,
-      enum: ["premium", "classic", "organic", "seasonal"],
-      default: "classic",
+      enum: ["Black teas", "Green teas", "White teas", "Chai", "Matcha", "Herbal teas", "Oolong", "Rooibos", "Teaware"],
+      default: "Black teas",
     },
     origin: {
       type: String,
       required: [true, "Origin is required"],
     },
-    caffeineLevel: {
+    caffeine: {
       type: String,
-      enum: ["none", "low", "medium", "high"],
-      default: "medium",
+      enum: ["No Caffeine", "Low Caffeine", "Medium Caffeine", "High Caffeine"],
+      default: "Medium Caffeine",
     },
     stock: {
       type: Number,
@@ -57,6 +57,28 @@ const productSchema = new mongoose.Schema(
         trim: true,
       },
     ],
+    flavour: [
+      {
+        type: String,
+        enum: ["Spicy", "Sweet", "Citrus", "Smooth", "Fruity", "Floral", "Grassy", "Minty", "Bitter", "Creamy"],
+      },
+    ],
+    qualities: [
+      {
+        type: String,
+        enum: ["Detox", "Energy", "Relax", "Digestion"],
+      },
+    ],
+    allergens: [
+      {
+        type: String,
+        enum: ["Lactose-free", "Gluten-free", "Nuts-free", "Soy-free"],
+      },
+    ],
+    organic: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
