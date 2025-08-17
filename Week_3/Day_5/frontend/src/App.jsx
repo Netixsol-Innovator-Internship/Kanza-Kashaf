@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { ThemeProvider } from "./components/ThemeProvider"
 import { AuthProvider } from "./context/AuthContext.jsx"
 import { CartProvider } from "./context/CartContext.jsx"
 import Navbar from "./components/Navbar.jsx"
@@ -12,6 +13,7 @@ import Footer from "./components/Footer.jsx"
 
 function App() {
   return (
+    <ThemeProvider defaultTheme="light" storageKey="tea-app-theme">
     <AuthProvider>
       <CartProvider>
         <Router>
@@ -33,6 +35,7 @@ function App() {
         </Router>
       </CartProvider>
     </AuthProvider>
+    </ThemeProvider>
   )
 }
 

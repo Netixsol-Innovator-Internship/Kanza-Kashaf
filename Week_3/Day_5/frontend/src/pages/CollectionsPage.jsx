@@ -7,7 +7,7 @@ import axios from "axios"
 const CollectionsPage = () => {
   const { category } = useParams()
   const location = useLocation()
-  const [products, setProducts] = useState([]) // always array
+  const [products, setProducts] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [filters, setFilters] = useState({
@@ -59,16 +59,14 @@ const CollectionsPage = () => {
     const newFilters = { ...filters }
     const newExpandedFilters = { ...expandedFilters }
 
-    // Check each filter type in URL parameters
     Object.keys(filterOptions).forEach((filterType) => {
       const paramValue = searchParams.get(filterType)
       if (paramValue) {
         newFilters[filterType] = [paramValue]
-        newExpandedFilters[filterType] = true // Auto-expand sections with active filters
+        newExpandedFilters[filterType] = true
       }
     })
 
-    // Check organic parameter
     if (searchParams.get("organic") === "true") {
       newFilters.organic = true
     }
@@ -79,7 +77,7 @@ const CollectionsPage = () => {
 
   useEffect(() => {
     applyFilters()
-  }, [products, filters, category, sortBy]) // ✅ include sortBy
+  }, [products, filters, category, sortBy])
 
   const fetchProducts = async () => {
     try {
@@ -88,23 +86,21 @@ const CollectionsPage = () => {
       setProducts(Array.isArray(data) ? data : [])
     } catch (error) {
       console.error("Error fetching products:", error)
-      setProducts([]) // fallback
+      setProducts([])
     } finally {
       setLoading(false)
     }
   }
 
   const applyFilters = () => {
-    const safeProducts = Array.isArray(products) ? [...products] : [] // ✅ safe
+    const safeProducts = Array.isArray(products) ? [...products] : []
     let filtered = safeProducts
 
-    // Filter by category from URL
     if (category) {
       const categoryName = category.replace("-", " ").toUpperCase()
       filtered = filtered.filter((product) => product.collection?.toUpperCase() === categoryName)
     }
 
-    // Apply other filters
     if (filters.collections.length > 0) {
       filtered = filtered.filter((product) => filters.collections.includes(product.collection))
     }
@@ -139,7 +135,6 @@ const CollectionsPage = () => {
       filtered = filtered.filter((product) => product.organic)
     }
 
-    // Sort products
     filtered.sort((a, b) => {
       switch (sortBy) {
         case "price-low":
@@ -172,33 +167,37 @@ const CollectionsPage = () => {
   }
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
+        <div className="text-gray-900 dark:text-white">Loading...</div>
+      </div>
+    )
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Hero Image */}
-      <div className="h-64 bg-cover bg-center" style={{ backgroundImage: `url('/images/BgPic.png')` }}>
-        <div className="h-full bg-black bg-opacity-20"></div>
-      </div>
+      <div className="h-48 sm:h-64 lg:h-[308px] xl:h-[358px] bg-cover bg-center" style={{ backgroundImage: `url('/images/BgPic.png')` }}></div>
 
       {/* Breadcrumb */}
-      <div className="py-4">
+      <div className="py-4 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="text-sm flex flex-wrap items-center">
-            <Link to="/" className="text-gray-600 hover:text-gray-800">
+            <Link to="/" className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">
               HOME
             </Link>
-            <span className="mx-2">/</span>
-            <Link to="/collections" className="text-gray-600 hover:text-gray-800">
+            <span className="mx-2 text-gray-600 dark:text-gray-400">/</span>
+            <Link
+              to="/collections"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+            >
               COLLECTIONS
             </Link>
 
-            {/* Category from URL */}
             {category && (
               <>
-                <span className="mx-2">/</span>
-                <span className="text-gray-800 uppercase">{category.replace("-", " ")}</span>
+                <span className="mx-2 text-gray-600 dark:text-gray-400">/</span>
+                <span className="text-gray-800 dark:text-gray-200 uppercase">{category.replace("-", " ")}</span>
               </>
             )}
 
@@ -206,16 +205,16 @@ const CollectionsPage = () => {
               if (Array.isArray(value) && value.length > 0) {
                 return value.map((val) => (
                   <span key={`${key}-${val}`} className="flex items-center">
-                    <span className="mx-2">/</span>
-                    <span className="text-gray-800 capitalize">{val}</span>
+                    <span className="mx-2 text-gray-600 dark:text-gray-400">/</span>
+                    <span className="text-gray-800 dark:text-gray-200 capitalize">{val}</span>
                   </span>
                 ))
               }
               if (typeof value === "boolean" && value) {
                 return (
                   <span key={key} className="flex items-center">
-                    <span className="mx-2">/</span>
-                    <span className="text-gray-800 capitalize">{key}</span>
+                    <span className="mx-2 text-gray-600 dark:text-gray-400">/</span>
+                    <span className="text-gray-800 dark:text-gray-200 capitalize">{key}</span>
                   </span>
                 )
               }
@@ -231,25 +230,25 @@ const CollectionsPage = () => {
           <div className="lg:w-1/4">
             <div className="space-y-6">
               {/* Collections Filter */}
-              <div>
+              <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
                 <button
                   onClick={() => toggleExpandedFilter("collections")}
-                  className="flex items-center justify-between w-full text-left font-medium text-gray-900 pb-2 border-b"
+                  className="flex items-center justify-between w-full text-left font-medium text-gray-900 dark:text-white pb-2"
                 >
                   COLLECTIONS
                   <span className="text-lg">{expandedFilters.collections ? "-" : "+"}</span>
                 </button>
                 {expandedFilters.collections && (
-                  <div className="mt-4 space-y-2">
+                  <div className="mt-4 space-y-2 max-h-48 overflow-y-auto">
                     {filterOptions.collections.map((collection) => (
-                      <label key={collection} className="flex items-center">
+                      <label key={collection} className="flex items-center cursor-pointer">
                         <input
                           type="checkbox"
                           checked={filters.collections.includes(collection)}
                           onChange={() => toggleFilter("collections", collection)}
-                          className="mr-2"
+                          className="mr-2 rounded border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 focus:ring-gray-500"
                         />
-                        <span className="text-sm">{collection}</span>
+                        <span className="text-sm text-gray-700 dark:text-gray-300">{collection}</span>
                       </label>
                     ))}
                   </div>
@@ -257,10 +256,10 @@ const CollectionsPage = () => {
               </div>
 
               {/* Origin Filter */}
-              <div>
+              <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
                 <button
                   onClick={() => toggleExpandedFilter("origins")}
-                  className="flex items-center justify-between w-full text-left font-medium text-gray-900 pb-2 border-b"
+                  className="flex items-center justify-between w-full text-left font-medium text-gray-900 dark:text-white pb-2"
                 >
                   ORIGIN
                   <span className="text-lg">{expandedFilters.origins ? "-" : "+"}</span>
@@ -268,14 +267,14 @@ const CollectionsPage = () => {
                 {expandedFilters.origins && (
                   <div className="mt-4 space-y-2">
                     {filterOptions.origins.map((origin) => (
-                      <label key={origin} className="flex items-center">
+                      <label key={origin} className="flex items-center cursor-pointer">
                         <input
                           type="checkbox"
                           checked={filters.origins.includes(origin)}
                           onChange={() => toggleFilter("origins", origin)}
-                          className="mr-2"
+                          className="mr-2 rounded border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 focus:ring-gray-500"
                         />
-                        <span className="text-sm">{origin}</span>
+                        <span className="text-sm text-gray-700 dark:text-gray-300">{origin}</span>
                       </label>
                     ))}
                   </div>
@@ -283,25 +282,25 @@ const CollectionsPage = () => {
               </div>
 
               {/* Flavour Filter */}
-              <div>
+              <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
                 <button
                   onClick={() => toggleExpandedFilter("flavours")}
-                  className="flex items-center justify-between w-full text-left font-medium text-gray-900 pb-2 border-b"
+                  className="flex items-center justify-between w-full text-left font-medium text-gray-900 dark:text-white pb-2"
                 >
                   FLAVOUR
                   <span className="text-lg">{expandedFilters.flavours ? "-" : "+"}</span>
                 </button>
                 {expandedFilters.flavours && (
-                  <div className="mt-4 space-y-2">
+                  <div className="mt-4 space-y-2 max-h-48 overflow-y-auto">
                     {filterOptions.flavours.map((flavour) => (
-                      <label key={flavour} className="flex items-center">
+                      <label key={flavour} className="flex items-center cursor-pointer">
                         <input
                           type="checkbox"
                           checked={filters.flavours.includes(flavour)}
                           onChange={() => toggleFilter("flavours", flavour)}
-                          className="mr-2"
+                          className="mr-2 rounded border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 focus:ring-gray-500"
                         />
-                        <span className="text-sm">{flavour}</span>
+                        <span className="text-sm text-gray-700 dark:text-gray-300">{flavour}</span>
                       </label>
                     ))}
                   </div>
@@ -309,10 +308,10 @@ const CollectionsPage = () => {
               </div>
 
               {/* Qualities Filter */}
-              <div>
+              <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
                 <button
                   onClick={() => toggleExpandedFilter("qualities")}
-                  className="flex items-center justify-between w-full text-left font-medium text-gray-900 pb-2 border-b"
+                  className="flex items-center justify-between w-full text-left font-medium text-gray-900 dark:text-white pb-2"
                 >
                   QUALITIES
                   <span className="text-lg">{expandedFilters.qualities ? "-" : "+"}</span>
@@ -320,25 +319,25 @@ const CollectionsPage = () => {
                 {expandedFilters.qualities && (
                   <div className="mt-4 space-y-2">
                     {filterOptions.qualities.map((quality) => (
-                      <label key={quality} className="flex items-center">
+                      <label key={quality} className="flex items-center cursor-pointer">
                         <input
                           type="checkbox"
                           checked={filters.qualities.includes(quality)}
                           onChange={() => toggleFilter("qualities", quality)}
-                          className="mr-2"
+                          className="mr-2 rounded border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 focus:ring-gray-500"
                         />
-                        <span className="text-sm">{quality}</span>
+                        <span className="text-sm text-gray-700 dark:text-gray-300">{quality}</span>
                       </label>
                     ))}
                   </div>
                 )}
               </div>
 
-              {/* Cafeine Filter */}
-              <div>
+              {/* Caffeine Filter */}
+              <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
                 <button
                   onClick={() => toggleExpandedFilter("cafeines")}
-                  className="flex items-center justify-between w-full text-left font-medium text-gray-900 pb-2 border-b"
+                  className="flex items-center justify-between w-full text-left font-medium text-gray-900 dark:text-white pb-2"
                 >
                   CAFFEINE
                   <span className="text-lg">{expandedFilters.cafeines ? "-" : "+"}</span>
@@ -346,14 +345,14 @@ const CollectionsPage = () => {
                 {expandedFilters.cafeines && (
                   <div className="mt-4 space-y-2">
                     {filterOptions.cafeines.map((caffeine) => (
-                      <label key={caffeine} className="flex items-center">
+                      <label key={caffeine} className="flex items-center cursor-pointer">
                         <input
                           type="checkbox"
                           checked={filters.cafeines.includes(caffeine)}
                           onChange={() => toggleFilter("cafeines", caffeine)}
-                          className="mr-2"
+                          className="mr-2 rounded border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 focus:ring-gray-500"
                         />
-                        <span className="text-sm">{caffeine}</span>
+                        <span className="text-sm text-gray-700 dark:text-gray-300">{caffeine}</span>
                       </label>
                     ))}
                   </div>
@@ -361,10 +360,10 @@ const CollectionsPage = () => {
               </div>
 
               {/* Allergens Filter */}
-              <div>
+              <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
                 <button
                   onClick={() => toggleExpandedFilter("allergens")}
-                  className="flex items-center justify-between w-full text-left font-medium text-gray-900 pb-2 border-b"
+                  className="flex items-center justify-between w-full text-left font-medium text-gray-900 dark:text-white pb-2"
                 >
                   ALLERGENS
                   <span className="text-lg">{expandedFilters.allergens ? "-" : "+"}</span>
@@ -372,14 +371,14 @@ const CollectionsPage = () => {
                 {expandedFilters.allergens && (
                   <div className="mt-4 space-y-2">
                     {filterOptions.allergens.map((allergen) => (
-                      <label key={allergen} className="flex items-center">
+                      <label key={allergen} className="flex items-center cursor-pointer">
                         <input
                           type="checkbox"
                           checked={filters.allergens.includes(allergen)}
                           onChange={() => toggleFilter("allergens", allergen)}
-                          className="mr-2"
+                          className="mr-2 rounded border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 focus:ring-gray-500"
                         />
-                        <span className="text-sm">{allergen}</span>
+                        <span className="text-sm text-gray-700 dark:text-gray-300">{allergen}</span>
                       </label>
                     ))}
                   </div>
@@ -388,8 +387,8 @@ const CollectionsPage = () => {
 
               {/* Organic Toggle */}
               <div>
-                <label className="flex items-center">
-                  <span className="font-medium text-gray-900 mr-3">ORGANIC</span>
+                <label className="flex items-center cursor-pointer">
+                  <span className="font-medium text-gray-900 dark:text-white mr-3">ORGANIC</span>
                   <div className="relative">
                     <input
                       type="checkbox"
@@ -403,12 +402,10 @@ const CollectionsPage = () => {
                       className="sr-only"
                     />
                     <div
-                      className={`w-8 h-3.5 pt-[1px] border border-black rounded-full ${
-                        filters.organic ? "bg-white" : "bg-white"
-                      } transition-colors`}
+                      className={`w-8 h-3.5 pt-[1px] border border-gray-800 dark:border-gray-300 rounded-full bg-white dark:bg-gray-700 transition-colors`}
                     >
                       <div
-                        className={`w-2.5 h-2.5 bg-black rounded-full transition-transform ${
+                        className={`w-2.5 h-2.5 bg-gray-800 dark:bg-gray-300 rounded-full transition-transform ${
                           filters.organic ? "translate-x-4" : "translate-x-1"
                         }`}
                       ></div>
@@ -422,12 +419,12 @@ const CollectionsPage = () => {
           {/* Products Grid */}
           <div className="lg:w-3/4">
             {/* Sort and Results Count */}
-            <div className="flex justify-between items-center mb-6">
-              <p className="text-gray-600">Showing {filteredProducts.length} products</p>
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+              <p className="text-gray-600 dark:text-gray-400">Showing {filteredProducts.length} products</p>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="border border-gray-300 rounded px-3 py-2"
+                className="border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-500"
               >
                 <option value="name">Sort by Name</option>
                 <option value="price-low">Price: Low to High</option>
@@ -436,11 +433,11 @@ const CollectionsPage = () => {
             </div>
 
             {/* Products Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredProducts.map((product) => (
                 <Link key={product._id} to={`/product/${product._id}`} className="group">
-                  <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                    <div className="aspect-square bg-gray-100">
+                  <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm hover:shadow-md dark:hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700">
+                    <div className="aspect-square bg-gray-100 dark:bg-gray-700">
                       <img
                         src={`http://localhost:3000${product.image || "/placeholder.svg"}`}
                         alt={product.name}
@@ -448,8 +445,10 @@ const CollectionsPage = () => {
                       />
                     </div>
                     <div className="p-4">
-                      <h3 className="font-medium text-gray-900 mb-2 group-hover:text-gray-600">{product.name}</h3>
-                      <p className="text-sm text-gray-600 mb-2">
+                      <h3 className="font-medium text-gray-900 dark:text-white mb-2 group-hover:text-gray-600 dark:group-hover:text-gray-300">
+                        {product.name}
+                      </h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                         €{product.price?.toFixed(2)} / {product.weight || "50 g"}
                       </p>
                     </div>
@@ -460,7 +459,7 @@ const CollectionsPage = () => {
 
             {filteredProducts.length === 0 && (
               <div className="text-center py-12">
-                <p className="text-gray-500">No products found matching your filters.</p>
+                <p className="text-gray-500 dark:text-gray-400">No products found matching your filters.</p>
               </div>
             )}
           </div>

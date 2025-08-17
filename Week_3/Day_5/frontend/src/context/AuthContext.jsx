@@ -16,8 +16,12 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [redirectAfterLogin, setRedirectAfterLogin] = useState(
+    () => localStorage.getItem("redirectAfterLogin") || null
+  )
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api"
+  const API_BASE_URL =
+    import.meta.env.VITE_API_URL || "http://localhost:5000/api"
 
   useEffect(() => {
     const token = localStorage.getItem("token")
@@ -86,8 +90,22 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem("token")
+    localStorage.removeItem("redirectAfterLogin")
     delete axios.defaults.headers.common["Authorization"]
     setUser(null)
+    setRedirectAfterLogin(null)
+  }
+
+  const setRedirectUrl = (url) => {
+    setRedirectAfterLogin(url)
+    localStorage.setItem("redirectAfterLogin", url)
+  }
+
+  const getAndClearRedirectUrl = () => {
+    const url = redirectAfterLogin || localStorage.getItem("redirectAfterLogin")
+    setRedirectAfterLogin(null)
+    localStorage.removeItem("redirectAfterLogin")
+    return url
   }
 
   const value = {
@@ -96,6 +114,8 @@ export const AuthProvider = ({ children }) => {
     register,
     logout,
     loading,
+    setRedirectUrl,
+    getAndClearRedirectUrl,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

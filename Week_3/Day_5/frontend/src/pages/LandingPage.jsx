@@ -58,29 +58,29 @@ const LandingPage = () => {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
       {/* Hero Section */}
-      <section className="w-full bg-white pb-24">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 gap-20 lg:grid-cols-2">
+      <section className="w-full bg-white dark:bg-gray-900 pb-12 lg:pb-24">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 gap-8 lg:gap-20 lg:grid-cols-2">
           {/* Left Image */}
-          <div className="h-96 lg:h-auto">
+          <div className="h-64 sm:h-80 lg:h-auto order-2 lg:order-1">
             <img src="/images/LandingImage.png" alt="Tea varieties" className="w-full h-full object-cover" />
           </div>
 
           {/* Right Content */}
-          <div className="flex flex-col justify-center px-6 py-10 lg:px-16">
-            <h1 className="text-3xl md:text-4xl font-bold mb-6">
+          <div className="flex flex-col justify-center px-6 py-6 lg:px-16 lg:py-10 order-1 lg:order-2">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 lg:mb-6 text-gray-900 dark:text-gray-100">
               Every day is unique, <br /> just like our tea
             </h1>
-            <p className="text-base mb-4 text-gray-700">
+            <p className="text-sm sm:text-base mb-3 lg:mb-4 text-gray-700 dark:text-gray-300">
               Lorem ipsum dolor sit amet consectetur. Orci nibh nullam risus adipiscing odio. Neque lacus nibh eros in.
             </p>
-            <p className="text-base mb-8 text-gray-700">
+            <p className="text-sm sm:text-base mb-6 lg:mb-8 text-gray-700 dark:text-gray-300">
               Lorem ipsum dolor sit amet consectetur. Orci nibh nullam risus adipiscing odio. Neque lacus nibh eros in.
             </p>
             <Link
               to="/collections"
-              className="w-[240px] inline-block bg-gray-800 text-white px-16 py-3 font-medium hover:bg-gray-900 transition-colors"
+              className="w-full sm:w-auto max-w-xs inline-block bg-gray-800 dark:bg-gray-700 text-white px-8 sm:px-16 py-3 font-medium hover:bg-gray-900 dark:hover:bg-gray-600 transition-colors text-center"
             >
               BROWSE TEAS
             </Link>
@@ -89,28 +89,34 @@ const LandingPage = () => {
       </section>
 
       {/* Features Section */}
-      <section className="pb-6 pt-12 bg-black bg-opacity-5">
+      <section className="pb-6 pt-12 bg-black bg-opacity-5 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-            <div className="flex flex-row items-center">
-              <img src="/images/Cup.png" alt="cup" className="mr-4" />
-              <h3 className="font-semibold">450+ KIND OF LOOSEF TEA</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 text-center">
+            <div className="flex flex-col sm:flex-row items-center">
+              <img src="/images/Cup.png" alt="cup" className="mb-2 sm:mb-0 sm:mr-4 dark:invert" />
+              <h3 className="font-semibold text-sm lg:text-base text-gray-900 dark:text-gray-100">
+                450+ KIND OF LOOSE TEA
+              </h3>
             </div>
-            <div className="flex flex-row items-center">
-              <img src="/images/Gift.png" alt="gift" className="mr-4" />
-              <h3 className="font-semibold">CERTIFICATED ORGANIC TEAS</h3>
+            <div className="flex flex-col sm:flex-row items-center">
+              <img src="/images/Gift.png" alt="gift" className="mb-2 sm:mb-0 sm:mr-4 dark:invert" />
+              <h3 className="font-semibold text-sm lg:text-base text-gray-900 dark:text-gray-100">
+                CERTIFICATED ORGANIC TEAS
+              </h3>
             </div>
-            <div className="flex flex-row items-center">
-              <img src="/images/Truck.png" alt="truck" className="mr-4" />
-              <h3 className="font-semibold">FREE DELIVERY</h3>
+            <div className="flex flex-col sm:flex-row items-center">
+              <img src="/images/Truck.png" alt="truck" className="mb-2 sm:mb-0 sm:mr-4 dark:invert" />
+              <h3 className="font-semibold text-sm lg:text-base text-gray-900 dark:text-gray-100">FREE DELIVERY</h3>
             </div>
-            <div className="flex flex-row items-center">
-              <img src="/images/Tag.png" alt="tag" className="mr-4" />
-              <h3 className="font-semibold">SAMPLE FOR ALL TEAS</h3>
+            <div className="flex flex-col sm:flex-row items-center">
+              <img src="/images/Tag.png" alt="tag" className="mb-2 sm:mb-0 sm:mr-4 dark:invert" />
+              <h3 className="font-semibold text-sm lg:text-base text-gray-900 dark:text-gray-100">
+                SAMPLE FOR ALL TEAS
+              </h3>
             </div>
           </div>
-          <div className="text-center mt-16">
-            <button className="border border-gray-800 text-gray-800 px-16 py-3 font-medium hover:bg-gray-800 hover:text-white transition-colors">
+          <div className="text-center mt-12 lg:mt-16">
+            <button className="border border-gray-800 dark:border-gray-300 text-gray-800 dark:text-gray-300 px-8 sm:px-16 py-3 font-medium hover:bg-gray-800 hover:text-white dark:hover:bg-gray-300 dark:hover:text-gray-900 transition-colors">
               LEARN MORE
             </button>
           </div>
@@ -118,114 +124,116 @@ const LandingPage = () => {
       </section>
 
       {/* Collections Section */}
-      <section className="py-16">
+      <section className="py-12 lg:py-16 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">Our Collections</h2>
+          <h2 className="text-2xl lg:text-3xl font-bold text-center mb-8 lg:mb-12 text-gray-900 dark:text-gray-100">
+            Our Collections
+          </h2>
 
           {loading ? (
-            <div className="text-center">Loading collections...</div>
+            <div className="text-center text-gray-600 dark:text-gray-400">Loading collections...</div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 justify-items-center">
               {/* First Row */}
               <Link to="/collections?collections=Black teas" className="group flex flex-col items-center">
-                <div className="overflow-hidden w-[360px] h-[360px]">
+                <div className="overflow-hidden w-full max-w-sm aspect-square">
                   <img
                     src={collectionImages["BLACK TEA"] || "/placeholder.svg"}
                     alt="Black Tea"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <h3 className="mt-4 text-lg font-semibold text-center">BLACK TEA</h3>
+                <h3 className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-gray-100">BLACK TEA</h3>
               </Link>
 
               <Link to="/collections?collections=Green teas" className="group flex flex-col items-center">
-                <div className="overflow-hidden w-[360px] h-[360px]">
+                <div className="overflow-hidden w-full max-w-sm aspect-square">
                   <img
                     src={collectionImages["GREEN TEA"] || "/placeholder.svg"}
                     alt="Green Tea"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <h3 className="mt-4 text-lg font-semibold text-center">GREEN TEA</h3>
+                <h3 className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-gray-100">GREEN TEA</h3>
               </Link>
 
               <Link to="/collections?collections=White teas" className="group flex flex-col items-center">
-                <div className="overflow-hidden w-[360px] h-[360px]">
+                <div className="overflow-hidden w-full max-w-sm aspect-square">
                   <img
                     src={collectionImages["WHITE TEA"] || "/placeholder.svg"}
                     alt="White Tea"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <h3 className="mt-4 text-lg font-semibold text-center">WHITE TEA</h3>
+                <h3 className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-gray-100">WHITE TEA</h3>
               </Link>
 
               {/* Second Row */}
               <Link to="/collections?collections=Matcha" className="group flex flex-col items-center">
-                <div className="overflow-hidden w-[360px] h-[360px]">
+                <div className="overflow-hidden w-full max-w-sm aspect-square">
                   <img
                     src={collectionImages["MATCHA"] || "/placeholder.svg"}
                     alt="Matcha"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <h3 className="mt-4 text-lg font-semibold text-center">MATCHA</h3>
+                <h3 className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-gray-100">MATCHA</h3>
               </Link>
 
               <Link to="/collections?collections=Herbal teas" className="group flex flex-col items-center">
-                <div className="overflow-hidden w-[360px] h-[360px]">
+                <div className="overflow-hidden w-full max-w-sm aspect-square">
                   <img
                     src={collectionImages["HERBAL TEA"] || "/placeholder.svg"}
                     alt="Herbal Tea"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <h3 className="mt-4 text-lg font-semibold text-center">HERBAL TEA</h3>
+                <h3 className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-gray-100">HERBAL TEA</h3>
               </Link>
 
               <Link to="/collections?collections=Chai" className="group flex flex-col items-center">
-                <div className="overflow-hidden w-[360px] h-[360px]">
+                <div className="overflow-hidden w-full max-w-sm aspect-square">
                   <img
                     src={collectionImages["CHAI"] || "/placeholder.svg"}
                     alt="Chai"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <h3 className="mt-4 text-lg font-semibold text-center">CHAI</h3>
+                <h3 className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-gray-100">CHAI</h3>
               </Link>
 
               {/* Third Row */}
               <Link to="/collections?collections=Oolong" className="group flex flex-col items-center">
-                <div className="overflow-hidden w-[360px] h-[360px]">
+                <div className="overflow-hidden w-full max-w-sm aspect-square">
                   <img
                     src={collectionImages["OOLONG"] || "/placeholder.svg"}
                     alt="Oolong"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <h3 className="mt-4 text-lg font-semibold text-center">OOLONG</h3>
+                <h3 className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-gray-100">OOLONG</h3>
               </Link>
 
               <Link to="/collections?collections=Rooibos" className="group flex flex-col items-center">
-                <div className="overflow-hidden w-[360px] h-[360px]">
+                <div className="overflow-hidden w-full max-w-sm aspect-square">
                   <img
                     src={collectionImages["ROOIBOS"] || "/placeholder.svg"}
                     alt="Rooibos"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <h3 className="mt-4 text-lg font-semibold text-center">ROOIBOS</h3>
+                <h3 className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-gray-100">ROOIBOS</h3>
               </Link>
 
               <Link to="/collections?collections=Teaware" className="group flex flex-col items-center">
-                <div className="overflow-hidden w-[360px] h-[360px]">
+                <div className="overflow-hidden w-full max-w-sm aspect-square">
                   <img
                     src={collectionImages["TEAWARE"] || "/placeholder.svg"}
                     alt="Teaware"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <h3 className="mt-4 text-lg font-semibold text-center">TEAWARE</h3>
+                <h3 className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-gray-100">TEAWARE</h3>
               </Link>
             </div>
           )}
