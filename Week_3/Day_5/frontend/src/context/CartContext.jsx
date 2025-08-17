@@ -48,7 +48,6 @@ export const CartProvider = ({ children }) => {
 
       console.log("[v0] Cart fetch response:", response.data)
 
-      // Try different response structures to match backend
       let items = []
       if (response.data.data?.cart?.items) {
         items = response.data.data.cart.items

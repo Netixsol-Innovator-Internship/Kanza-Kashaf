@@ -12,74 +12,47 @@ const Footer = () => {
             </h3>
             <ul className="space-y-2">
               <li>
-                <Link
-                  to="/collections/black-tea"
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm"
-                >
+                <Link to="/collections/black-tea" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm">
                   Black teas
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/collections/green-tea"
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm"
-                >
+                <Link to="/collections/green-tea" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm">
                   Green teas
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/collections/white-tea"
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm"
-                >
+                <Link to="/collections/white-tea" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm">
                   White teas
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/collections/herbal-tea"
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm"
-                >
+                <Link to="/collections/herbal-tea" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm">
                   Herbal teas
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/collections/matcha"
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm"
-                >
+                <Link to="/collections/matcha" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm">
                   Matcha
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/collections/chai"
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm"
-                >
+                <Link to="/collections/chai" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm">
                   Chai
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/collections/oolong"
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm"
-                >
+                <Link to="/collections/oolong" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm">
                   Oolong
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/collections/rooibos"
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm"
-                >
+                <Link to="/collections/rooibos" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm">
                   Rooibos
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/collections/teaware"
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm"
-                >
+                <Link to="/collections/teaware" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm">
                   Teaware
                 </Link>
               </li>
@@ -93,26 +66,17 @@ const Footer = () => {
             </h3>
             <ul className="space-y-2">
               <li>
-                <Link
-                  to="/about"
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm"
-                >
+                <Link to="/about" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm">
                   About us
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/about-teas"
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm"
-                >
+                <Link to="/about-teas" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm">
                   About our teas
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/tea-academy"
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm"
-                >
+                <Link to="/tea-academy" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm">
                   Tea academy
                 </Link>
               </li>
@@ -126,34 +90,22 @@ const Footer = () => {
             </h3>
             <ul className="space-y-2">
               <li>
-                <Link
-                  to="/ordering"
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm"
-                >
+                <Link to="/ordering" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm">
                   Ordering and payment
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/delivery"
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm"
-                >
+                <Link to="/delivery" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm">
                   Delivery
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/privacy"
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm"
-                >
+                <Link to="/privacy" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm">
                   Privacy and policy
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/terms"
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm"
-                >
+                <Link to="/terms" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors text-sm">
                   Terms & Conditions
                 </Link>
               </li>

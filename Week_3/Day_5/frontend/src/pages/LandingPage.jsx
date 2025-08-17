@@ -18,7 +18,6 @@ const LandingPage = () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/products`)
 
-      // ✅ handle both array or { products: [] } response
       const products = Array.isArray(response.data) ? response.data : response.data.products || []
 
       // Group products by collection
@@ -39,7 +38,7 @@ const LandingPage = () => {
       )
     } catch (error) {
       console.error("Error fetching collections:", error)
-      setCollections([]) // ✅ avoid state crash
+      setCollections([])
     } finally {
       setLoading(false)
     }
@@ -78,10 +77,8 @@ const LandingPage = () => {
             <p className="text-sm sm:text-base mb-6 lg:mb-8 text-gray-700 dark:text-gray-300">
               Lorem ipsum dolor sit amet consectetur. Orci nibh nullam risus adipiscing odio. Neque lacus nibh eros in.
             </p>
-            <Link
-              to="/collections"
-              className="w-full mx-auto sm:ml-0 sm:w-auto max-w-xs inline-block bg-gray-800 dark:bg-gray-700 text-white px-8 sm:px-16 py-3 font-medium hover:bg-gray-900 dark:hover:bg-gray-600 transition-colors text-center"
-            >
+            <Link to="/collections"
+              className="w-full mx-auto sm:ml-0 sm:w-auto max-w-xs inline-block bg-gray-800 dark:bg-gray-700 text-white px-8 sm:px-16 py-3 font-medium hover:bg-gray-900 dark:hover:bg-gray-600 transition-colors text-center">
               BROWSE TEAS
             </Link>
           </div>
@@ -137,33 +134,24 @@ const LandingPage = () => {
               {/* First Row */}
               <Link to="/collections?collections=Black teas" className="group flex flex-col items-center">
                 <div className="overflow-hidden w-full max-w-sm aspect-square">
-                  <img
-                    src={collectionImages["BLACK TEA"] || "/placeholder.svg"}
-                    alt="Black Tea"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+                  <img src={collectionImages["BLACK TEA"] || "/placeholder.svg"} alt="Black Tea"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"/>
                 </div>
                 <h3 className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-gray-100">BLACK TEA</h3>
               </Link>
 
               <Link to="/collections?collections=Green teas" className="group flex flex-col items-center">
                 <div className="overflow-hidden w-full max-w-sm aspect-square">
-                  <img
-                    src={collectionImages["GREEN TEA"] || "/placeholder.svg"}
-                    alt="Green Tea"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+                  <img src={collectionImages["GREEN TEA"] || "/placeholder.svg"} alt="Green Tea"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"/>
                 </div>
                 <h3 className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-gray-100">GREEN TEA</h3>
               </Link>
 
               <Link to="/collections?collections=White teas" className="group flex flex-col items-center">
                 <div className="overflow-hidden w-full max-w-sm aspect-square">
-                  <img
-                    src={collectionImages["WHITE TEA"] || "/placeholder.svg"}
-                    alt="White Tea"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+                  <img src={collectionImages["WHITE TEA"] || "/placeholder.svg"} alt="White Tea"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"/>
                 </div>
                 <h3 className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-gray-100">WHITE TEA</h3>
               </Link>
@@ -171,33 +159,24 @@ const LandingPage = () => {
               {/* Second Row */}
               <Link to="/collections?collections=Matcha" className="group flex flex-col items-center">
                 <div className="overflow-hidden w-full max-w-sm aspect-square">
-                  <img
-                    src={collectionImages["MATCHA"] || "/placeholder.svg"}
-                    alt="Matcha"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+                  <img src={collectionImages["MATCHA"] || "/placeholder.svg"} alt="Matcha"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"/>
                 </div>
                 <h3 className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-gray-100">MATCHA</h3>
               </Link>
 
               <Link to="/collections?collections=Herbal teas" className="group flex flex-col items-center">
                 <div className="overflow-hidden w-full max-w-sm aspect-square">
-                  <img
-                    src={collectionImages["HERBAL TEA"] || "/placeholder.svg"}
-                    alt="Herbal Tea"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+                  <img src={collectionImages["HERBAL TEA"] || "/placeholder.svg"} alt="Herbal Tea"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"/>
                 </div>
                 <h3 className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-gray-100">HERBAL TEA</h3>
               </Link>
 
               <Link to="/collections?collections=Chai" className="group flex flex-col items-center">
                 <div className="overflow-hidden w-full max-w-sm aspect-square">
-                  <img
-                    src={collectionImages["CHAI"] || "/placeholder.svg"}
-                    alt="Chai"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+                  <img src={collectionImages["CHAI"] || "/placeholder.svg"} alt="Chai"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"/>
                 </div>
                 <h3 className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-gray-100">CHAI</h3>
               </Link>
@@ -205,33 +184,24 @@ const LandingPage = () => {
               {/* Third Row */}
               <Link to="/collections?collections=Oolong" className="group flex flex-col items-center">
                 <div className="overflow-hidden w-full max-w-sm aspect-square">
-                  <img
-                    src={collectionImages["OOLONG"] || "/placeholder.svg"}
-                    alt="Oolong"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+                  <img src={collectionImages["OOLONG"] || "/placeholder.svg"} alt="Oolong"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"/>
                 </div>
                 <h3 className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-gray-100">OOLONG</h3>
               </Link>
 
               <Link to="/collections?collections=Rooibos" className="group flex flex-col items-center">
                 <div className="overflow-hidden w-full max-w-sm aspect-square">
-                  <img
-                    src={collectionImages["ROOIBOS"] || "/placeholder.svg"}
-                    alt="Rooibos"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+                  <img src={collectionImages["ROOIBOS"] || "/placeholder.svg"} alt="Rooibos"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"/>
                 </div>
                 <h3 className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-gray-100">ROOIBOS</h3>
               </Link>
 
               <Link to="/collections?collections=Teaware" className="group flex flex-col items-center">
                 <div className="overflow-hidden w-full max-w-sm aspect-square">
-                  <img
-                    src={collectionImages["TEAWARE"] || "/placeholder.svg"}
-                    alt="Teaware"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+                  <img src={collectionImages["TEAWARE"] || "/placeholder.svg"} alt="Teaware"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"/>
                 </div>
                 <h3 className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-gray-100">TEAWARE</h3>
               </Link>

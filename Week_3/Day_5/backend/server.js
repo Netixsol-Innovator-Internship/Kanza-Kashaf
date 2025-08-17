@@ -2,7 +2,7 @@ const express = require("express")
 const cors = require("cors")
 const dotenv = require("dotenv")
 const swaggerUi = require("swagger-ui-express")
-const path = require("path") // ✅ added
+const path = require("path")
 
 // Import configuration and documentation
 const connectDB = require("./src/config/db")

@@ -111,17 +111,11 @@ const ProductPage = () => {
               HOME
             </Link>
             <span className="mx-2 text-gray-600 dark:text-gray-400">/</span>
-            <Link
-              to="/collections"
-              className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
-            >
+            <Link to="/collections" className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">
               COLLECTIONS
             </Link>
             <span className="mx-2 text-gray-600 dark:text-gray-400">/</span>
-            <Link
-              to={`/collections/${product.collection?.toLowerCase().replace(" ", "-")}`}
-              className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
-            >
+            <Link to={`/collections/${product.collection?.toLowerCase().replace(" ", "-")}`} className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">
               {product.collection?.toUpperCase()}
             </Link>
             <span className="mx-2 text-gray-600 dark:text-gray-400">/</span>
@@ -134,11 +128,7 @@ const ProductPage = () => {
         <div className="grid grid-cols-1 mb-6 sm:mb-16 lg:grid-cols-2 gap-8 lg:gap-16">
           {/* Product Image */}
           <div className="aspect-square bg-gray-100 dark:bg-gray-800 overflow-hidden rounded-lg">
-            <img
-              src={`http://localhost:3000${product.image}`}
-              alt={product.name}
-              className="w-full h-full object-cover"
-            />
+            <img src={`http://localhost:3000${product.image}`} alt={product.name} className="w-full h-full object-cover"/>
           </div>
 
           {/* Product Info */}
@@ -194,11 +184,7 @@ const ProductPage = () => {
                           : "bg-transparent dark:bg-white/90 hover:bg-gray-50 dark:hover:bg-white"
                       }`}
                     >
-                      <img
-                        src={variant.image || "/placeholder.svg"}
-                        alt={variant.label}
-                        className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
-                      />
+                      <img src={variant.image || "/placeholder.svg"} alt={variant.label} className="w-8 h-8 sm:w-10 sm:h-10 object-contain"/>
                     </div>
                     <div className="text-xs sm:text-sm pb-2 text-gray-700 dark:text-gray-300">
                       {variant.label}
@@ -211,27 +197,20 @@ const ProductPage = () => {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               {/* Quantity Selector */}
               <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-md">
-                <button
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="w-10 h-10 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
-                >
+                <button onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  className="w-10 h-10 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
                   -
                 </button>
                 <span className="w-12 text-center text-lg text-gray-900 dark:text-white">{quantity}</span>
-                <button
-                  onClick={() => setQuantity(quantity + 1)}
-                  className="w-10 h-10 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
-                >
+                <button onClick={() => setQuantity(quantity + 1)}
+                  className="w-10 h-10 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
                   +
                 </button>
               </div>
 
               {/* Add to Cart Button */}
-              <button
-                onClick={handleAddToCart}
-                disabled={addingToCart}
-                className="flex-1 bg-gray-800 dark:bg-gray-700 text-white py-3 px-6 font-medium hover:bg-gray-900 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2 rounded-md"
-              >
+              <button onClick={handleAddToCart} disabled={addingToCart}
+                className="flex-1 bg-gray-800 dark:bg-gray-700 text-white py-3 px-6 font-medium hover:bg-gray-900 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2 rounded-md">
                 {addingToCart ? (
                   "ADDING..."
                 ) : (
@@ -322,37 +301,20 @@ const ProductPage = () => {
       <div className="py-16 bg-white dark:bg-gray-900">
         <h2 className="text-2xl font-semibold text-center mb-12 text-gray-900 dark:text-white">You may also like</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 lg:gap-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Product 1 */}
           <div className="text-center">
-            <img
-              src="/images/Img1.png"
-              alt="Ceylon Ginger Cinnamon chai tea"
-              className="mx-auto w-48 h-48 sm:w-56 sm:h-56 object-contain"
-            />
+            <img src="/images/Img1.png" alt="Ceylon Ginger Cinnamon chai tea" className="mx-auto w-48 h-48 sm:w-56 sm:h-56 object-contain"/>
             <p className="mt-4 text-gray-900 dark:text-white">Ceylon Ginger</p>
             <p className="text-gray-900 dark:text-white">Cinnamon chai tea</p>
             <p className="mt-2 text-gray-800 dark:text-gray-200 font-medium">€4.85 / 50 g</p>
           </div>
-
-          {/* Product 2 */}
           <div className="text-center">
-            <img
-              src="/images/Img2.png"
-              alt="Ceylon Ginger Cinnamon chai tea"
-              className="mx-auto w-48 h-48 sm:w-56 sm:h-56 object-contain"
-            />
+            <img src="/images/Img2.png" alt="Ceylon Ginger Cinnamon chai tea" className="mx-auto w-48 h-48 sm:w-56 sm:h-56 object-contain"/>
             <p className="mt-4 text-gray-900 dark:text-white">Ceylon Ginger</p>
             <p className="text-gray-900 dark:text-white">Cinnamon chai tea</p>
             <p className="mt-2 text-gray-800 dark:text-gray-200 font-medium">€4.85 / 50 g</p>
           </div>
-
-          {/* Product 3 */}
           <div className="text-center">
-            <img
-              src="/images/Img3.png"
-              alt="Ceylon Ginger Cinnamon chai tea"
-              className="mx-auto w-48 h-48 sm:w-56 sm:h-56 object-contain"
-            />
+            <img src="/images/Img3.png" alt="Ceylon Ginger Cinnamon chai tea"className="mx-auto w-48 h-48 sm:w-56 sm:h-56 object-contain"/>
             <p className="mt-4 text-gray-900 dark:text-white">Ceylon Ginger</p>
             <p className="text-gray-900 dark:text-white">Cinnamon chai tea</p>
             <p className="mt-2 text-gray-800 dark:text-gray-200 font-medium">€4.85 / 50 g</p>
