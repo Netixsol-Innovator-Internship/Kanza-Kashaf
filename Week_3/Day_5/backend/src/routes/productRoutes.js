@@ -14,12 +14,17 @@ const router = express.Router()
 
 const productValidation = [
   body("name").trim().isLength({ min: 2, max: 100 }).withMessage("Product name must be between 2 and 100 characters"),
-  body("description")
-    .trim()
-    .isLength({ min: 10, max: 500 })
-    .withMessage("Description must be between 10 and 500 characters"),
+  body("description").trim().isLength({ min: 10, max: 500 }).withMessage("Description must be between 10 and 500 characters"),
   body("price").isFloat({ min: 0 }).withMessage("Price must be a positive number"),
-  body("image").isURL().withMessage("Image must be a valid URL"),
+  body("image").custom((value) => {
+    if (typeof value === "string" && value.startsWith("/")) {
+      return true;
+    }
+    if (/^(https?:\/\/[^\s]+)$/.test(value)) {
+      return true;
+    }
+    throw new Error("Image must be a valid URL or a relative path");
+  }),
   body("category")
     .isIn(["black-tea", "green-tea", "herbal-tea", "oolong-tea", "white-tea", "chai", "matcha", "rooibos", "teaware"])
     .withMessage("Invalid category"),
@@ -156,7 +161,7 @@ router.get("/:id", idValidation, validateRequest, getProductById)
  *               description: "High-quality organic green tea from Japan"
  *               price: 12.99
  *               image: "https://example.com/images/green-tea.jpg"
- *               category: "Beverages"
+ *               category: "green-tea"
  *               origin: "Japan"
  *               stock: 50
  *               collection: "Green teas"

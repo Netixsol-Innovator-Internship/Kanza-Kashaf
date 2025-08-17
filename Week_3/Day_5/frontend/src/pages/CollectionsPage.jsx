@@ -225,7 +225,7 @@ const CollectionsPage = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col sm:flex-row gap-16">
           {/* Filters Sidebar */}
           <div className="lg:w-1/4">
             <div className="space-y-6">
@@ -433,10 +433,10 @@ const CollectionsPage = () => {
             </div>
 
             {/* Products Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-16">
               {filteredProducts.map((product) => (
                 <Link key={product._id} to={`/product/${product._id}`} className="group">
-                  <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm hover:shadow-md dark:hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700">
+                  <div className="bg-white dark:bg-gray-800 overflow-hidden hover:shadow-md dark:hover:shadow-lg transition-shadow">
                     <div className="aspect-square bg-gray-100 dark:bg-gray-700">
                       <img
                         src={`http://localhost:3000${product.image || "/placeholder.svg"}`}
@@ -444,7 +444,7 @@ const CollectionsPage = () => {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>
-                    <div className="p-4">
+                    <div className="p-4 text-center">
                       <h3 className="font-medium text-gray-900 dark:text-white mb-2 group-hover:text-gray-600 dark:group-hover:text-gray-300">
                         {product.name}
                       </h3>

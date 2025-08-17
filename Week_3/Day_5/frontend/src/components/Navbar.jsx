@@ -22,11 +22,11 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-700 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-6 md:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <img src="/images/Logo.png" alt="Logo" className="w-8 h-8 p-1 dark:bg-white" />
+          <Link to="/" className="flex items-center space-x-1 sm:space-x-2">
+            <img src="/images/Logo.png" alt="Logo" className="w-8 h-8 p-1 dark:invert" />
             <span className="text-xl font-semibold text-gray-800 dark:text-gray-200">Brand Name</span>
           </Link>
 
@@ -59,7 +59,7 @@ const Navbar = () => {
           </div>
 
           {/* Right side icons */}
-          <div className="flex items-center space-x-4 lg:space-x-6">
+          <div className="flex items-center space-x-2.5 sm:space-x-6">
             {/* Theme Toggle */}
             <ThemeToggle />
 

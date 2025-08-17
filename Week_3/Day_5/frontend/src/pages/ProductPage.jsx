@@ -131,7 +131,7 @@ const ProductPage = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 mb-16 lg:grid-cols-2 gap-8 lg:gap-16">
+        <div className="grid grid-cols-1 mb-6 sm:mb-16 lg:grid-cols-2 gap-8 lg:gap-16">
           {/* Product Image */}
           <div className="aspect-square bg-gray-100 dark:bg-gray-800 overflow-hidden rounded-lg">
             <img
@@ -151,25 +151,19 @@ const ProductPage = () => {
 
               <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-8 lg:space-x-16 text-sm text-gray-600 dark:text-gray-400 mt-8 mb-4 space-y-2 sm:space-y-0">
                 <div className="flex items-center">
-                  <div className="mr-2 p-1 rounded-md bg-transparent dark:bg-white">
-                    <img src="/images/World.png" alt="world" className="w-5 h-5 object-contain" />
-                  </div>
+                  <img src="/images/World.png" alt="world" className="w-5 h-5 mr-2 dark:invert" />
                   <span className="font-medium">Origin: {product.origin || "Iran"}</span>
                 </div>
 
                 {product.organic && (
                   <div className="flex items-center">
-                    <div className="mr-2 p-1 rounded-md bg-transparent dark:bg-white">
-                      <img src="/images/Organic.png" alt="organic" className="w-5 h-5 object-contain" />
-                    </div>
+                    <img src="/images/Organic.png" alt="organic" className="w-5 h-5 mr-2 dark:invert" />
                     <span className="font-medium">Organic</span>
                   </div>
                 )}
 
                 <div className="flex items-center">
-                  <div className="mr-2 p-1 rounded-md bg-transparent dark:bg-white">
-                    <img src="/images/Vegan.png" alt="vegan" className="w-5 h-5 object-contain" />
-                  </div>
+                  <img src="/images/Vegan.png" alt="vegan" className="w-5 h-5 mr-2 dark:invert" />
                   <span className="font-medium">Vegan</span>
                 </div>
               </div>
@@ -256,7 +250,7 @@ const ProductPage = () => {
       </div>
 
       <div className="w-full bg-gray-100 dark:bg-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-8">
           {/* Product Details */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 pt-12">
             {/* Steeping Instructions */}
@@ -264,33 +258,25 @@ const ProductPage = () => {
               <h3 className="text-3xl lg:text-4xl mb-10 text-gray-900 dark:text-white">Steeping instructions</h3>
               <div className="space-y-4 text-gray-700 dark:text-gray-300">
                 <div className="flex items-center">
-                  <div className="mr-3 mb-3 p-1 rounded-md bg-transparent dark:bg-white">
-                    <img src="/images/Kettle.png" alt="kettle" className="dark:opacity-100"/>
-                  </div>
+                  <img src="/images/Kettle.png" alt="kettle" className="mr-3 mb-4 dark:invert"/>
                   <span className="pb-4 border-b-2 border-gray-400 dark:border-gray-600 flex-1">
                     <strong>SERVING SIZE:</strong> 2 tsp per cup, 6 tsp per pot
                   </span>
                 </div>
                 <div className="flex items-center">
-                  <div className="mr-3 mb-3 p-1 rounded-md bg-transparent dark:bg-white">
-                    <img src="/images/Drop.png" alt="drop" className="dark:opacity-100"/>
-                  </div>
+                  <img src="/images/Drop.png" alt="drop" className="mr-3 mb-4 dark:invert"/>
                   <span className="pb-4 border-b-2 border-gray-400 dark:border-gray-600 flex-1">
                     <strong>WATER TEMPERATURE:</strong> 100°C
                   </span>
                 </div>
                 <div className="flex items-center">
-                  <div className="mr-3 mb-3 p-1 rounded-md bg-transparent dark:bg-white">
-                    <img src="/images/Clock.png" alt="clock" className="dark:opacity-100"/>
-                  </div>
+                  <img src="/images/Clock.png" alt="clock" className="mr-3 mb-4 dark:invert"/>
                   <span className="pb-4 border-b-2 border-gray-400 dark:border-gray-600 flex-1">
                     <strong>STEEPING TIME:</strong> 3 - 5 minutes
                   </span>
                 </div>
                 <div className="flex items-center">
-                  <div className="mr-3 mb-3 p-1 rounded-md bg-transparent dark:bg-white">
-                    <img src="/images/Circle.png" alt="circle" className="dark:opacity-100"/>
-                  </div>
+                  <img src="/images/Circle.png" alt="circle" className="mr-3 mb-4"/>
                   <span className="pb-4 flex-1">
                     <strong>COLOR AFTER 3 MINUTES</strong>
                   </span>

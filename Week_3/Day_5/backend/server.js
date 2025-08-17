@@ -135,11 +135,11 @@ app.use("*", (req, res) => {
 })
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-  console.log(`API Documentation: http://localhost:${PORT}/api-docs`)
-  console.log(`Health Check: http://localhost:${PORT}/api/health`)
-  console.log(`Images: http://localhost:${PORT}/images/Pic1.png`) // ✅ added log
-  console.log(`Environment: ${process.env.NODE_ENV || "development"}`)
+  console.log(`--> Server running on port ${PORT}`)
+  console.log(`--> API Documentation: http://localhost:${PORT}/api-docs`)
+  console.log(`--> Health Check: http://localhost:${PORT}/api/health`)
+  console.log(`--> Images: http://localhost:${PORT}/images/Pic1.png`) // ✅ added log
+  console.log(`--> Environment: ${process.env.NODE_ENV || "development"}`)
 })
 
 module.exports = app

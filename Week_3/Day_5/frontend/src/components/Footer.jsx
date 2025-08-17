@@ -3,10 +3,10 @@ import { Link } from "react-router-dom"
 const Footer = () => {
   return (
     <footer className="bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+      <div className="max-w-7xl mx-auto px-8 sm:px-6 lg:px-8 py-8 lg:py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 sm:pl-16 lg:grid-cols-4 lg:pl-0 gap-6 lg:gap-8">
           {/* Collections */}
-          <div>
+          <div className="sm:order-1">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 uppercase tracking-wider mb-4">
               COLLECTIONS
             </h3>
@@ -87,7 +87,7 @@ const Footer = () => {
           </div>
 
           {/* Learn */}
-          <div>
+          <div className="sm:order-3">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 uppercase tracking-wider mb-4">
               LEARN
             </h3>
@@ -120,7 +120,7 @@ const Footer = () => {
           </div>
 
           {/* Customer Service */}
-          <div>
+          <div className="sm:order-2">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 uppercase tracking-wider mb-4">
               CUSTOMER SERVICE
             </h3>
@@ -161,7 +161,7 @@ const Footer = () => {
           </div>
 
           {/* Contact Us */}
-          <div>
+          <div className="sm:order-4">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 uppercase tracking-wider mb-4">
               CONTACT US
             </h3>

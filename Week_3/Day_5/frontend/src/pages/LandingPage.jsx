@@ -61,14 +61,14 @@ const LandingPage = () => {
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
       {/* Hero Section */}
       <section className="w-full bg-white dark:bg-gray-900 pb-12 lg:pb-24">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 gap-8 lg:gap-20 lg:grid-cols-2">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 gap-8 md:gap-20 md:grid-cols-2">
           {/* Left Image */}
-          <div className="h-64 sm:h-80 lg:h-auto order-2 lg:order-1">
+          <div className="h-64 sm:h-80 md:h-auto lg:h-auto">
             <img src="/images/LandingImage.png" alt="Tea varieties" className="w-full h-full object-cover" />
           </div>
 
           {/* Right Content */}
-          <div className="flex flex-col justify-center px-6 py-6 lg:px-16 lg:py-10 order-1 lg:order-2">
+          <div className="flex flex-col justify-center px-6 py-6 lg:px-16 lg:py-10">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 lg:mb-6 text-gray-900 dark:text-gray-100">
               Every day is unique, <br /> just like our tea
             </h1>
@@ -80,7 +80,7 @@ const LandingPage = () => {
             </p>
             <Link
               to="/collections"
-              className="w-full sm:w-auto max-w-xs inline-block bg-gray-800 dark:bg-gray-700 text-white px-8 sm:px-16 py-3 font-medium hover:bg-gray-900 dark:hover:bg-gray-600 transition-colors text-center"
+              className="w-full mx-auto sm:ml-0 sm:w-auto max-w-xs inline-block bg-gray-800 dark:bg-gray-700 text-white px-8 sm:px-16 py-3 font-medium hover:bg-gray-900 dark:hover:bg-gray-600 transition-colors text-center"
             >
               BROWSE TEAS
             </Link>
@@ -91,7 +91,7 @@ const LandingPage = () => {
       {/* Features Section */}
       <section className="pb-6 pt-12 bg-black bg-opacity-5 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 text-center">
+          <div className="grid grid-cols-1 sm:pl-16 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_0.7fr_1fr] lg:pl-4 gap-6 lg:gap-8 text-center">
             <div className="flex flex-col sm:flex-row items-center">
               <img src="/images/Cup.png" alt="cup" className="mb-2 sm:mb-0 sm:mr-4 dark:invert" />
               <h3 className="font-semibold text-sm lg:text-base text-gray-900 dark:text-gray-100">

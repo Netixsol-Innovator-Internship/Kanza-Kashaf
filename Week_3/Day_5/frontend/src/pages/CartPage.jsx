@@ -49,39 +49,41 @@ const CartPage = () => {
     <div className="min-h-screen bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Progress Steps */}
-        <div className="flex items-center justify-center mb-8 text-sm w-full overflow-x-auto">
+        <div className="flex flex-col sm:flex-row items-center justify-center mb-8 text-sm w-full gap-2 sm:gap-0">
           {/* Step 1 */}
           <div className="flex items-center flex-1 min-w-0">
-            <span className="text-black dark:text-white font-medium whitespace-nowrap mr-2 sm:mr-4 text-xs sm:text-sm">
+            <span className="text-black dark:text-white font-medium mr-2 sm:mr-4 text-xs sm:text-sm">
               1. MY BAG
             </span>
-            <div className="flex-grow border-t border-gray-300 dark:border-gray-600 min-w-4"></div>
+            <div className="hidden sm:flex flex-grow border-t border-gray-300 dark:border-gray-600 min-w-4"></div>
           </div>
 
           {/* Step 2 */}
           <div className="flex items-center flex-1 min-w-0">
-            <span className="text-gray-400 dark:text-gray-500 font-medium whitespace-nowrap mx-2 sm:mx-4 text-xs sm:text-sm">
+            <span className="text-gray-400 dark:text-gray-500 font-medium mx-2 sm:mx-4 text-xs sm:text-sm">
               2. DELIVERY
             </span>
-            <div className="flex-grow border-t border-gray-300 dark:border-gray-600 min-w-4"></div>
+            <div className="hidden sm:flex flex-grow border-t border-gray-300 dark:border-gray-600 min-w-4"></div>
           </div>
 
           {/* Step 3 */}
           <div className="flex items-center flex-1 min-w-0">
-            <span className="text-gray-400 dark:text-gray-500 font-medium whitespace-nowrap ml-2 sm:ml-4 text-xs sm:text-sm">
+            <span className="text-gray-400 dark:text-gray-500 font-medium ml-2 sm:ml-4 text-xs sm:text-sm">
               3. REVIEW & PAYMENT
             </span>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-16">
+
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-16">
           {/* Cart Items */}
-          <div className="lg:col-span-2">
+          <div className="md:col-span-2">
             <div className="divide-y divide-gray-200 dark:divide-gray-700">
               {cartItems.map((item) => (
                 <div
                   key={item.product._id}
-                  className="flex flex-col sm:flex-row items-start sm:items-center py-6 gap-4"
+                  className="flex flex-row items-start sm:items-center py-6 gap-4"
                 >
                   <img
                     src={`http://localhost:3000${item.product.image}`}
@@ -106,14 +108,14 @@ const CartPage = () => {
                     <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-md">
                       <button
                         onClick={() => updateQuantity(item.product._id, Math.max(0, item.quantity - 1))}
-                        className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                        className="w-5 h-5 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
                       >
                         -
                       </button>
-                      <span className="w-8 text-center text-gray-900 dark:text-white">{item.quantity}</span>
+                      <span className="w-5 sm:w-8 text-center text-gray-900 dark:text-white">{item.quantity}</span>
                       <button
                         onClick={() => updateQuantity(item.product._id, item.quantity + 1)}
-                        className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                        className="w-5 h-5 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
                       >
                         +
                       </button>
@@ -130,10 +132,10 @@ const CartPage = () => {
               <span className="font-medium text-gray-900 dark:text-white">€{subtotal.toFixed(2)}</span>
             </div>
 
-            <div className="mt-6">
+            <div className="mt-6 flex justify-center">
               <Link
                 to="/collections"
-                className="inline-block border border-gray-800 dark:border-gray-300 px-6 py-2 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors text-gray-900 dark:text-white"
+                className="inline-block border border-gray-800 dark:border-gray-300 px-16 py-2 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors text-gray-900 dark:text-white"
               >
                 BACK TO SHOPPING
               </Link>
@@ -187,27 +189,19 @@ const CartPage = () => {
               <h4 className="mb-4 text-gray-900 dark:text-white font-medium">Delivery and retour</h4>
               <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-100">
                 <li className="flex items-start">
-                  <div className="mt-0.5 mr-2 p-0.5 rounded-md bg-transparent dark:bg-white">
-                    <img src="/images/Arrow.png" alt="arrow" className="w-3 h-3 object-contain" />
-                  </div>
+                  <img src="/images/Arrow.png" alt="arrow" className="w-3 h-3 mt-1.5 mr-2 dark:invert" />
                   Order before 12:00 and we will ship the same day.
                 </li>
                 <li className="flex items-start">
-                  <div className="mt-0.5 mr-2 p-0.5 rounded-md bg-transparent dark:bg-white">
-                    <img src="/images/Arrow.png" alt="arrow" className="w-3 h-3 object-contain" />
-                  </div>
+                  <img src="/images/Arrow.png" alt="arrow" className="w-3 h-3 mt-1.5 mr-2 dark:invert" />
                   Orders made after Friday 12:00 are processed on Monday.
                 </li>
                 <li className="flex items-start">
-                  <div className="mt-0.5 mr-2 p-0.5 rounded-md bg-transparent dark:bg-white">
-                    <img src="/images/Arrow.png" alt="arrow" className="w-3 h-3 object-contain" />
-                  </div>
+                  <img src="/images/Arrow.png" alt="arrow" className="w-3 h-3 mt-1.5 mr-2 dark:invert" />
                   To return your articles, please contact us first.
                 </li>
                 <li className="flex items-start">
-                  <div className="mt-0.5 mr-2 p-0.5 rounded-md bg-transparent dark:bg-white">
-                    <img src="/images/Arrow.png" alt="arrow" className="w-3 h-3 object-contain" />
-                  </div>
+                  <img src="/images/Arrow.png" alt="arrow" className="w-3 h-3 mt-1.5 mr-2 dark:invert" />
                   Postal charges for retour are not reimbursed.
                 </li>
               </ul>
