@@ -15,7 +15,7 @@ const options = {
     },
     servers: [
       {
-        url: process.env.BASE_URL || "http://localhost:3000",
+        url: "kanzaweek3day5backendtask.vercel.app",
         description: "Development server",
       },
     ],
