@@ -28,7 +28,7 @@ const productValidation = [
   body("category")
     .isIn(["black-tea", "green-tea", "herbal-tea", "oolong-tea", "white-tea", "chai", "matcha", "rooibos", "teaware"])
     .withMessage("Invalid category"),
-  body("origin").trim().notEmpty().withMessage("Origin is required"),
+  body("origin").trim().isIn(["India", "Japan", "Iran", "South Africa"]).withMessage("Origin must be one of: India, Japan, Iran, South Africa"),
   body("stock").isInt({ min: 0 }).withMessage("Stock must be a non-negative integer"),
   body("collection")
     .optional()

@@ -29,7 +29,7 @@ app.use(
 app.use(express.json({ limit: "10mb" }))
 app.use(express.urlencoded({ extended: true }))
 
-// ✅ Serve static images folder
+// Serve static images folder
 app.use("/images", express.static(path.join(__dirname, "images")))
 
 // Connect to MongoDB
@@ -138,7 +138,6 @@ app.listen(PORT, () => {
   console.log(`--> Server running on port ${PORT}`)
   console.log(`--> API Documentation: http://localhost:${PORT}/api-docs`)
   console.log(`--> Health Check: http://localhost:${PORT}/api/health`)
-  console.log(`--> Images: http://localhost:${PORT}/images/Pic1.png`) // ✅ added log
   console.log(`--> Environment: ${process.env.NODE_ENV || "development"}`)
 })
 

@@ -56,12 +56,12 @@ app.get("/health", (req, res) => {
   });
 });
 
-// ✅ API Routes FIRST
+// API Routes FIRST
 app.use("/api/users", authRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(specs));
 
-// ✅ Serve frontend in production (AFTER API routes)
+// Serve frontend in production (AFTER API routes)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "frontend", "build")));
 
