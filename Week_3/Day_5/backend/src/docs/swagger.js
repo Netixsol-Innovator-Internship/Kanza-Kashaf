@@ -1,4 +1,5 @@
 const swaggerJsdoc = require("swagger-jsdoc")
+const path = require("path");
 
 const options = {
   definition: {
@@ -120,7 +121,7 @@ const options = {
       },
     ],
   },
-  apis: ["./src/routes/*.js"],
+  apis: process.env.NODE_ENV === "production" ? [] : [path.join(__dirname, "routes/*.js")]
 }
 
 const specs = swaggerJsdoc(options)
