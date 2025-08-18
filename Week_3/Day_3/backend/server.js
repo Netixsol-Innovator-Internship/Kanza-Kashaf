@@ -22,7 +22,7 @@ connectDB();
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
-  'https://kanzaweek3day3backendtask.vercel.app'
+  'https://kanzaweek3day3frontendtask.vercel.app'
 ];
 
 app.use(cors({
