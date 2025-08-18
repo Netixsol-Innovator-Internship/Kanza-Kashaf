@@ -26,15 +26,15 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('CORS not allowed for this origin'));
-    }
-  },
+  origin: true,   // automatically reflect request Origin
   credentials: true
 }));
+
+app.options("*", cors({
+  origin: true,
+  credentials: true
+}));
+
 
 // Middleware
 app.use(express.json({ limit: "10mb" }));
