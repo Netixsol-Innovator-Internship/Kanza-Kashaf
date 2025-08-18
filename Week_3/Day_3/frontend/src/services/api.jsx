@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_BASE_URL = "https://kanzaweek3day3backendtask.vercel.app"
+const API_BASE_URL = "https://kanzaweek3day3backendtask.vercel.app/api"
 
 // Create axios instance
 const api = axios.create({
