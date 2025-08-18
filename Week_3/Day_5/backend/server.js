@@ -141,4 +141,6 @@ app.listen(PORT, () => {
   console.log(`--> Environment: ${process.env.NODE_ENV || "development"}`)
 })
 
+const serverless = require("serverless-http")
 module.exports = app
+module.exports.handler = serverless(app)
