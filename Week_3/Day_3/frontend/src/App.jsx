@@ -5,7 +5,7 @@ import LoginPage from "./pages/LoginPage"
 import SignupPage from "./pages/SignupPage"
 import Dashboard from "./pages/Dashboard"
 import { authAPI, tokenManager } from "./services/api"
-import { ThemeProvider } from "./contexts/ThemeContext"
+import { ThemeProvider } from "./context/ThemeContext"
 import "./App.css"
 
 function TaskManagerApp() {
