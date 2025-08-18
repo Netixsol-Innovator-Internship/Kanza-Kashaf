@@ -68,7 +68,7 @@ const LandingPage = () => {
 
           {/* Right Content */}
           <div className="flex flex-col justify-center px-6 py-6 lg:px-16 lg:py-10">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 lg:mb-6 text-gray-900 dark:text-gray-100">
+            <h1 className="text-2xl font-prosto sm:text-3xl md:text-4xl font-bold mb-4 lg:mb-6 text-gray-900 dark:text-gray-100">
               Every day is unique, <br /> just like our tea
             </h1>
             <p className="text-sm sm:text-base mb-3 lg:mb-4 text-gray-700 dark:text-gray-300">
@@ -123,7 +123,7 @@ const LandingPage = () => {
       {/* Collections Section */}
       <section className="py-12 lg:py-16 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl lg:text-3xl font-bold text-center mb-8 lg:mb-12 text-gray-900 dark:text-gray-100">
+          <h2 className="font-prosto text-2xl lg:text-3xl font-bold text-center mb-8 lg:mb-12 text-gray-900 dark:text-gray-100">
             Our Collections
           </h2>
 
