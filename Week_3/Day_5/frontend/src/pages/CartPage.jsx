@@ -3,6 +3,8 @@ import { Link } from "react-router-dom"
 import { useCart } from "../context/CartContext"
 import { useAuth } from "../context/AuthContext"
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api"
+
 const CartPage = () => {
   const { cartItems, updateQuantity, removeFromCart, getCartTotal } = useCart()
   const { user } = useAuth()
@@ -71,7 +73,7 @@ const CartPage = () => {
             <div className="divide-y divide-gray-200 dark:divide-gray-700">
               {cartItems.map((item) => (
                 <div key={item.product._id} className="flex flex-row items-start sm:items-center py-6 gap-4">
-                  <img src={`http://localhost:3000${item.product.image}`} alt={item.product.name} className="w-20 h-20 object-cover rounded-md"/>
+                  <img src={`${API_BASE_URL}${item.product.image}`} alt={item.product.name} className="w-20 h-20 object-cover rounded-md"/>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-medium text-gray-900 dark:text-white">{item.product.name}</h3>
                     <p className="text-sm text-gray-600 dark:text-gray-400">

@@ -388,7 +388,7 @@ const CollectionsPage = () => {
                 <Link key={product._id} to={`/product/${product._id}`} className="group">
                   <div className="bg-white dark:bg-gray-800 overflow-hidden hover:shadow-md dark:hover:shadow-lg transition-shadow">
                     <div className="aspect-square bg-gray-100 dark:bg-gray-700">
-                      <img src={`http://localhost:3000${product.image || "/placeholder.svg"}`} alt={product.name}
+                      <img src={`${API_BASE_URL}${product.image || "/placeholder.svg"}`} alt={product.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"/>
                     </div>
                     <div className="p-4 text-center">

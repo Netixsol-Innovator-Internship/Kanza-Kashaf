@@ -3,6 +3,8 @@ import { Link } from "react-router-dom"
 import { useCart } from "../context/CartContext"
 import { useEffect, useRef } from "react"
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api"
+
 const CartPopup = ({ onClose }) => {
   const { cartItems, cartCount, getCartTotal, updateQuantity, removeFromCart } = useCart()
   const deliveryFee = 3.95
@@ -67,7 +69,7 @@ const CartPopup = ({ onClose }) => {
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 sm:space-y-6 max-h-[calc(100vh-300px)] sm:max-h-[calc(100vh-350px)] lg:max-h-[340px]">
           {cartItems.map((item) => (
             <div key={item.product._id} className="flex items-start justify-between gap-3">
-              <img src={`http://localhost:3000${item.product.image}`} alt={item.product.name} className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded"/>
+              <img src={`${API_BASE_URL}${item.product.image}`} alt={item.product.name} className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded"/>
               <div className="flex-1 min-w-0">
                 <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{item.product.name}</h4>
                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
