@@ -4,7 +4,7 @@ import taskRoutes from "./routes/tasks"
 import { specs, swaggerUi } from "./config/swagger"
 
 const app = express()
-const PORT = process.env.PORT || 5000
+const PORT = 5000
 
 // ✅ CORS configuration
 const allowedOrigins = [
