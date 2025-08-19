@@ -36,7 +36,7 @@ const ProductPage = () => {
   const [addingToCart, setAddingToCart] = useState(false)
   const [notification, setNotification] = useState(null)
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL2 || "http://localhost:5000/api"
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api"
 
   useEffect(() => {
     if (id) {
