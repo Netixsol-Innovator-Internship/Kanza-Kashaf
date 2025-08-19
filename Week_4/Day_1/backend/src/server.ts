@@ -6,8 +6,29 @@ import { specs, swaggerUi } from "./config/swagger"
 const app = express()
 const PORT = process.env.PORT || 5000
 
+// ✅ CORS configuration
+const allowedOrigins = [
+  "http://localhost:5173",   // Vite dev server
+  "http://localhost:5000",   // Next.js/React dev (if needed)
+  "https://kanzaweek4day1frontendtask",  // Production frontend
+]
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin (like curl or mobile apps)
+      if (!origin) return callback(null, true)
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true)
+      } else {
+        return callback(new Error("Not allowed by CORS"))
+      }
+    },
+    credentials: true, // enable cookies / auth headers if needed
+  })
+)
+
 // Middleware
-app.use(cors())
 app.use(express.json())
 
 // Swagger documentation
