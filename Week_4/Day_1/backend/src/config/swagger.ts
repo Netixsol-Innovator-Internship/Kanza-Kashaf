@@ -1,7 +1,7 @@
-import swaggerJsdoc from "swagger-jsdoc"
+import swaggerJsdoc, { Options } from "swagger-jsdoc"
 import swaggerUi from "swagger-ui-express"
 
-const options = {
+const options: Options = {
   definition: {
     openapi: "3.0.0",
     info: {
@@ -11,8 +11,8 @@ const options = {
     },
     servers: [
       {
-        url: "https:kanzaweek4day1backendtask.vercel.app",
-        description: "Development server",
+        url: "https://kanzaweek4day1backendtask.vercel.app",
+        description: "Production server",
       },
     ],
     components: {
@@ -157,7 +157,7 @@ const options = {
       },
     },
   },
-  apis: ["./src/routes/*.ts"], // Path to the API docs
+  apis: ["./src/routes/*.ts"],
 }
 
 const specs = swaggerJsdoc(options)

@@ -4,7 +4,6 @@ import taskRoutes from "./routes/tasks"
 import { specs, swaggerUi } from "./config/swagger"
 
 const app = express()
-const PORT = 5000
 
 // ✅ CORS configuration
 const allowedOrigins = [
@@ -42,7 +41,14 @@ app.get("/health", (req, res) => {
   res.json({ status: "OK", timestamp: new Date().toISOString() })
 })
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-  console.log(`Swagger documentation available at http://localhost:${PORT}/api-docs`)
-})
+// ✅ Local dev server only
+if (process.env.NODE_ENV !== "production") {
+  const PORT = 5000
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+    console.log(`Swagger docs at http://localhost:${PORT}/api-docs`)
+  })
+}
+
+// ✅ Export for Vercel
+export default app
