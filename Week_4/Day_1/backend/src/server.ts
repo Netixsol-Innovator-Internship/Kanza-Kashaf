@@ -1,37 +1,39 @@
 import express from "express"
 import cors from "cors"
+import path from "path"
 import taskRoutes from "./routes/tasks"
 import { specs, swaggerUi } from "./config/swagger"
 
 const app = express()
 
-// ✅ CORS configuration
-const allowedOrigins = [
-  "http://localhost:5173",   // Vite dev server
-  "http://localhost:5000",   // Next.js/React dev (if needed)
-  "https://kanzaweek4day1frontendtask.vercel.app",  // Production frontend
-]
+// ✅ CORS configuration (allow all for production stability)
+const corsOptions: cors.CorsOptions = {
+  origin: "*", // allow all origins to prevent Vercel CORS issues
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "x-requested-with"],
+}
+app.use(cors(corsOptions))
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // allow requests with no origin (like curl or mobile apps)
-      if (!origin) return callback(null, true)
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true)
-      } else {
-        return callback(new Error("Not allowed by CORS"))
-      }
-    },
-    credentials: true, // enable cookies / auth headers if needed
-  })
-)
+// Handle pre-flight OPTIONS for all routes
+app.options("*", cors(corsOptions))
 
 // Middleware
 app.use(express.json())
 
-// Swagger documentation
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs))
+// ✅ Swagger UI assets explicitly served (fixes 404 on Vercel)
+const swaggerUiDist = path.join(__dirname, "../node_modules/swagger-ui-dist")
+app.use("/swagger-ui", express.static(swaggerUiDist))
+
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs, {
+    customCss: ".swagger-ui .topbar { display: none }",
+    customSiteTitle: "Task API Docs",
+    swaggerUrl: "/swagger-ui/swagger-ui-bundle.js",
+  })
+)
 
 // Routes
 app.use("/api/tasks", taskRoutes)
@@ -39,6 +41,19 @@ app.use("/api/tasks", taskRoutes)
 // Health check
 app.get("/health", (req, res) => {
   res.json({ status: "OK", timestamp: new Date().toISOString() })
+})
+
+// 404 handler
+app.use("*", (req, res) => {
+  res.status(404).json({
+    success: false,
+    message: `Route ${req.originalUrl} not found`,
+    availableRoutes: {
+      tasks: "/api/tasks",
+      docs: "/api-docs",
+      health: "/health",
+    },
+  })
 })
 
 // ✅ Local dev server only
