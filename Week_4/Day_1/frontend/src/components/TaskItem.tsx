@@ -52,7 +52,7 @@ export function TaskItem({ task, onToggle, onDelete, isLoading }: TaskItemProps)
 
         <div className="flex-1 min-w-0">
           <span
-            className={`block text-sm sm:text-base font-medium transition-all duration-200 ${
+            className={`block text-left text-sm sm:text-base font-medium transition-all duration-200 break-all whitespace-normal overflow-hidden ${
               task.completed ? "line-through text-muted-foreground" : "text-card-foreground"
             }`}
           >
