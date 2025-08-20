@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
-const path_1 = __importDefault(require("path"));
 const tasks_1 = __importDefault(require("./routes/tasks"));
 const swagger_1 = require("./config/swagger");
 const app = (0, express_1.default)();
@@ -21,13 +20,9 @@ app.use((0, cors_1.default)(corsOptions));
 app.options("*", (0, cors_1.default)(corsOptions));
 // Middleware
 app.use(express_1.default.json());
-// ✅ Swagger UI assets explicitly served (fixes 404 on Vercel)
-const swaggerUiDist = path_1.default.join(__dirname, "../node_modules/swagger-ui-dist");
-app.use("/swagger-ui", express_1.default.static(swaggerUiDist));
 app.use("/api-docs", swagger_1.swaggerUi.serve, swagger_1.swaggerUi.setup(swagger_1.specs, {
     customCss: ".swagger-ui .topbar { display: none }",
     customSiteTitle: "Task API Docs",
-    swaggerUrl: "/swagger-ui/swagger-ui-bundle.js",
 }));
 // Routes
 app.use("/api/tasks", tasks_1.default);

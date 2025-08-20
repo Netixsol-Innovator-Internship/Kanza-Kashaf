@@ -2,7 +2,9 @@ import express from "express"
 import cors from "cors"
 import path from "path"
 import taskRoutes from "./routes/tasks"
-import { specs, swaggerUi } from "./config/swagger"
+import { specs } from "./config/swagger"
+import swaggerUi from "swagger-ui-express"
+import swaggerJsdoc from "swagger-jsdoc"
 
 const app = express()
 
@@ -20,6 +22,11 @@ app.options("*", cors(corsOptions))
 
 // Middleware
 app.use(express.json())
+
+app.use(
+  "/swagger-ui",
+  express.static(path.join(require.resolve("swagger-ui-dist"), ".."))
+)
 
 app.use(
   "/api-docs",
