@@ -11,7 +11,7 @@ const options = {
     },
     servers: [
       {
-        url: "kanzaweek4day1backendtask.vercel.app",
+        url: "https:kanzaweek4day1backendtask.vercel.app",
         description: "Development server",
       },
     ],
