@@ -21,17 +21,12 @@ app.options("*", cors(corsOptions))
 // Middleware
 app.use(express.json())
 
-// ✅ Swagger UI assets explicitly served (fixes 404 on Vercel)
-const swaggerUiDist = path.join(__dirname, "../node_modules/swagger-ui-dist")
-app.use("/swagger-ui", express.static(swaggerUiDist))
-
 app.use(
   "/api-docs",
   swaggerUi.serve,
   swaggerUi.setup(specs, {
     customCss: ".swagger-ui .topbar { display: none }",
     customSiteTitle: "Task API Docs",
-    swaggerUrl: "/swagger-ui/swagger-ui-bundle.js",
   })
 )
 
