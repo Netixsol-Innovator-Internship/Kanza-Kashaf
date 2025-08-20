@@ -10,7 +10,7 @@ const PORT = 5000
 const allowedOrigins = [
   "http://localhost:5173",   // Vite dev server
   "http://localhost:5000",   // Next.js/React dev (if needed)
-  "https://kanzaweek4day1frontendtask",  // Production frontend
+  "https://kanzaweek4day1frontendtask.vercel.app",  // Production frontend
 ]
 
 app.use(
