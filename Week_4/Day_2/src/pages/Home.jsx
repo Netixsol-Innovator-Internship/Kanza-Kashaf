@@ -9,13 +9,12 @@ const Home = () => {
   
   // Filter jobs based on active filters and search query
   const filteredJobs = jobsData.filter(job => {
-    // If there are filters, check if job matches all filters
     const matchesFilters = filters.length === 0 || 
       filters.every(filter => 
         [job.role, job.level, ...job.languages, ...job.tools].includes(filter)
       )
     
-    // If there's a search query, check if job matches search
+    // Search query, check if job matches search
     const matchesSearch = searchQuery === '' || 
       job.position.toLowerCase().includes(searchQuery.toLowerCase()) ||
       job.company.toLowerCase().includes(searchQuery.toLowerCase()) ||

@@ -18,7 +18,7 @@ const JobCard = ({ job }) => {
         <img 
           src={job.logo} 
           alt={job.company} 
-          className="w-14 h-14 lg:w-20 lg:h-20 rounded-lg object-contain border border-gray-200 dark:border-dark-600 p-1"
+          className="w-14 h-14 lg:w-20 lg:h-20 rounded-lg object-contain"
         />
       </div>
       
@@ -57,7 +57,7 @@ const JobCard = ({ job }) => {
         </div>
       </div>
       
-      {/* Filters - Now on left side for mobile, right for desktop */}
+      {/* Filters*/}
       <div className="border-t border-gray-200 dark:border-dark-700 pt-4 md:pt-0 md:border-t-0 flex flex-wrap gap-2 md:justify-end">
         {filters.map((filter, index) => (
           <button 
