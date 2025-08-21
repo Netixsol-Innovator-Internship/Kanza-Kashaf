@@ -26,13 +26,13 @@ const JobDetail = () => {
     <div className="container mx-auto sm:px-4 py-6 max-w-4xl">
       <button 
         onClick={() => navigate('/')}
-        className="flex items-center text-primary font-bold mb-8 hover:underline"
+        className="flex items-center text-primary font-bold mb-8 hover:underline dark:text-white"
       >
         <ArrowLeft size={18} className="mr-2" />
         Back to Job Listings
       </button>
       
-      <div className="bg-white dark:bg-very-dark-cyan rounded-lg shadow-lg overflow-hidden">
+      <div className="job-details bg-white dark:bg-very-dark-cyan rounded-lg shadow-lg overflow-hidden">
         <div className="p-6 border-b border-gray-200 dark:border-gray-700">
           <div className="flex flex-col md:flex-row md:items-center gap-6">
             <img 
