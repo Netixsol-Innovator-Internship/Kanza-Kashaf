@@ -25,11 +25,17 @@ function App() {
             <div className="App min-h-screen flex flex-col">
               <Navbar />
               <main className="flex-grow">
-                <Routes element={<ProtectedRoute roles={['admin','superAdmin']} />}>
-                  <Route path="/admin" element={<AdminDashboard />} />
+                <Routes>
+                  <Route element={<ProtectedRoute roles={['admin','superAdmin']} />}>
+                    <Route path="/admin" element={<AdminDashboard />} />
+                    <Route path="/admin/manage-users" element={<ManageUsers />} />
+                    <Route path="/admin/manage-admins" element={<ManageAdmins />} />
+                    <Route path="/admin/add-product" element={<AddProduct />} />
+                  </Route>
+                  {/* <Route path="/admin" element={<AdminDashboard />} />
                   <Route path="/admin/manage-users" element={<ManageUsers />} />
                   <Route path="/admin/manage-admins" element={<ManageAdmins />} />
-                  <Route path="/admin/add-product" element={<AddProduct />} />
+                  <Route path="/admin/add-product" element={<AddProduct />} /> */}
                   <Route path="/" element={<LandingPage />} />
                   <Route path="/collections" element={<CollectionsPage />} />
                   <Route path="/collections/:category" element={<CollectionsPage />} />

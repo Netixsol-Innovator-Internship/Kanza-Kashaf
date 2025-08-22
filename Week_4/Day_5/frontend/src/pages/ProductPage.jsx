@@ -137,7 +137,7 @@ const ProductPage = () => {
           {/* Product Info */}
           <div className="space-y-8 lg:space-y-12">
             <div>
-              {user?.isAdmin && (
+              {user && (user.role === "admin" || user.role === "superAdmin") && (
                 <>
                   <EditableProductInfo product={product} onUpdated={fetchProduct} />
                   <DeleteProductButton productId={product._id} />

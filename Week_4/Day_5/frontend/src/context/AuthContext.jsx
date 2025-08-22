@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
       setUser(user)
 
-      return { success: true }
+      return { success: true, user, token }
     } catch (error) {
       return {
         success: false,
@@ -79,7 +79,7 @@ export const AuthProvider = ({ children }) => {
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
       setUser(user)
 
-      return { success: true }
+      return { success: true, user, token }
     } catch (error) {
       return {
         success: false,
@@ -108,6 +108,19 @@ export const AuthProvider = ({ children }) => {
     return url
   }
 
+  const setCredentials = ({ user, token }) => {
+    if (user) setUser(user)
+    else setUser(null)
+
+    if (token) {
+      localStorage.setItem("token", token)
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
+    } else {
+      localStorage.removeItem("token")
+      delete axios.defaults.headers.common["Authorization"]
+    }
+  }
+
   const value = {
     user,
     login,
@@ -116,6 +129,7 @@ export const AuthProvider = ({ children }) => {
     loading,
     setRedirectUrl,
     getAndClearRedirectUrl,
+    setCredentials, // ⬅️ added to context
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

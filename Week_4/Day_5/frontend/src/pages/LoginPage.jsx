@@ -12,7 +12,7 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
 
-  const { login, getAndClearRedirectUrl } = useAuth()
+  const { login, getAndClearRedirectUrl, setCredentials } = useAuth()
   const navigate = useNavigate()
 
   const handleChange = (e) => {
@@ -30,6 +30,11 @@ const LoginPage = () => {
     const result = await login(formData.email, formData.password)
 
     if (result.success) {
+      setCredentials({
+        user: result.user,
+        token: result.token,
+      })
+
       const redirectUrl = getAndClearRedirectUrl() || "/"
       navigate(redirectUrl, { replace: true })
     } else {
