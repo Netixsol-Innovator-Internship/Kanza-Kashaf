@@ -2,11 +2,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { ThemeProvider } from "./components/ThemeProvider"
 import { AuthProvider } from "./context/AuthContext.jsx"
 import { CartProvider } from "./context/CartContext.jsx"
-import { Routes, Route } from "react-router-dom";
-import ProtectedRoute from "./src/components/ProtectedRoute";
-import AdminDashboard from "./src/pages/admin/AdminDashboard";
-import ManageUsers from "./src/pages/admin/ManageUsers";
-import ManageAdmins from "./src/pages/admin/ManageAdmins";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import ManageUsers from "./pages/admin/ManageUsers";
+import ManageAdmins from "./pages/admin/ManageAdmins";
 import Navbar from "./components/Navbar.jsx"
 import LandingPage from "./pages/LandingPage.jsx"
 import CollectionsPage from "./pages/CollectionsPage.jsx"
@@ -26,18 +25,20 @@ function App() {
             <div className="App min-h-screen flex flex-col">
               <Navbar />
               <main className="flex-grow">
-                <Routes element={<ProtectedRoute roles={['admin','superAdmin']} />}>
-                  <Route path="/admin" element={<AdminDashboard />} />
-                  <Route path="/admin/manage-users" element={<ManageUsers />} />
-                  <Route path="/admin/manage-admins" element={<ManageAdmins />} />
+                <Routes>
                   <Route path="/" element={<LandingPage />} />
                   <Route path="/collections" element={<CollectionsPage />} />
                   <Route path="/collections/:category" element={<CollectionsPage />} />
-                  <Route path="/admin/add-product" element={<AddProduct />} />
                   <Route path="/product/:id" element={<ProductPage />} />
                   <Route path="/cart" element={<CartPage />} />
                   <Route path="/login" element={<LoginPage />} />
                   <Route path="/register" element={<RegisterPage />} />
+                </Routes>
+                <Routes element={<ProtectedRoute roles={['admin','superAdmin']} />}>
+                  <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="/admin/manage-users" element={<ManageUsers />} />
+                  <Route path="/admin/manage-admins" element={<ManageAdmins />} />
+                  <Route path="/admin/add-product" element={<AddProduct />} />
                 </Routes>
               </main>
               <Footer />

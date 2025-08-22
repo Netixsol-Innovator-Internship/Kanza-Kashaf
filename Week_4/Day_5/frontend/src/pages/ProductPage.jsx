@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { useParams, Link, useLocation } from "react-router-dom"
-import EditableProductInfo from "./src/components/admin/EditableProductInfo";
-import DeleteProductButton from "./src/components/admin/DeleteProductButton";
+import EditableProductInfo from "../components/admin/EditableProductInfo";
+import DeleteProductButton from "../components/admin/DeleteProductButton";
 import { useCart } from "../context/CartContext"
 import { useAuth } from "../context/AuthContext"
 

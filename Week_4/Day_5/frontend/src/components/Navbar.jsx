@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 import { useCart } from "../context/CartContext"
 import { ThemeToggle } from "./ThemeToggle"
-import AdminNav from "../admin/AdminNav";
+import AdminNav from "./admin/AdminNav";
 import CartPopup from "./CartPopup"
 
 const Navbar = () => {
