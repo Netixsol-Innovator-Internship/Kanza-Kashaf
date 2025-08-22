@@ -2,9 +2,12 @@
 
 import { useState, useEffect } from "react"
 import { useParams, Link, useLocation } from "react-router-dom"
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../features/auth/authSlice";
 import axios from "axios"
 
 const CollectionsPage = () => {
+  const user = useSelector(selectCurrentUser);
   const { category } = useParams()
   const location = useLocation()
   const [products, setProducts] = useState([])
