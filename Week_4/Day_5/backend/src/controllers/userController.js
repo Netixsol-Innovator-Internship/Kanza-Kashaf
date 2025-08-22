@@ -3,10 +3,28 @@ const User = require("../models/User")
 // Get all users
 const getUsers = async (req, res) => {
   try {
-    const users = await User.find().select("-password")
+    let users
+
+    if (req.user.role === "admin") {
+      // Admin can only see regular users
+      users = await User.find({ role: "user" }).select("-password")
+    } else if (req.user.role === "superAdmin") {
+      // SuperAdmin can see everyone
+      users = await User.find().select("-password")
+    } else {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied: insufficient permissions",
+      })
+    }
+
     res.status(200).json({ success: true, data: users })
   } catch (error) {
-    res.status(500).json({ success: false, message: "Failed to fetch users", error: error.message })
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch users",
+      error: error.message,
+    })
   }
 }
 

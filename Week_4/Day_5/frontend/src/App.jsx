@@ -3,6 +3,7 @@ import { ThemeProvider } from "./components/ThemeProvider"
 import { AuthProvider } from "./context/AuthContext.jsx"
 import { CartProvider } from "./context/CartContext.jsx"
 import Navbar from "./components/Navbar.jsx"
+import ManageUsers from "./pages/ManageUsers"
 import LandingPage from "./pages/LandingPage.jsx"
 import CollectionsPage from "./pages/CollectionsPage.jsx"
 import ProductPage from "./pages/ProductPage.jsx"
@@ -22,6 +23,7 @@ function App() {
               <main className="flex-grow">
                 <Routes>
                   <Route path="/" element={<LandingPage />} />
+                  <Route path="/manage-users" element={<ManageUsers />} />
                   <Route path="/collections" element={<CollectionsPage />} />
                   <Route path="/collections/:category" element={<CollectionsPage />} />
                   <Route path="/product/:id" element={<ProductPage />} />

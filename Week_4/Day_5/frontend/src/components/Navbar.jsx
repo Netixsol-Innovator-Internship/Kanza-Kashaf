@@ -9,11 +9,10 @@ import CartPopup from "./CartPopup"
 
 const Navbar = () => {
   const { user, logout } = useAuth()
-  const { cartCount } = useCart()
+  const { cartCount, clearCart } = useCart()
   const [showCartPopup, setShowCartPopup] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const navigate = useNavigate()
-  const { clearCart } = useCart()
 
   const handleLogout = () => {
     clearCart()
@@ -26,28 +25,67 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center space-x-1 sm:space-x-2">
             <img src="/images/Logo.png" alt="Logo" className="w-8 h-8 p-1 dark:invert" />
-            <span className="font-prosto text-xl font-semibold text-gray-800 dark:text-gray-200">Brand Name</span>
+            <span className="font-prosto text-xl font-semibold text-gray-800 dark:text-gray-200">
+              Brand Name
+            </span>
           </Link>
 
           {/* Desktop Navigation Links */}
           <div className="hidden lg:flex items-center space-x-8">
-            <Link to="/collections" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors">
+            <Link
+              to="/collections"
+              className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
+            >
               TEA COLLECTIONS
             </Link>
-            <Link to="/" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors">
+            <Link
+              to="/accessories"
+              className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
+            >
               ACCESSORIES
             </Link>
-            <Link to="/" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors">
+            <Link
+              to="/blog"
+              className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
+            >
               BLOG
             </Link>
-            <Link to="/" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors">
+            <Link
+              to="/contact"
+              className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
+            >
               CONTACT US
             </Link>
+
+            {/* Role-based Links */}
+            {user?.role === "admin" && (
+              <Link
+                to="/manage-users"
+                className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
+              >
+                Manage Users
+              </Link>
+            )}
+            {user?.role === "superAdmin" && (
+              <>
+                <Link
+                  to="/manage-admins"
+                  className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
+                >
+                  Manage Admins
+                </Link>
+                <Link
+                  to="/manage-users"
+                  className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
+                >
+                  Manage Users
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Right side icons */}
           <div className="flex items-center space-x-2.5 sm:space-x-6">
-            {/* Theme Toggle */}
             <ThemeToggle />
 
             {/* Search */}
@@ -74,7 +112,10 @@ const Navbar = () => {
                 </div>
               </div>
             ) : (
-              <Link to="/login" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 transition-colors">
+              <Link
+                to="/login"
+                className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 transition-colors"
+              >
                 <img src="/images/Person.png" alt="Login" className="w-5 h-5 dark:invert" />
               </Link>
             )}
@@ -92,7 +133,6 @@ const Navbar = () => {
                   </span>
                 )}
               </button>
-
               {showCartPopup && <CartPopup onClose={() => setShowCartPopup(false)} />}
             </div>
 
@@ -101,7 +141,12 @@ const Navbar = () => {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 transition-colors"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
@@ -112,22 +157,63 @@ const Navbar = () => {
         {isMobileMenuOpen && (
           <div className="lg:hidden border-t border-gray-200 dark:border-gray-700 py-4">
             <div className="flex flex-col space-y-4">
-              <Link to="/collections" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}>
+              <Link
+                to="/collections"
+                className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
                 TEA COLLECTIONS
               </Link>
-              <Link to="/accessories" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}>
+              <Link
+                to="/accessories"
+                className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
                 ACCESSORIES
               </Link>
-              <Link to="/blog" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}>
+              <Link
+                to="/blog"
+                className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
                 BLOG
               </Link>
-              <Link to="/contact" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}>
+              <Link
+                to="/contact"
+                className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
                 CONTACT US
               </Link>
+
+              {/* Role-based (Mobile) */}
+              {user?.role === "admin" && (
+                <Link
+                  to="/manage-users"
+                  className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Manage Users
+                </Link>
+              )}
+              {user?.role === "superAdmin" && (
+                <>
+                  <Link
+                    to="/manage-admins"
+                    className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Manage Admins
+                  </Link>
+                  <Link
+                    to="/manage-users"
+                    className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Manage Users
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         )}

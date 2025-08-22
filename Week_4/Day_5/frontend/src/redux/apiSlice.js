@@ -5,7 +5,7 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3000/api",
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth?.token;
+      const token = getState().auth.token;
       if (token) headers.set("authorization", `Bearer ${token}`);
       return headers;
     },
@@ -68,23 +68,25 @@ export const apiSlice = createApi({
     // USERS
     getUsers: builder.query({
       query: () => "/users",
-      providesTags: ["User"],
+      providesTags: ["Users"],
     }),
+
     updateUserRole: builder.mutation({
-      query: ({ id, role }) => ({
-        url: `/users/${id}/role`,
-        method: "PATCH",
+      query: ({ userId, role }) => ({
+        url: `/users/${userId}/role`,
+        method: "PUT",
         body: { role },
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["Users"],
     }),
-    toggleBlockUser: builder.mutation({
-      query: ({ id, blocked }) => ({
-        url: `/users/${id}/block`,
-        method: "PATCH",
+
+    toggleUserBlock: builder.mutation({
+      query: ({ userId, blocked }) => ({
+        url: `/users/${userId}/block`,
+        method: "PUT",
         body: { blocked },
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["Users"],
     }),
 
     // CART
@@ -139,7 +141,7 @@ export const {
   // USERS
   useGetUsersQuery,
   useUpdateUserRoleMutation,
-  useToggleBlockUserMutation,
+  useToggleUserBlockMutation,
   // CART
   useGetCartQuery,
   useAddToCartMutation,
