@@ -1,46 +1,94 @@
-import { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useLoginMutation } from "../features/api/authApi";
-import { useDispatch } from "react-redux";
-import { setCredentials } from "../features/auth/authSlice";
-import { normalizeRole } from "../features/auth/roleUtils";
+"use client"
 
-export default function Login(){
-  const [login, { isLoading, error, data }] = useLoginMutation();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"
 
-  useEffect(()=>{
-    if(data?.token && data?.user){
-      const role = normalizeRole(data.user.role);
-      dispatch(setCredentials({ token: data.token, user: { ...data.user, role } }));
-      const redirect =
-        role === "admin" ? "/admin/dashboard" :
-        role === "superAdmin" ? "/superadmin/dashboard" :
-        location.state?.from?.pathname || "/";
-      navigate(redirect, { replace: true });
+const LoginPage = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  })
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+
+  const { login, getAndClearRedirectUrl } = useAuth()
+  const navigate = useNavigate()
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    setError("")
+
+    const result = await login(formData.email, formData.password)
+
+    if (result.success) {
+      const redirectUrl = getAndClearRedirectUrl() || "/"
+      navigate(redirectUrl, { replace: true })
+    } else {
+      setError(result.message)
     }
-  },[data, dispatch, navigate, location]);
 
-  const onSubmit = async (e)=>{
-    e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const body = Object.fromEntries(form.entries());
-    try{
-      await login(body).unwrap();
-    }catch(err){ /* handled by error state */ }
-  };
+    setLoading(false)
+  }
 
   return (
-    <div className="max-w-md mx-auto px-4 py-10">
-      <h1 className="text-2xl font-semibold mb-6">Login</h1>
-      <form onSubmit={onSubmit} className="space-y-4">
-        <input name="email" type="email" required placeholder="Email" className="w-full rounded border px-3 py-2" />
-        <input name="password" type="password" required placeholder="Password" className="w-full rounded border px-3 py-2" />
-        <button disabled={isLoading} className="w-full rounded bg-black text-white py-2 disabled:opacity-50">Login</button>
-        {error && <p className="text-red-600 text-sm">{error?.data?.message || "Login failed"}</p>}
-      </form>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 transition-colors">
+      <div className="max-w-md w-full space-y-8">
+        <div>
+          <h2 className="mt-6 text-center text-2xl lg:text-3xl font-extrabold text-gray-900 dark:text-gray-100">
+            Sign in to your account
+          </h2>
+          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+            Or{" "}
+            <Link to="/register" className="font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors">
+              create a new account
+            </Link>
+          </p>
+        </div>
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          {error && (
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded">
+              {error}
+            </div>
+          )}
+
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                Email address
+              </label>
+              <input id="email" name="email" type="email" autoComplete="email" required value={formData.email} onChange={handleChange} placeholder="Enter your email"
+                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 rounded focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm transition-colors"/>
+            </div>
+
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                Password
+              </label>
+              <input id="password" name="password" type="password" autoComplete="current-password" required value={formData.password} onChange={handleChange}
+                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 rounded focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm transition-colors"
+                placeholder="Enter your password"/>
+            </div>
+          </div>
+
+          <div>
+            <button type="submit" disabled={loading}
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-800 dark:bg-gray-700 hover:bg-gray-900 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50 transition-colors">
+              {loading ? "Signing in..." : "Sign in"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-  );
+  )
 }
+
+export default LoginPage

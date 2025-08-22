@@ -2,11 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { useParams, Link, useLocation } from "react-router-dom"
-import EditableProductInfo from "../components/admin/EditableProductInfo";
-import DeleteProductButton from "../components/admin/DeleteProductButton";
 import { useCart } from "../context/CartContext"
 import { useAuth } from "../context/AuthContext"
-
 import axios from "axios"
 
 // Notification Component
@@ -137,12 +134,6 @@ const ProductPage = () => {
           {/* Product Info */}
           <div className="space-y-8 lg:space-y-12">
             <div>
-              {user && (user.role === "admin" || user.role === "superAdmin") && (
-                <>
-                  <EditableProductInfo product={product} onUpdated={fetchProduct} />
-                  <DeleteProductButton productId={product._id} />
-                </>
-              )}
               <h1 className="font-prosto text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-2">{product.name}</h1>
               <p className="text-gray-600 dark:text-gray-400 mb-4">
                 {product.description || "A lovely warming Chai tea with ginger cinnamon flavours."}
