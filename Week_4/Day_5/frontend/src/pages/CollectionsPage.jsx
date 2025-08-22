@@ -2,14 +2,12 @@
 
 import { useState, useEffect } from "react"
 import { useParams, Link, useLocation } from "react-router-dom"
-import axios from "axios"
+import { useGetProductsQuery } from "../redux/apiSlice"  // ✅ import RTK Query hook
 
 const CollectionsPage = () => {
   const { category } = useParams()
   const location = useLocation()
-  const [products, setProducts] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([])
-  const [loading, setLoading] = useState(true)
   const [filters, setFilters] = useState({
     collections: [],
     origins: [],
@@ -50,9 +48,9 @@ const CollectionsPage = () => {
     allergens: ["Lactose-free", "Gluten-free", "Nuts-free", "Soy-free"],
   }
 
-  useEffect(() => {
-    fetchProducts()
-  }, [])
+  // ✅ Replace axios with RTK Query
+  const { data, isLoading, error } = useGetProductsQuery()
+  const products = data?.data?.products || []
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search)
@@ -79,22 +77,8 @@ const CollectionsPage = () => {
     applyFilters()
   }, [products, filters, category, sortBy])
 
-  const fetchProducts = async () => {
-    try {
-      const response = await axios.get(`${API_BASE_URL}/products`)
-      const data = response.data?.data?.products || []
-      setProducts(Array.isArray(data) ? data : [])
-    } catch (error) {
-      console.error("Error fetching products:", error)
-      setProducts([])
-    } finally {
-      setLoading(false)
-    }
-  }
-
   const applyFilters = () => {
-    const safeProducts = Array.isArray(products) ? [...products] : []
-    let filtered = safeProducts
+    let filtered = [...products]
 
     if (category) {
       const categoryName = category.replace("-", " ").toUpperCase()
@@ -166,10 +150,18 @@ const CollectionsPage = () => {
     }))
   }
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
         <div className="text-gray-900 dark:text-white">Loading...</div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
+        <div className="text-gray-900 dark:text-white">Failed to load products.</div>
       </div>
     )
   }

@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect } from "react"
-import axios from "axios"
+import { useLoginMutation, useRegisterMutation, useGetProfileQuery } from "../redux/apiSlice"
 
 const AuthContext = createContext()
 
@@ -20,82 +20,67 @@ export const AuthProvider = ({ children }) => {
     () => localStorage.getItem("redirectAfterLogin") || null
   )
 
-  const API_BASE_URL =
-    import.meta.env.VITE_API_URL || "http://localhost:5000/api"
+  // ✅ RTK Query hooks
+  const [loginMutation] = useLoginMutation()
+  const [registerMutation] = useRegisterMutation()
 
+  // Profile query (auto fetch if token exists)
+  const token = localStorage.getItem("token")
+  const { data: profileData, isLoading: profileLoading, isError } = useGetProfileQuery(undefined, {
+    skip: !token, // don’t fetch if no token
+  })
+
+  // Keep user state in sync with profile data
   useEffect(() => {
-    const token = localStorage.getItem("token")
-    if (token) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
-      checkAuthStatus()
-    } else {
-      setLoading(false)
+    if (profileData?.data?.user) {
+      setUser(profileData.data.user)
+    } else if (!profileLoading && !token) {
+      setUser(null)
     }
-  }, [])
+    setLoading(profileLoading)
+  }, [profileData, profileLoading, token])
 
-  const checkAuthStatus = async () => {
-    try {
-      const response = await axios.get(`${API_BASE_URL}/auth/profile`)
-      setUser(response.data.data.user)
-    } catch (error) {
-      localStorage.removeItem("token")
-      delete axios.defaults.headers.common["Authorization"]
-    } finally {
-      setLoading(false)
-    }
-  }
-
+  // 🔑 Login
   const login = async (email, password) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/auth/login`, {
-        email,
-        password,
-      })
-
-      const { token, user } = response.data.data
+      const result = await loginMutation({ email, password }).unwrap()
+      const { token, user } = result.data
       localStorage.setItem("token", token)
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
       setUser(user)
-
       return { success: true }
     } catch (error) {
       return {
         success: false,
-        message: error.response?.data?.message || "Login failed",
+        message: error?.data?.message || "Login failed",
       }
     }
   }
 
+  // 📝 Register
   const register = async (name, email, password) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/auth/register`, {
-        name,
-        email,
-        password,
-      })
-
-      const { token, user } = response.data.data
+      const result = await registerMutation({ name, email, password }).unwrap()
+      const { token, user } = result.data
       localStorage.setItem("token", token)
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
       setUser(user)
-
       return { success: true }
     } catch (error) {
       return {
         success: false,
-        message: error.response?.data?.message || "Registration failed",
+        message: error?.data?.message || "Registration failed",
       }
     }
   }
 
+  // 🚪 Logout
   const logout = () => {
     localStorage.removeItem("token")
     localStorage.removeItem("redirectAfterLogin")
-    delete axios.defaults.headers.common["Authorization"]
     setUser(null)
     setRedirectAfterLogin(null)
   }
 
+  // Redirect helpers
   const setRedirectUrl = (url) => {
     setRedirectAfterLogin(url)
     localStorage.setItem("redirectAfterLogin", url)

@@ -1,8 +1,14 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect } from "react"
-import axios from "axios"
 import { useAuth } from "./AuthContext"
+import {
+  useGetCartQuery,
+  useAddToCartMutation,
+  useUpdateCartMutation,
+  useRemoveFromCartMutation,
+  useClearCartMutation,
+} from "../redux/apiSlice"
 
 const CartContext = createContext()
 
@@ -20,113 +26,85 @@ export const CartProvider = ({ children }) => {
   const [loading, setLoading] = useState(false)
   const { user } = useAuth()
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api"
+  // ✅ RTK Query hooks
+  const {
+    data: cartData,
+    isLoading: cartLoading,
+    refetch: refetchCart,
+  } = useGetCartQuery(undefined, { skip: !user })
 
-  const ensureAuthHeaders = () => {
-    const token = localStorage.getItem("token")
-    if (token && !axios.defaults.headers.common["Authorization"]) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
-    }
-  }
+  const [addToCartMutation] = useAddToCartMutation()
+  const [updateCartMutation] = useUpdateCartMutation()
+  const [removeFromCartMutation] = useRemoveFromCartMutation()
+  const [clearCartMutation] = useClearCartMutation()
 
+  // Keep cart state in sync with query data
   useEffect(() => {
-    if (user) {
-      fetchCart()
-    } else {
-      setCartItems([])
-      setCartCount(0)
-    }
-  }, [user])
-
-  const fetchCart = async () => {
-    if (!user) return
-
-    try {
-      setLoading(true)
-      ensureAuthHeaders()
-      const response = await axios.get(`${API_BASE_URL}/cart`)
-
-      console.log("[v0] Cart fetch response:", response.data)
-
+    if (cartData) {
       let items = []
-      if (response.data.data?.cart?.items) {
-        items = response.data.data.cart.items
-      } else if (response.data.cart?.items) {
-        items = response.data.cart.items
-      } else if (response.data.data?.items) {
-        items = response.data.data.items
-      } else if (response.data.items) {
-        items = response.data.items
+      if (cartData.data?.cart?.items) {
+        items = cartData.data.cart.items
+      } else if (cartData.cart?.items) {
+        items = cartData.cart.items
+      } else if (cartData.data?.items) {
+        items = cartData.data.items
+      } else if (cartData.items) {
+        items = cartData.items
       }
 
-      console.log("[v0] Processed cart items:", items)
       setCartItems(items)
       setCartCount(items.reduce((total, item) => total + item.quantity, 0))
-    } catch (error) {
-      console.error("Error fetching cart:", error)
+    } else if (!user) {
       setCartItems([])
       setCartCount(0)
-    } finally {
-      setLoading(false)
     }
-  }
+    setLoading(cartLoading)
+  }, [cartData, cartLoading, user])
 
+  // ➕ Add to cart
   const addToCart = async (productId, quantity = 1) => {
     if (!user) {
       return { success: false, message: "Please login to add items to cart" }
     }
-
     try {
-      ensureAuthHeaders()
-      const response = await axios.post(`${API_BASE_URL}/cart/add`, {
-        productId,
-        quantity,
-      })
-
-      await fetchCart()
+      await addToCartMutation({ productId, quantity }).unwrap()
+      await refetchCart()
       return { success: true, message: "Item added to cart" }
     } catch (error) {
       return {
         success: false,
-        message: error.response?.data?.message || "Failed to add item to cart",
+        message: error?.data?.message || "Failed to add item to cart",
       }
     }
   }
 
+  // ✏️ Update quantity
   const updateQuantity = async (productId, quantity) => {
     if (!user) return
-
     try {
-      ensureAuthHeaders()
-      await axios.put(`${API_BASE_URL}/cart/update`, {
-        productId,
-        quantity,
-      })
-
-      await fetchCart()
+      await updateCartMutation({ productId, quantity }).unwrap()
+      await refetchCart()
     } catch (error) {
       console.error("Error updating quantity:", error)
     }
   }
 
+  // ❌ Remove from cart
   const removeFromCart = async (productId) => {
     if (!user) return
-
     try {
-      ensureAuthHeaders()
-      await axios.delete(`${API_BASE_URL}/cart/remove/${productId}`)
-      await fetchCart()
+      await removeFromCartMutation(productId).unwrap()
+      await refetchCart()
     } catch (error) {
       console.error("Error removing item:", error)
     }
   }
 
+  // 🧹 Clear cart
   const clearCart = async () => {
     if (!user) return
-
     try {
-      ensureAuthHeaders()
-      await axios.delete(`${API_BASE_URL}/cart/clear`)
+      await clearCartMutation().unwrap()
       setCartItems([])
       setCartCount(0)
     } catch (error) {
@@ -134,6 +112,7 @@ export const CartProvider = ({ children }) => {
     }
   }
 
+  // 💰 Cart total
   const getCartTotal = () => {
     return cartItems.reduce((total, item) => {
       return total + (item.product?.price || 0) * item.quantity
@@ -149,7 +128,7 @@ export const CartProvider = ({ children }) => {
     removeFromCart,
     clearCart,
     getCartTotal,
-    fetchCart,
+    fetchCart: refetchCart, // keep same name for compatibility
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

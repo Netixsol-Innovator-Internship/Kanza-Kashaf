@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useParams, Link, useLocation } from "react-router-dom"
 import { useCart } from "../context/CartContext"
 import { useAuth } from "../context/AuthContext"
-import axios from "axios"
+import { useGetProductByIdQuery } from "../redux/apiSlice"
 
 // Notification Component
 const Notification = ({ message, onClose }) => {
@@ -29,31 +29,15 @@ const ProductPage = () => {
   const location = useLocation()
   const { addToCart } = useCart()
   const { user, setRedirectUrl } = useAuth()
-  const [product, setProduct] = useState(null)
   const [selectedVariant, setSelectedVariant] = useState("50g")
   const [quantity, setQuantity] = useState(1)
-  const [loading, setLoading] = useState(true)
   const [addingToCart, setAddingToCart] = useState(false)
   const [notification, setNotification] = useState(null)
 
+  const { data, error, isLoading } = useGetProductByIdQuery(id)
+  const product = data?.data?.product
+
   const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api"
-
-  useEffect(() => {
-    if (id) {
-      fetchProduct()
-    }
-  }, [id])
-
-  const fetchProduct = async () => {
-    try {
-      const response = await axios.get(`${API_BASE_URL}/products/${id}`)
-      setProduct(response.data.data.product)
-    } catch (error) {
-      console.error("Error fetching product:", error)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const handleAddToCart = async () => {
     if (!user) {
@@ -67,12 +51,10 @@ const ProductPage = () => {
 
     if (result.success) {
       setNotification(`${product.name} added to cart!`)
-      setTimeout(() => setNotification(null), 3000)
     } else {
       setNotification(result.message)
-      setTimeout(() => setNotification(null), 3000)
     }
-
+    setTimeout(() => setNotification(null), 3000)
     setAddingToCart(false)
   }
 
@@ -85,7 +67,7 @@ const ProductPage = () => {
     { id: "sample", label: "Sampler", image: "/images/Sample.png" },
   ]
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
         <div className="text-gray-900 dark:text-white">Loading...</div>
@@ -93,7 +75,7 @@ const ProductPage = () => {
     )
   }
 
-  if (!product) {
+  if (error || !product) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
         <div className="text-gray-900 dark:text-white">Product not found</div>
@@ -115,7 +97,10 @@ const ProductPage = () => {
               COLLECTIONS
             </Link>
             <span className="mx-2 text-gray-600 dark:text-gray-400">/</span>
-            <Link to={`/collections/${product.collection?.toLowerCase().replace(" ", "-")}`} className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">
+            <Link
+              to={`/collections/${product.collection?.toLowerCase().replace(" ", "-")}`}
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+            >
               {product.collection?.toUpperCase()}
             </Link>
             <span className="mx-2 text-gray-600 dark:text-gray-400">/</span>
