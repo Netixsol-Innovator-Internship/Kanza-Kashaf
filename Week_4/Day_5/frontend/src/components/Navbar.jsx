@@ -1,142 +1,50 @@
-"use client"
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../features/auth/authSlice";
+import { normalizeRole } from "../features/auth/roleUtils";
 
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { useAuth } from "../context/AuthContext"
-import { useCart } from "../context/CartContext"
-import { ThemeToggle } from "./ThemeToggle"
-import AdminNav from "./admin/AdminNav";
-import CartPopup from "./CartPopup"
+export default function Navbar(){
+  const { user } = useSelector((s)=>s.auth);
+  const dispatch = useDispatch();
+  const role = normalizeRole(user?.role);
 
-const Navbar = () => {
-  const { user, logout } = useAuth()
-  const { cartCount } = useCart()
-  const [showCartPopup, setShowCartPopup] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const navigate = useNavigate()
-  const { clearCart } = useCart()
-
-  const handleLogout = () => {
-    clearCart()
-    logout()
-  }
+  const isAdmin = role === "admin";
+  const isSuper = role === "superAdmin";
 
   return (
-    <nav className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-700 transition-colors">
-      <div className="max-w-7xl mx-auto px-2 sm:px-6 md:px-8">
-        <div className="flex justify-between items-center h-16">
-          <Link to="/" className="flex items-center space-x-1 sm:space-x-2">
-            <img src="/images/Logo.png" alt="Logo" className="w-8 h-8 p-1 dark:invert" />
-            <span className="font-prosto text-xl font-semibold text-gray-800 dark:text-gray-200">Brand Name</span>
-          </Link>
-
-          {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center space-x-8">
-            <Link to="/collections" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors">
-              TEA COLLECTIONS
+    <nav className="w-full border-b bg-white/70 dark:bg-zinc-900/70 backdrop-blur sticky top-0 z-40">
+      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Link to="/" className="font-bold text-lg">Tea App</Link>
+          <Link to="/collections" className="text-sm opacity-80 hover:opacity-100">Collection</Link>
+          <Link to="/contact" className="text-sm opacity-80 hover:opacity-100">Contact Us</Link>
+          {isAdmin && (
+            <Link to="/admin/manage-users" className="text-sm font-medium px-2 py-1 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
+              Manage User
             </Link>
-            <Link to="/" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors">
-              ACCESSORIES
-            </Link>
-            <Link to="/" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors">
-              BLOG
-            </Link>
-            <Link to="/" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors">
-              CONTACT US
-            </Link>
-            <AdminNav/>
-          </div>
-
-          {/* Right side icons */}
-          <div className="flex items-center space-x-2.5 sm:space-x-6">
-            {/* Theme Toggle */}
-            <ThemeToggle />
-
-            {/* Search */}
-            <button className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 transition-colors">
-              <img src="/images/Search.png" alt="Search" className="w-5 h-5 dark:invert" />
-            </button>
-
-            {/* User Account */}
-            {user ? (
-              <div className="relative group">
-                <button className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 transition-colors">
-                  <img src="/images/Person.png" alt="User" className="w-5 h-5 dark:invert" />
-                </button>
-                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 border dark:border-gray-700">
-                  <div className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 border-b dark:border-gray-700">
-                    Hello, {user.name}
-                  </div>
-                  <button
-                    onClick={handleLogout}
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                  >
-                    Logout
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <Link to="/login" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 transition-colors">
-                <img src="/images/Person.png" alt="Login" className="w-5 h-5 dark:invert" />
+          )}
+          {isSuper && (
+            <>
+              <Link to="/superadmin/manage-admins" className="text-sm font-medium px-2 py-1 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
+                Manage Admin
               </Link>
-            )}
-
-            {/* Cart */}
-            <div className="relative">
-              <button
-                onClick={() => setShowCartPopup(!showCartPopup)}
-                className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 relative transition-colors"
-              >
-                <img src="/images/Cart.png" alt="Cart" className="w-5 h-5 mt-1 dark:invert" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                    {cartCount}
-                  </span>
-                )}
-              </button>
-
-              {showCartPopup && <CartPopup onClose={() => setShowCartPopup(false)} />}
-            </div>
-
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 transition-colors"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-          </div>
+              <Link to="/superadmin/manage-users" className="text-sm font-medium px-2 py-1 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
+                Manage User
+              </Link>
+            </>
+          )}
         </div>
-
-        {/* Mobile Navigation Menu */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden border-t border-gray-200 dark:border-gray-700 py-4">
-            <div className="flex flex-col space-y-4">
-              <Link to="/collections" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}>
-                TEA COLLECTIONS
-              </Link>
-              <Link to="/accessories" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}>
-                ACCESSORIES
-              </Link>
-              <Link to="/blog" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}>
-                BLOG
-              </Link>
-              <Link to="/contact" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}>
-                CONTACT US
-              </Link>
-              <AdminNav/>
-            </div>
-          </div>
-        )}
+        <div className="flex items-center gap-3">
+          {user ? (
+            <>
+              <span className="text-xs px-2 py-1 rounded bg-zinc-100 dark:bg-zinc-800">{role}</span>
+              <button onClick={()=>dispatch(logout())} className="text-sm px-3 py-1 rounded border hover:bg-zinc-100 dark:hover:bg-zinc-800">Logout</button>
+            </>
+          ) : (
+            <Link to="/login" className="text-sm px-3 py-1 rounded border hover:bg-zinc-100 dark:hover:bg-zinc-800">Login</Link>
+          )}
+        </div>
       </div>
     </nav>
-  )
+  );
 }
-
-export default Navbar

@@ -1,45 +1,38 @@
-
 import { createSlice } from "@reduxjs/toolkit";
+import { normalizeRole } from "./roleUtils";
 
-const initialState = (() => {
-  try {
-    const raw = localStorage.getItem("auth");
-    if (raw) return JSON.parse(raw);
-  } catch {}
-  // Fallback for legacy storage (token only)
-  const token = localStorage.getItem("token");
-  return { user: null, token: token || null };
-})();
+const saved = localStorage.getItem("tea_auth");
+const initialState = saved ? JSON.parse(saved) : { user: null, token: null, hydrated: false };
 
-const persist = (state) => {
-  localStorage.setItem("auth", JSON.stringify(state));
-  if (state.token) localStorage.setItem("token", state.token);
-  else localStorage.removeItem("token");
-};
-
-const authSlice = createSlice({
+const slice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setCredentials: (state, action) => {
-      const { user, token } = action.payload;
-      state.user = user;
-      state.token = token;
-      persist(state);
+    setCredentials: (state, { payload }) => {
+      const role = normalizeRole(payload?.user?.role);
+      state.user = payload.user ? { ...payload.user, role } : null;
+      state.token = payload.token || state.token;
+      state.hydrated = true;
+      localStorage.setItem("tea_auth", JSON.stringify(state));
     },
-    updateUser: (state, action) => {
-      state.user = { ...(state.user || {}), ...action.payload };
-      persist(state);
+    setUser: (state, { payload }) => {
+      const role = normalizeRole(payload?.role);
+      state.user = payload ? { ...payload, role } : null;
+      state.hydrated = true;
+      localStorage.setItem("tea_auth", JSON.stringify(state));
+    },
+    setHydrated: (state) => {
+      state.hydrated = true;
+      localStorage.setItem("tea_auth", JSON.stringify(state));
     },
     logout: (state) => {
       state.user = null;
       state.token = null;
-      persist(state);
+      state.hydrated = true;
+      localStorage.removeItem("tea_auth");
     },
   },
 });
 
-export const { setCredentials, updateUser, logout } = authSlice.actions;
-export const selectCurrentUser = (state) => state.auth.user;
-export const selectToken = (state) => state.auth.token;
-export default authSlice.reducer;
+export const { setCredentials, logout, setUser, setHydrated } = slice.actions;
+export default slice.reducer;
