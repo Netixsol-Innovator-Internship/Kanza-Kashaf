@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 import { useCart } from "../context/CartContext"
 import { ThemeToggle } from "./ThemeToggle"
+import AdminNav from "../admin/AdminNav";
 import CartPopup from "./CartPopup"
 
 const Navbar = () => {
@@ -43,6 +44,7 @@ const Navbar = () => {
             <Link to="/" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors">
               CONTACT US
             </Link>
+            <AdminNav/>
           </div>
 
           {/* Right side icons */}
@@ -128,6 +130,7 @@ const Navbar = () => {
                 onClick={() => setIsMobileMenuOpen(false)}>
                 CONTACT US
               </Link>
+              <AdminNav/>
             </div>
           </div>
         )}

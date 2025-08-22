@@ -380,6 +380,14 @@ const CollectionsPage = () => {
                 <option value="price-low">Price: Low to High</option>
                 <option value="price-high">Price: High to Low</option>
               </select>
+              {user && (user.role === "admin" || user.role === "superAdmin") && (
+                <Link
+                  to="/admin/add-product"
+                  className="px-4 py-2 rounded-xl bg-black text-white dark:bg-white dark:text-black hover:opacity-80"
+                >
+                  + Add Item
+                </Link>
+              )}
             </div>
 
             {/* Products Grid */}
