@@ -16,7 +16,6 @@ const Navbar = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  // Get user from Redux state
   const user = useSelector((state) => state.auth.user)
 
   const handleLogout = () => {

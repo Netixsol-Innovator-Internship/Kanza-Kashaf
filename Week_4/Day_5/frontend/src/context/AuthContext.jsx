@@ -20,17 +20,16 @@ export const AuthProvider = ({ children }) => {
     () => localStorage.getItem("redirectAfterLogin") || null
   )
 
-  // ✅ RTK Query hooks
+  // RTK Query hooks
   const [loginMutation] = useLoginMutation()
   const [registerMutation] = useRegisterMutation()
 
-  // Profile query (auto fetch if token exists)
+  // Profile query
   const token = localStorage.getItem("token")
   const { data: profileData, isLoading: profileLoading, isError } = useGetProfileQuery(undefined, {
-    skip: !token, // don’t fetch if no token
+    skip: !token,
   })
 
-  // Keep user state in sync with profile data
   useEffect(() => {
     if (profileData?.data?.user) {
       setUser(profileData.data.user)
@@ -40,7 +39,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(profileLoading)
   }, [profileData, profileLoading, token])
 
-  // 🔑 Login
+  // Login
   const login = async (email, password) => {
     try {
       const result = await loginMutation({ email, password }).unwrap()
@@ -56,7 +55,7 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  // 📝 Register
+  // Register
   const register = async (name, email, password) => {
     try {
       const result = await registerMutation({ name, email, password }).unwrap()
@@ -72,7 +71,7 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  // 🚪 Logout
+  // Logout
   const logout = () => {
     localStorage.removeItem("token")
     localStorage.removeItem("redirectAfterLogin")

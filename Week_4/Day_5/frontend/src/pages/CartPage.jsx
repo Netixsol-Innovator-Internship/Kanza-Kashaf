@@ -1,26 +1,29 @@
 "use client"
 import { Link } from "react-router-dom"
+import { useSelector } from "react-redux"
 import { useCart } from "../context/CartContext"
-import { useAuth } from "../context/AuthContext"
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api"
 
 const CartPage = () => {
   const { cartItems, updateQuantity, removeFromCart, getCartTotal } = useCart()
-  const { user } = useAuth()
+  const { user } = useSelector((state) => state.auth) 
 
   const deliveryFee = 3.95
   const subtotal = getCartTotal()
   const total = subtotal + deliveryFee
 
+  // Authentication check
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Please Login</h2>
           <p className="text-gray-600 dark:text-gray-300 mb-6">You need to be logged in to view your cart.</p>
-          <Link to="/login"
-            className="bg-gray-800 dark:bg-gray-700 text-white px-6 py-3 hover:bg-gray-900 dark:hover:bg-gray-600 transition-colors rounded-md">
+          <Link
+            to="/login"
+            className="bg-gray-800 dark:bg-gray-700 text-white px-6 py-3 hover:bg-gray-900 dark:hover:bg-gray-600 transition-colors rounded-md"
+          >
             Login
           </Link>
         </div>
@@ -34,8 +37,10 @@ const CartPage = () => {
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Your cart is empty</h2>
           <p className="text-gray-600 dark:text-gray-300 mb-6">Add some delicious teas to get started!</p>
-          <Link to="/collections"
-            className="bg-gray-800 dark:bg-gray-700 text-white px-6 py-3 hover:bg-gray-900 dark:hover:bg-gray-600 transition-colors rounded-md">
+          <Link
+            to="/collections"
+            className="bg-gray-800 dark:bg-gray-700 text-white px-6 py-3 hover:bg-gray-900 dark:hover:bg-gray-600 transition-colors rounded-md"
+          >
             Browse Teas
           </Link>
         </div>
@@ -67,33 +72,44 @@ const CartPage = () => {
           </div>
         </div>
 
+        {/* Cart + Order Summary */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-16">
           {/* Cart Items */}
           <div className="md:col-span-2">
             <div className="divide-y divide-gray-200 dark:divide-gray-700">
               {cartItems.map((item) => (
                 <div key={item.product._id} className="flex flex-row items-start sm:items-center py-6 gap-4">
-                  <img src={`${API_BASE_URL}${item.product.image}`} alt={item.product.name} className="w-20 h-20 object-cover rounded-md"/>
+                  <img
+                    src={`${API_BASE_URL}${item.product.image}`}
+                    alt={item.product.name}
+                    className="w-20 h-20 object-cover rounded-md"
+                  />
                   <div className="flex-1 min-w-0">
                     <h3 className="font-medium text-gray-900 dark:text-white">{item.product.name}</h3>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
                       chai tea - {item.product.weight || "50 g"}
                     </p>
-                    <button onClick={() => removeFromCart(item.product._id)}
-                      className="text-sm text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 mt-1">
+                    <button
+                      onClick={() => removeFromCart(item.product._id)}
+                      className="text-sm text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 mt-1"
+                    >
                       REMOVE
                     </button>
                   </div>
 
                   <div className="flex flex-col items-end gap-2">
                     <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-md">
-                      <button onClick={() => updateQuantity(item.product._id, Math.max(0, item.quantity - 1))}
-                        className="w-5 h-5 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                      <button
+                        onClick={() => updateQuantity(item.product._id, Math.max(0, item.quantity - 1))}
+                        className="w-5 h-5 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                      >
                         -
                       </button>
                       <span className="w-5 sm:w-8 text-center text-gray-900 dark:text-white">{item.quantity}</span>
-                      <button onClick={() => updateQuantity(item.product._id, item.quantity + 1)}
-                        className="w-5 h-5 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                      <button
+                        onClick={() => updateQuantity(item.product._id, item.quantity + 1)}
+                        className="w-5 h-5 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                      >
                         +
                       </button>
                     </div>
@@ -109,8 +125,10 @@ const CartPage = () => {
             </div>
 
             <div className="mt-6 flex justify-center">
-              <Link to="/collections"
-                className="inline-block border border-gray-800 dark:border-gray-300 px-16 py-2 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors text-gray-900 dark:text-white">
+              <Link
+                to="/collections"
+                className="inline-block border border-gray-800 dark:border-gray-300 px-16 py-2 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors text-gray-900 dark:text-white"
+              >
                 BACK TO SHOPPING
               </Link>
             </div>
@@ -118,7 +136,6 @@ const CartPage = () => {
 
           {/* Order Summary */}
           <div className="lg:col-span-1 space-y-6 lg:space-y-10">
-            {/* Price Summary */}
             <div className="bg-gray-100 dark:bg-gray-800 p-6 flex flex-col justify-between min-h-[250px] rounded-lg">
               <div>
                 <h3 className="mb-4 text-gray-900 dark:text-white font-medium">Order summary</h3>
@@ -190,19 +207,19 @@ const CartPage = () => {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 lg:gap-12 max-w-7xl mx-auto">
             <div className="text-center">
-              <img src="/images/Img1.png" alt="Ceylon Ginger Cinnamon chai tea" className="mx-auto w-48 h-48 sm:w-56 sm:h-56 object-contain"/>
+              <img src="/images/Img1.png" alt="Ceylon Ginger Cinnamon chai tea" className="mx-auto w-48 h-48 sm:w-56 sm:h-56 object-contain" />
               <p className="mt-4 text-gray-900 dark:text-white">Ceylon Ginger</p>
               <p className="text-gray-900 dark:text-white">Cinnamon chai tea</p>
               <p className="mt-2 text-gray-800 dark:text-gray-200 font-medium">€4.85 / 50 g</p>
             </div>
             <div className="text-center">
-              <img src="/images/Img2.png" alt="Ceylon Ginger Cinnamon chai tea" className="mx-auto w-48 h-48 sm:w-56 sm:h-56 object-contain"/>
+              <img src="/images/Img2.png" alt="Ceylon Ginger Cinnamon chai tea" className="mx-auto w-48 h-48 sm:w-56 sm:h-56 object-contain" />
               <p className="mt-4 text-gray-900 dark:text-white">Ceylon Ginger</p>
               <p className="text-gray-900 dark:text-white">Cinnamon chai tea</p>
               <p className="mt-2 text-gray-800 dark:text-gray-200 font-medium">€4.85 / 50 g</p>
             </div>
             <div className="text-center">
-              <img src="/images/Img3.png" alt="Ceylon Ginger Cinnamon chai tea" className="mx-auto w-48 h-48 sm:w-56 sm:h-56 object-contain"/>
+              <img src="/images/Img3.png" alt="Ceylon Ginger Cinnamon chai tea" className="mx-auto w-48 h-48 sm:w-56 sm:h-56 object-contain" />
               <p className="mt-4 text-gray-900 dark:text-white">Ceylon Ginger</p>
               <p className="text-gray-900 dark:text-white">Cinnamon chai tea</p>
               <p className="mt-2 text-gray-800 dark:text-gray-200 font-medium">€4.85 / 50 g</p>

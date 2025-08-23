@@ -16,7 +16,7 @@ const productSchema = new mongoose.Schema(
     price: {
       type: Number,
       required: [true, "Price is required"],
-      min: [0, "Price cannot be negative"],
+      min: [1, "Price cannot be negative"],
     },
     image: {
       type: String,
@@ -44,8 +44,7 @@ const productSchema = new mongoose.Schema(
     stock: {
       type: Number,
       required: [true, "Stock quantity is required"],
-      min: [0, "Stock cannot be negative"],
-      default: 0,
+      min: [1, "Stock cannot be negative"],
     },
     isActive: {
       type: Boolean,

@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect } from "react"
-import { useAuth } from "./AuthContext"
+import { useSelector } from "react-redux"
 import {
   useGetCartQuery,
   useAddToCartMutation,
@@ -24,9 +24,10 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([])
   const [cartCount, setCartCount] = useState(0)
   const [loading, setLoading] = useState(false)
-  const { user } = useAuth()
 
-  // ✅ RTK Query hooks
+  // use Redux auth slice directly
+  const user = useSelector((state) => state.auth.user)
+
   const {
     data: cartData,
     isLoading: cartLoading,
@@ -38,7 +39,6 @@ export const CartProvider = ({ children }) => {
   const [removeFromCartMutation] = useRemoveFromCartMutation()
   const [clearCartMutation] = useClearCartMutation()
 
-  // Keep cart state in sync with query data
   useEffect(() => {
     if (cartData) {
       let items = []
@@ -61,7 +61,7 @@ export const CartProvider = ({ children }) => {
     setLoading(cartLoading)
   }, [cartData, cartLoading, user])
 
-  // ➕ Add to cart
+  // Add to cart
   const addToCart = async (productId, quantity = 1) => {
     if (!user) {
       return { success: false, message: "Please login to add items to cart" }
@@ -78,7 +78,7 @@ export const CartProvider = ({ children }) => {
     }
   }
 
-  // ✏️ Update quantity
+  // Update quantity
   const updateQuantity = async (productId, quantity) => {
     if (!user) return
     try {
@@ -89,7 +89,7 @@ export const CartProvider = ({ children }) => {
     }
   }
 
-  // ❌ Remove from cart
+  // Remove from cart
   const removeFromCart = async (productId) => {
     if (!user) return
     try {
@@ -100,7 +100,7 @@ export const CartProvider = ({ children }) => {
     }
   }
 
-  // 🧹 Clear cart
+  // Clear cart
   const clearCart = async () => {
     if (!user) return
     try {
@@ -112,7 +112,7 @@ export const CartProvider = ({ children }) => {
     }
   }
 
-  // 💰 Cart total
+  // Cart total
   const getCartTotal = () => {
     return cartItems.reduce((total, item) => {
       return total + (item.product?.price || 0) * item.quantity
@@ -128,7 +128,7 @@ export const CartProvider = ({ children }) => {
     removeFromCart,
     clearCart,
     getCartTotal,
-    fetchCart: refetchCart, // keep same name for compatibility
+    fetchCart: refetchCart,
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

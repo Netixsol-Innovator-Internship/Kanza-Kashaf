@@ -23,7 +23,7 @@ function App() {
       <AuthProvider>
         <CartProvider>
           <Router>
-            <div className="App min-h-screen flex flex-col">
+            <div className="App min-h-screen flex flex-col dark:bg-gray-900">
               <Navbar />
               <main className="flex-grow">
                 <Routes>

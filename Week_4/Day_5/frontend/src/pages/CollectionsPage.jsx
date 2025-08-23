@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from "react"
 import { useParams, Link, useLocation } from "react-router-dom"
-import { useSelector } from "react-redux"                     // ✅ NEW
-import { useGetProductsQuery } from "../redux/apiSlice"  // ✅ RTK Query hook
+import { useSelector } from "react-redux"  
+import { useGetProductsQuery } from "../redux/apiSlice"
 import { useNavigate } from "react-router-dom"
 
 const CollectionsPage = () => {
   const { category } = useParams()
   const location = useLocation()
-  const user = useSelector((state) => state.auth.user)        // ✅ NEW
+  const user = useSelector((state) => state.auth.user) 
   const navigate = useNavigate();
 
   const [filteredProducts, setFilteredProducts] = useState([])
@@ -53,7 +53,7 @@ const CollectionsPage = () => {
     allergens: ["Lactose-free", "Gluten-free", "Nuts-free", "Soy-free"],
   }
 
-  // ✅ RTK Query
+  // RTK Query
   const { data, isLoading, error } = useGetProductsQuery()
   const products = data?.data?.products || []
 
@@ -76,12 +76,10 @@ const CollectionsPage = () => {
 
     setFilters(newFilters)
     setExpandedFilters(newExpandedFilters)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search])
 
   useEffect(() => {
     applyFilters()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [products, filters, category, sortBy])
 
   const applyFilters = () => {
@@ -384,7 +382,7 @@ const CollectionsPage = () => {
                 Showing {filteredProducts.length} products
               </p>
 
-              {/* ✅ Right side controls: ADD Item (conditional) + Sort select */}
+              {/* Right side controls: ADD Item (conditional) + Sort select */}
               <div className="flex items-center gap-3">
                 {(user?.role === "admin" || user?.role === "superAdmin") && (
                   <button

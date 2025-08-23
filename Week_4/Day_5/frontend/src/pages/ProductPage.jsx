@@ -45,7 +45,6 @@ const ProductPage = () => {
 
   const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api"
 
-  // ✅ Admin editing state
   const [isEditing, setIsEditing] = useState(false)
   const [editData, setEditData] = useState({
     name: "",
@@ -70,8 +69,8 @@ const ProductPage = () => {
   const handleSaveEdit = async () => {
     try {
       const payload = {
-        ...product,          // keep existing product fields
-        ...editData,         // overwrite with changes
+        ...product,         
+        ...editData,        
         price: Number(editData.price ?? product.price),
         stock: Number(editData.stock ?? product.stock),
       }
@@ -94,7 +93,6 @@ const ProductPage = () => {
 
     try {
       await deleteProduct(product._id).unwrap()
-      // redirect to the collection page
       navigate(`/collections/${product.collection?.toLowerCase().replace(" ", "-")}`)
     } catch (err) {
       console.error("Delete failed", err)
@@ -251,7 +249,7 @@ const ProductPage = () => {
                     {product.description || "A lovely warming Chai tea with ginger cinnamon flavours."}
                   </p>
 
-                  {/* ✅ Show Edit button for admin/superAdmin, Delete only for superAdmin */}
+                  {/* Show Edit button for admin/superAdmin, Delete only for superAdmin */}
                   <div className="flex gap-3 mb-4">
                     {(user?.role === "admin" || user?.role === "superAdmin") && (
                       <button
@@ -367,8 +365,99 @@ const ProductPage = () => {
         </div>
       </div>
 
-      {/* The rest of your page (details, instructions, related products) stays unchanged */}
-      {/* ... */}
+      <div className="w-full bg-gray-100 dark:bg-gray-800">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-8">
+          {/* Product Details */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 pt-12">
+            {/* Steeping Instructions */}
+            <div>
+              <h3 className="text-3xl lg:text-4xl mb-10 text-gray-900 dark:text-white">Steeping instructions</h3>
+              <div className="space-y-4 text-gray-700 dark:text-gray-300">
+                <div className="flex items-center">
+                  <img src="/images/Kettle.png" alt="kettle" className="mr-3 mb-4 dark:invert"/>
+                  <span className="pb-4 border-b-2 border-gray-400 dark:border-gray-600 flex-1">
+                    <strong>SERVING SIZE:</strong> 2 tsp per cup, 6 tsp per pot
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <img src="/images/Drop.png" alt="drop" className="mr-3 mb-4 dark:invert"/>
+                  <span className="pb-4 border-b-2 border-gray-400 dark:border-gray-600 flex-1">
+                    <strong>WATER TEMPERATURE:</strong> 100°C
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <img src="/images/Clock.png" alt="clock" className="mr-3 mb-4 dark:invert"/>
+                  <span className="pb-4 border-b-2 border-gray-400 dark:border-gray-600 flex-1">
+                    <strong>STEEPING TIME:</strong> 3 - 5 minutes
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <img src="/images/Circle.png" alt="circle" className="mr-3 mb-4"/>
+                  <span className="pb-4 flex-1">
+                    <strong>COLOR AFTER 3 MINUTES</strong>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* About this tea */}
+            <div>
+              <h3 className="text-3xl lg:text-4xl mb-10 text-gray-900 dark:text-white">About this tea</h3>
+              <div className="grid grid-cols-2 lg:grid-cols-4 text-sm divide-x divide-gray-300 dark:divide-gray-600 gap-4 lg:gap-0">
+                <div className="px-0 lg:px-3">
+                  <div className="uppercase text-gray-500 dark:text-gray-400 text-xs font-medium mb-1">FLAVOR</div>
+                  <div className="text-gray-800 dark:text-gray-200">Spicy</div>
+                </div>
+                <div className="px-0 lg:px-3">
+                  <div className="uppercase text-gray-500 dark:text-gray-400 text-xs font-medium mb-1">QUALITIES</div>
+                  <div className="text-gray-800 dark:text-gray-200">Smoothing</div>
+                </div>
+                <div className="px-0 lg:px-3">
+                  <div className="uppercase text-gray-500 dark:text-gray-400 text-xs font-medium mb-1">CAFFEINE</div>
+                  <div className="text-gray-800 dark:text-gray-200">Medium</div>
+                </div>
+                <div className="px-0 lg:px-3">
+                  <div className="uppercase text-gray-500 dark:text-gray-400 text-xs font-medium mb-1">ALLERGENS</div>
+                  <div className="text-gray-800 dark:text-gray-200">Nuts-free</div>
+                </div>
+              </div>
+
+              <div className="mt-8">
+                <h4 className="text-3xl lg:text-4xl mb-8 text-gray-900 dark:text-white">Ingredient</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                  {product.ingredients ||
+                    "Black Ceylon tea, Green tea, Ginger root, Cloves, Black pepper, Cinnamon sticks, Cardamom, Cinnamon pieces."}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Related Products */}
+      <div className="py-16 bg-white dark:bg-gray-900">
+        <h2 className="font-prosto text-2xl lg:text-3xl font-semibold text-center mb-12 text-gray-900 dark:text-white">You may also like</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 lg:gap-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <img src="/images/Img1.png" alt="Ceylon Ginger Cinnamon chai tea" className="mx-auto w-48 h-48 sm:w-56 sm:h-56 object-contain"/>
+            <p className="mt-4 text-gray-900 dark:text-white">Ceylon Ginger</p>
+            <p className="text-gray-900 dark:text-white">Cinnamon chai tea</p>
+            <p className="mt-2 text-gray-800 dark:text-gray-200 font-medium">€4.85 / 50 g</p>
+          </div>
+          <div className="text-center">
+            <img src="/images/Img2.png" alt="Ceylon Ginger Cinnamon chai tea" className="mx-auto w-48 h-48 sm:w-56 sm:h-56 object-contain"/>
+            <p className="mt-4 text-gray-900 dark:text-white">Ceylon Ginger</p>
+            <p className="text-gray-900 dark:text-white">Cinnamon chai tea</p>
+            <p className="mt-2 text-gray-800 dark:text-gray-200 font-medium">€4.85 / 50 g</p>
+          </div>
+          <div className="text-center">
+            <img src="/images/Img3.png" alt="Ceylon Ginger Cinnamon chai tea"className="mx-auto w-48 h-48 sm:w-56 sm:h-56 object-contain"/>
+            <p className="mt-4 text-gray-900 dark:text-white">Ceylon Ginger</p>
+            <p className="text-gray-900 dark:text-white">Cinnamon chai tea</p>
+            <p className="mt-2 text-gray-800 dark:text-gray-200 font-medium">€4.85 / 50 g</p>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
