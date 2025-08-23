@@ -18,13 +18,16 @@ const productValidation = [
   body("description").trim().isLength({ min: 10, max: 500 }).withMessage("Description must be between 10 and 500 characters"),
   body("price").isFloat({ min: 0 }).withMessage("Price must be a positive number"),
   body("image").custom((value) => {
+    if (/^[\w,\s-]+\.(jpg|jpeg|png|gif|webp)$/i.test(value)) {
+      return true;
+    }
     if (typeof value === "string" && value.startsWith("/")) {
       return true;
     }
     if (/^(https?:\/\/[^\s]+)$/.test(value)) {
       return true;
     }
-    throw new Error("Image must be a valid URL or a relative path");
+    throw new Error("Image must be a valid filename, URL, or relative path");
   }),
   body("category")
     .isIn(["black-tea", "green-tea", "herbal-tea", "oolong-tea", "white-tea", "chai", "matcha", "rooibos", "teaware"])

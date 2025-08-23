@@ -2,11 +2,16 @@
 
 import { useState, useEffect } from "react"
 import { useParams, Link, useLocation } from "react-router-dom"
-import { useGetProductsQuery } from "../redux/apiSlice"  // ✅ import RTK Query hook
+import { useSelector } from "react-redux"                     // ✅ NEW
+import { useGetProductsQuery } from "../redux/apiSlice"  // ✅ RTK Query hook
+import { useNavigate } from "react-router-dom"
 
 const CollectionsPage = () => {
   const { category } = useParams()
   const location = useLocation()
+  const user = useSelector((state) => state.auth.user)        // ✅ NEW
+  const navigate = useNavigate();
+
   const [filteredProducts, setFilteredProducts] = useState([])
   const [filters, setFilters] = useState({
     collections: [],
@@ -48,7 +53,7 @@ const CollectionsPage = () => {
     allergens: ["Lactose-free", "Gluten-free", "Nuts-free", "Soy-free"],
   }
 
-  // ✅ Replace axios with RTK Query
+  // ✅ RTK Query
   const { data, isLoading, error } = useGetProductsQuery()
   const products = data?.data?.products || []
 
@@ -71,10 +76,12 @@ const CollectionsPage = () => {
 
     setFilters(newFilters)
     setExpandedFilters(newExpandedFilters)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search])
 
   useEffect(() => {
     applyFilters()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [products, filters, category, sortBy])
 
   const applyFilters = () => {
@@ -168,7 +175,10 @@ const CollectionsPage = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
-      <div className="h-48 sm:h-64 lg:h-[308px] xl:h-[358px] bg-cover bg-center" style={{ backgroundImage: `url('/images/BgPic.png')` }}></div>
+      <div
+        className="h-48 sm:h-64 lg:h-[308px] xl:h-[358px] bg-cover bg-center"
+        style={{ backgroundImage: `url('/images/BgPic.png')` }}
+      ></div>
 
       {/* Breadcrumb */}
       <div className="py-4 bg-white dark:bg-gray-900">
@@ -178,14 +188,19 @@ const CollectionsPage = () => {
               HOME
             </Link>
             <span className="mx-2 text-gray-600 dark:text-gray-400">/</span>
-            <Link to="/collections" className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">
+            <Link
+              to="/collections"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+            >
               COLLECTIONS
             </Link>
 
             {category && (
               <>
                 <span className="mx-2 text-gray-600 dark:text-gray-400">/</span>
-                <span className="text-gray-800 dark:text-gray-200 uppercase">{category.replace("-", " ")}</span>
+                <span className="text-gray-800 dark:text-gray-200 uppercase">
+                  {category.replace("-", " ")}
+                </span>
               </>
             )}
 
@@ -365,13 +380,32 @@ const CollectionsPage = () => {
           <div className="lg:w-3/4">
             {/* Sort and Results Count */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-              <p className="text-gray-600 dark:text-gray-400">Showing {filteredProducts.length} products</p>
-              <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}
-                className="border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-500">
-                <option value="name">Sort by Name</option>
-                <option value="price-low">Price: Low to High</option>
-                <option value="price-high">Price: High to Low</option>
-              </select>
+              <p className="text-gray-600 dark:text-gray-400">
+                Showing {filteredProducts.length} products
+              </p>
+
+              {/* ✅ Right side controls: ADD Item (conditional) + Sort select */}
+              <div className="flex items-center gap-3">
+                {(user?.role === "admin" || user?.role === "superAdmin") && (
+                  <button
+                    type="button"
+                    onClick={() => navigate("/add-product")}
+                    className="border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                  >
+                    ADD Item
+                  </button>
+                )}
+
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-500"
+                >
+                  <option value="name">Sort by Name</option>
+                  <option value="price-low">Price: Low to High</option>
+                  <option value="price-high">Price: High to Low</option>
+                </select>
+              </div>
             </div>
 
             {/* Products Grid */}
@@ -380,8 +414,11 @@ const CollectionsPage = () => {
                 <Link key={product._id} to={`/product/${product._id}`} className="group">
                   <div className="bg-white dark:bg-gray-800 overflow-hidden hover:shadow-md dark:hover:shadow-lg transition-shadow">
                     <div className="aspect-square bg-gray-100 dark:bg-gray-700">
-                      <img src={`${API_BASE_URL}${product.image || "/placeholder.svg"}`} alt={product.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"/>
+                      <img
+                        src={`${API_BASE_URL}${product.image || "/placeholder.svg"}`}
+                        alt={product.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
                     </div>
                     <div className="p-4 text-center">
                       <h3 className="font-medium text-gray-900 dark:text-white mb-2 group-hover:text-gray-600 dark:group-hover:text-gray-300">
@@ -398,7 +435,9 @@ const CollectionsPage = () => {
 
             {filteredProducts.length === 0 && (
               <div className="text-center py-12">
-                <p className="text-gray-500 dark:text-gray-400">No products found matching your filters.</p>
+                <p className="text-gray-500 dark:text-gray-400">
+                  No products found matching your filters.
+                </p>
               </div>
             )}
           </div>

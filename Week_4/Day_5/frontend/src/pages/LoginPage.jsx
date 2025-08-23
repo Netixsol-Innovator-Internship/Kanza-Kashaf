@@ -3,6 +3,9 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../redux/authSlice";
+import { useLoginMutation } from "../redux/apiSlice";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -11,8 +14,9 @@ const LoginPage = () => {
   })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+  const dispatch = useDispatch();
 
-  const { login, getAndClearRedirectUrl } = useAuth()
+  const [login] = useLoginMutation();
   const navigate = useNavigate()
 
   const handleChange = (e) => {
@@ -23,21 +27,28 @@ const LoginPage = () => {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setError("")
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
-    const result = await login(formData.email, formData.password)
+    try {
+      const result = await login(formData).unwrap(); 
 
-    if (result.success) {
-      const redirectUrl = getAndClearRedirectUrl() || "/"
-      navigate(redirectUrl, { replace: true })
-    } else {
-      setError(result.message)
+      dispatch(setCredentials(result));
+
+      navigate("/", { replace: true });
+    } catch (err) {
+      console.error("Login failed:", err);
+
+      if (err?.status === 403) {
+        setError("Your account is blocked");
+      } else {
+        setError("Invalid email or password");
+      }
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false)
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 transition-colors">

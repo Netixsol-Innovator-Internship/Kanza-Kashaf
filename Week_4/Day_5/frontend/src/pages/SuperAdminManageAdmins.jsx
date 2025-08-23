@@ -5,40 +5,25 @@ import Button from "../components/ui/Button"
 import Card from "../components/ui/Card"
 import Switch from "../components/ui/Switch"
 
-const ManageUsers = () => {
+const SuperAdminManageAdmins = () => {
   const { data: users, isLoading, error } = useGetUsersQuery()
-  const [updateUserRole] = useUpdateUserRoleMutation()
-  const [toggleUserBlock] = useToggleUserBlockMutation()
+  const [changeRole] = useUpdateUserRoleMutation()
+  const [toggleBlock] = useToggleUserBlockMutation()
 
-  if (isLoading) return <p className="p-4">Loading users...</p>
-  if (error) return <p className="p-4 text-red-500">Error loading users</p>
+  if (isLoading) return <p className="p-4">Loading admins...</p>
+  if (error) return <p className="p-4 text-red-500">Error loading admins</p>
 
-  const handleRoleChange = async (userId, newRole) => {
-    try {
-      await updateUserRole({ id: userId, role: newRole }).unwrap()
-    } catch (error) {
-      console.error("Failed to update role:", error)
-    }
-  }
-
-  const handleBlockToggle = async (userId, blockStatus) => {
-    try {
-      await toggleUserBlock({ id: userId, block: blockStatus }).unwrap()
-    } catch (error) {
-      console.error("Failed to toggle block:", error)
-    }
-  }
+  // Filter only admins
+  const admins = users?.filter((user) => user.role === "admin")
 
   return (
     <div className="max-w-6xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6">Manage Users</h1>
+      <h1 className="text-2xl font-bold mb-6">Manage Admins</h1>
 
       <div className="space-y-4">
-        {users?.filter((u) => u.role === "user").map((user) => (
-          <Card
-            key={user._id}
-            className="flex items-center justify-between p-4 shadow-md rounded-xl border"
-          >
+        {admins?.map((user) => (
+          <Card key={user._id} className="flex items-center justify-between p-4 shadow-md rounded-xl border">
+            
             {/* Left Section - User Info */}
             <div className="flex flex-col">
               <h2 className="text-lg font-semibold">{user.name}</h2>
@@ -53,12 +38,16 @@ const ManageUsers = () => {
 
             {/* Right Section - Actions */}
             <div className="flex items-center space-x-4">
-              {/* Promote to Admin */}
+              {/* Change Role */}
               <Button
-                onClick={() => handleRoleChange(user._id, "admin")}
-                disabled={user.role === "admin"} // already admin
+                onClick={() =>
+                  changeRole({
+                    id: user._id,
+                    role: user.role === "admin" ? "user" : "admin",
+                  })
+                }
               >
-                Make Admin
+                Change Role
               </Button>
 
               {/* Block/Unblock Toggle */}
@@ -73,16 +62,20 @@ const ManageUsers = () => {
                 <Switch
                   checked={user.isBlocked}
                   onCheckedChange={(checked) =>
-                    handleBlockToggle(user._id, checked)
+                    toggleBlock({ id: user._id, block: checked })
                   }
                 />
               </div>
             </div>
           </Card>
         ))}
+
+        {admins?.length === 0 && (
+          <p className="text-center p-4 text-gray-500">No admins found.</p>
+        )}
       </div>
     </div>
   )
 }
 
-export default ManageUsers
+export default SuperAdminManageAdmins

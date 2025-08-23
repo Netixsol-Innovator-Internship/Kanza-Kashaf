@@ -5,9 +5,8 @@ import { useParams, Link, useLocation } from "react-router-dom"
 import { useCart } from "../context/CartContext"
 import { useAuth } from "../context/AuthContext"
 import { useSelector } from "react-redux"
-import { useGetProductByIdQuery, useUpdateProductMutation, useDeleteProductMutation } from "../redux/apiSlice"
+import { useGetProductByIdQuery, useUpdateProductMutation } from "../redux/apiSlice"
 import { useNavigate } from "react-router-dom"
-
 
 // Notification Component
 const Notification = ({ message, onClose }) => {
@@ -38,7 +37,6 @@ const ProductPage = () => {
   const [notification, setNotification] = useState(null)
   const navigate = useNavigate()
   const user = useSelector((state) => state.auth.user)
-  const [deleteProduct] = useDeleteProductMutation()
 
   const { data, error, isLoading, refetch } = useGetProductByIdQuery(id)
   const product = data?.data?.product
@@ -85,45 +83,27 @@ const ProductPage = () => {
 
 
   const handleCancelEdit = () => {
-      setIsEditing(false)
-    }
-
-    const handleDelete = async () => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this product?")
-    if (!confirmDelete) return
-
-    try {
-      await deleteProduct(product._id).unwrap()
-      // redirect to the collection page
-      navigate(`/collections/${product.collection?.toLowerCase().replace(" ", "-")}`)
-    } catch (err) {
-      console.error("Delete failed", err)
-      alert("Failed to delete product.")
-    }
+    setIsEditing(false)
   }
 
   const handleAddToCart = async () => {
-  {(user?.role !== "user") && (
-    (() => {
+    if (!user) {
       setRedirectUrl(location.pathname)
-      alert("Please login with a user account to add items to cart.")
+      alert("Please login to add items to cart.")
       return
-    })()
-  )}
+    }
 
-  setAddingToCart(true)
-  const result = await addToCart(product._id, quantity)
+    setAddingToCart(true)
+    const result = await addToCart(product._id, quantity)
 
-  if (result.success) {
-    setNotification(`${product.name} added to cart!`)
-  } else {
-    setNotification(result.message)
+    if (result.success) {
+      setNotification(`${product.name} added to cart!`)
+    } else {
+      setNotification(result.message)
+    }
+    setTimeout(() => setNotification(null), 3000)
+    setAddingToCart(false)
   }
-
-  setTimeout(() => setNotification(null), 3000)
-  setAddingToCart(false)
-}
-
 
   const variants = [
     { id: "50g", label: "50 g bag", image: "/images/50.png" },
@@ -251,26 +231,15 @@ const ProductPage = () => {
                     {product.description || "A lovely warming Chai tea with ginger cinnamon flavours."}
                   </p>
 
-                  {/* ✅ Show Edit button for admin/superAdmin, Delete only for superAdmin */}
-                  <div className="flex gap-3 mb-4">
-                    {(user?.role === "admin" || user?.role === "superAdmin") && (
-                      <button
-                        onClick={handleStartEdit}
-                        className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
-                      >
-                        Edit Product
-                      </button>
-                    )}
-
-                    {user?.role === "superAdmin" && (
-                      <button
-                        onClick={handleDelete}
-                        className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition"
-                      >
-                        Delete Product
-                      </button>
-                    )}
-                  </div>
+                  {/* ✅ Show Edit button only if admin or superAdmin */}
+                  {(user?.role === "admin" || user?.role === "superAdmin") && (
+                    <button
+                      onClick={handleStartEdit}
+                      className="mb-4 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+                    >
+                      Edit Product
+                    </button>
+                  )}
 
                   <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-8 lg:space-x-16 text-sm text-gray-600 dark:text-gray-400 mt-8 mb-4 space-y-2 sm:space-y-0">
                     <div className="flex items-center">

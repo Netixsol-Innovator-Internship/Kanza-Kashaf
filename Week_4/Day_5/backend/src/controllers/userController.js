@@ -9,8 +9,8 @@ const getUsers = async (req, res) => {
       // Admin can only see regular users
       users = await User.find({ role: "user" }).select("-password")
     } else if (req.user.role === "superAdmin") {
-      // SuperAdmin can see everyone
-      users = await User.find().select("-password")
+      // SuperAdmin can see everyone EXCEPT themselves
+      users = await User.find({ _id: { $ne: req.user._id } }).select("-password")
     } else {
       return res.status(403).json({
         success: false,

@@ -5,12 +5,14 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3000/api",
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token;
-      if (token) headers.set("authorization", `Bearer ${token}`);
+      const token = getState().auth?.token;
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
       return headers;
     },
   }),
-  tagTypes: ["Product", "User", "Cart"],
+  tagTypes: ["Product", "Products", "User", "Users", "Cart"],
   endpoints: (builder) => ({
     // AUTH
     login: builder.mutation({
@@ -19,6 +21,7 @@ export const apiSlice = createApi({
         method: "POST",
         body: credentials,
       }),
+      transformResponse: (response) => response.data,
     }),
     register: builder.mutation({
       query: (data) => ({
@@ -32,61 +35,97 @@ export const apiSlice = createApi({
       providesTags: ["User"],
     }),
 
-    // PRODUCT
+    // PRODUCTS
     getProducts: builder.query({
       query: () => "/products",
-      providesTags: ["Product"],
+      providesTags: (result) =>
+        result?.data?.products?.length
+          ? [
+              ...result.data.products.map(({ _id }) => ({
+                type: "Product",
+                id: _id,
+              })),
+              { type: "Products", id: "LIST" },
+            ]
+          : [{ type: "Products", id: "LIST" }],
     }),
     getProductById: builder.query({
       query: (id) => `/products/${id}`,
-      providesTags: ["Product"],
+      providesTags: (result, error, id) => [{ type: "Product", id }],
     }),
+
     addProduct: builder.mutation({
-      query: (data) => ({
+      query: (product) => ({
         url: "/products",
         method: "POST",
-        body: data,
+        body: product,
+        headers: {
+          "Content-Type": "application/json",
+        },
       }),
-      invalidatesTags: ["Product"],
+      invalidatesTags: [{ type: "Products", id: "LIST" }],
     }),
+
     updateProduct: builder.mutation({
-      query: ({ id, ...data }) => ({
+      query: ({ id, updatedData }) => ({
         url: `/products/${id}`,
         method: "PUT",
-        body: data,
+        body: updatedData,
       }),
-      invalidatesTags: ["Product"],
+      invalidatesTags: (result, error, { id }) => [
+        { type: "Product", id },
+        { type: "Products", id: "LIST" },
+      ],
     }),
+
     deleteProduct: builder.mutation({
       query: (id) => ({
         url: `/products/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Product"],
+      invalidatesTags: (result, error, id) => [
+        { type: "Product", id },
+        { type: "Products", id: "LIST" },
+      ],
     }),
 
-    // USERS
+    // USERS (Admin)
     getUsers: builder.query({
       query: () => "/users",
+      transformResponse: (response) => response.data,
+      providesTags: ["Users"],
+    }),
+
+    // USERS (SuperAdmin - all users except self)
+    getSuperAdminUsers: builder.query({
+      query: () => "/users/super",
+      transformResponse: (response) => response.data,
       providesTags: ["Users"],
     }),
 
     updateUserRole: builder.mutation({
-      query: ({ userId, role }) => ({
-        url: `/users/${userId}/role`,
-        method: "PUT",
+      query: ({ id, role }) => ({
+        url: `/users/${id}/role`,
+        method: "PATCH",
         body: { role },
       }),
       invalidatesTags: ["Users"],
     }),
 
     toggleUserBlock: builder.mutation({
-      query: ({ userId, blocked }) => ({
-        url: `/users/${userId}/block`,
-        method: "PUT",
-        body: { blocked },
+      query: ({ id, block }) => ({
+        url: `/users/${id}/block`,
+        method: "PATCH",
+        body: { block },
       }),
       invalidatesTags: ["Users"],
+    }),
+
+    // USERS (SuperAdmin - only admins)
+    getSuperAdminAdmins: builder.query({
+      query: () => "/users/super/admins",
+      transformResponse: (response) => response.data,
+      providesTags: ["Users"],
     }),
 
     // CART
@@ -140,8 +179,10 @@ export const {
   useDeleteProductMutation,
   // USERS
   useGetUsersQuery,
+  useGetSuperAdminUsersQuery,
   useUpdateUserRoleMutation,
   useToggleUserBlockMutation,
+  useGetSuperAdminAdminsQuery,
   // CART
   useGetCartQuery,
   useAddToCartMutation,

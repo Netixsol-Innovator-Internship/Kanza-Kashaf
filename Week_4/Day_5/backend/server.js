@@ -24,7 +24,7 @@ const PORT = process.env.PORT || 5000;
 const corsOptions = {
   origin: "*", // Allow all origins
   credentials: true, // Allow credentials like cookies, Authorization headers
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allow specific methods
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], // Allow specific methods
   allowedHeaders: ["Content-Type", "Authorization", "x-requested-with"], // Allow specific headers
 };
 

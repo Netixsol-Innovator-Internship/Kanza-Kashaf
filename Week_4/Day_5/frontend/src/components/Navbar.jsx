@@ -2,21 +2,27 @@
 
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { useAuth } from "../context/AuthContext"
+import { useSelector, useDispatch } from "react-redux"
+import { logout } from "../redux/authSlice"
 import { useCart } from "../context/CartContext"
 import { ThemeToggle } from "./ThemeToggle"
 import CartPopup from "./CartPopup"
 
 const Navbar = () => {
-  const { user, logout } = useAuth()
   const { cartCount, clearCart } = useCart()
   const [showCartPopup, setShowCartPopup] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  // Get user from Redux state
+  const user = useSelector((state) => state.auth.user)
 
   const handleLogout = () => {
     clearCart()
-    logout()
+    dispatch(logout())
+    navigate("/login")
   }
 
   return (
@@ -60,22 +66,23 @@ const Navbar = () => {
             {/* Role-based Links */}
             {user?.role === "admin" && (
               <Link
-                to="/manage-users"
+                to="/admin/manage-users"
                 className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
               >
                 Manage Users
               </Link>
             )}
+
             {user?.role === "superAdmin" && (
               <>
                 <Link
-                  to="/manage-admins"
+                  to="/super-admin/manage-admins"
                   className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
                 >
                   Manage Admins
                 </Link>
                 <Link
-                  to="/manage-users"
+                  to="/super-admin/manage-users"
                   className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
                 >
                   Manage Users
@@ -186,29 +193,27 @@ const Navbar = () => {
                 CONTACT US
               </Link>
 
-              {/* Role-based (Mobile) */}
+              {/* Role-based Links */}
               {user?.role === "admin" && (
                 <Link
-                  to="/manage-users"
+                  to="/admin/manage-users"
                   className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Manage Users
                 </Link>
               )}
+
               {user?.role === "superAdmin" && (
                 <>
                   <Link
-                    to="/manage-admins"
+                    to="/super-admin/manage-admins"
                     className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
-                    onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Manage Admins
                   </Link>
                   <Link
-                    to="/manage-users"
+                    to="/super-admin/manage-users"
                     className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 font-medium transition-colors"
-                    onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Manage Users
                   </Link>
