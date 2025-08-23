@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://kanzaweek4day5backendtask-six.vercel.app/api",
+    baseUrl: "http://localhost:3000/api",
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth?.token;
       if (token) headers.set("Authorization", `Bearer ${token}`);

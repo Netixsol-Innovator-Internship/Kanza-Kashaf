@@ -182,10 +182,12 @@ const ProductPage = () => {
           {/* Product Image */}
           <div className="aspect-square bg-gray-100 dark:bg-gray-800 overflow-hidden rounded-lg">
             <img src={
-                          product.image
-                            ? `${IMAGE_BASE_URL}/${product.image.replace(/^\//, "")}`
-                            : "/placeholder.svg"
-                        } alt={product.name} className="w-full h-full object-cover"/>
+                product.image
+                  ? product.image.startsWith("http")
+                    ? product.image
+                    : `${IMAGE_BASE_URL}/${product.image.replace(/^\//, "")}`
+                  : "/placeholder.svg"
+              } alt={product.name} className="w-full h-full object-cover"/>
           </div>
 
           {/* Product Info */}

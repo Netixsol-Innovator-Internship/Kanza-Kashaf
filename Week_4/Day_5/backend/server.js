@@ -4,6 +4,9 @@ const dotenv = require("dotenv");
 const swaggerUi = require("swagger-ui-express");
 const path = require("path");
 
+// Load environment variables
+dotenv.config();
+
 // Import configuration and documentation
 const connectDB = require("./src/config/db");
 const swaggerSpec = require("./src/docs/swagger");
@@ -13,9 +16,6 @@ const authRoutes = require("./src/routes/authRoutes");
 const productRoutes = require("./src/routes/productRoutes");
 const cartRoutes = require("./src/routes/cartRoutes");
 const userRoutes = require("./src/routes/userRoutes");
-
-// Load environment variables
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;

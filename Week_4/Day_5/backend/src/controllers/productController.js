@@ -1,4 +1,12 @@
 const Product = require("../models/Product")
+const cloudinary = require("cloudinary").v2
+
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+})
 
 // Get all products with filtering and pagination
 const getProducts = async (req, res) => {
@@ -111,11 +119,20 @@ const getProductById = async (req, res) => {
 // Create new product (Admin only)
 const createProduct = async (req, res) => {
   try {
-    const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+    const { image, ...otherFields } = req.body;
+
+    if (!image) {
+      return res.status(400).json({ success: false, message: "Image is required" });
+    }
+
+    // Upload base64 string to Cloudinary
+    const uploadedResponse = await cloudinary.uploader.upload(image, {
+      folder: "products",
+    });
 
     const product = new Product({
-      ...req.body,
-      image: imagePath,
+      ...otherFields, // name, description, price, category, origin, stock, etc.
+      image: uploadedResponse.secure_url,
     });
 
     await product.save();
@@ -126,7 +143,7 @@ const createProduct = async (req, res) => {
       data: { product },
     });
   } catch (error) {
-    console.error("Product creation error:", error);
+    console.error("Product creation error:", error)
     res.status(500).json({
       success: false,
       message: "Failed to create product",

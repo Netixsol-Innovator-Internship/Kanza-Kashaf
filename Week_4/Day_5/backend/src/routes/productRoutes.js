@@ -178,7 +178,7 @@ router.get("/:id", idValidation, validateRequest, getProductById)
  *       401:
  *         description: Unauthorized
  */
-router.post("/", auth, role("admin", "superAdmin"), upload.single("image"), productValidation, validateRequest, createProduct)
+router.post("/", auth, role("admin", "superAdmin"), productValidation, validateRequest, createProduct)
 
 /**
  * @swagger

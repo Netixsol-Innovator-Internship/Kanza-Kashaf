@@ -417,7 +417,9 @@ const CollectionsPage = () => {
                       <img
                         src={
                           product.image
-                            ? `${IMAGE_BASE_URL}/${product.image.replace(/^\//, "")}`
+                            ? product.image.startsWith("http")
+                              ? product.image
+                              : `${IMAGE_BASE_URL}/${product.image.replace(/^\//, "")}`
                             : "/placeholder.svg"
                         }
                         alt={product.name}

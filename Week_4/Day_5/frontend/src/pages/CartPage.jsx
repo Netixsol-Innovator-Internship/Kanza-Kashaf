@@ -82,7 +82,9 @@ const CartPage = () => {
                   <img
                     src={
                       item.product.image
-                        ? `${IMAGE_BASE_URL}/${item.product.image.replace(/^\//, "")}`
+                        ? item.product.image.startsWith("http")
+                          ? item.product.image
+                          : `${IMAGE_BASE_URL}/${item.product.image.replace(/^\//, "")}`
                         : "/placeholder.svg"
                     }
                     alt={item.product.name}
@@ -103,8 +105,13 @@ const CartPage = () => {
 
                   <div className="flex flex-col items-end gap-2">
                     <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-md">
-                      <button
-                        onClick={() => updateQuantity(item.product._id, Math.max(0, item.quantity - 1))}
+                      <button onClick={() => {
+                          if (item.quantity === 1) {
+                            removeFromCart(item.product._id)
+                          } else {
+                            updateQuantity(item.product._id, item.quantity - 1)
+                          }
+                        }}
                         className="w-5 h-5 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
                       >
                         -

@@ -49,35 +49,31 @@ const AddProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-
-    formData.append("name", form.name);
-    formData.append("description", form.description);
-    formData.append("price", form.price);
-    formData.append("category", form.category);
-    formData.append("origin", form.origin);
-    formData.append("stock", form.stock);
-
-    if (form.collection) formData.append("collection", form.collection);
-    if (form.caffeine) formData.append("caffeine", form.caffeine);
-
-    form.flavour.forEach((f) => formData.append("flavour[]", f));
-    form.qualities.forEach((q) => formData.append("qualities[]", q));
-    form.allergens.forEach((a) => formData.append("allergens[]", a));
-
-    formData.append("organic", form.organic ? "true" : "false");
-
-    if (form.imageFile) {
-      formData.append("image", form.imageFile);
-    }
-
     try {
-      await addProduct(formData).unwrap()
-      alert("Product added successfully!")
-      navigate("/products");
+      let base64Image = null;
+
+      if (form.imageFile) {
+        // Convert file to base64
+        const reader = new FileReader();
+        reader.readAsDataURL(form.imageFile);
+        const base64Promise = new Promise((resolve, reject) => {
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = (error) => reject(error);
+        });
+
+        base64Image = await base64Promise;
+      }
+
+      await addProduct({
+        ...form, // send all form data
+        image: base64Image, // backend expects "image"
+      }).unwrap();
+
+      alert("Product created successfully!");
+      navigate("/"); // redirect if you want
     } catch (err) {
-      console.error("Add product error:", err)
-      alert("Failed to add product: " + (err?.data?.message || "Unknown error"));
+      console.error("Add product error:", err);
+      alert("Failed to create product.");
     }
   }
 
@@ -177,7 +173,6 @@ const AddProduct = () => {
           type="number"
           name="stock"
           placeholder="Stock No."
-          value={form.stock}
           onChange={handleChange}
           className="w-full border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-200 p-2 rounded"
           required
