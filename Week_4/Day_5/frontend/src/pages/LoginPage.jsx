@@ -3,11 +3,13 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
+import { useCart } from "../context/CartContext"
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../redux/authSlice";
 import { useLoginMutation } from "../redux/apiSlice";
 
 const LoginPage = () => {
+  const { cartCount, clearCart } = useCart()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -33,7 +35,7 @@ const LoginPage = () => {
 
     try {
       const result = await login(formData).unwrap(); 
-
+      clearCart()
       dispatch(setCredentials(result));
 
       navigate("/", { replace: true });

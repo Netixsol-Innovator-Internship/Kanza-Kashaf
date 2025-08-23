@@ -22,7 +22,7 @@ const AddProduct = () => {
     qualities: [],
     allergens: [],
     organic: false,
-    image: null,
+    imageFile: null,
   })
 
   const handleChange = (e) => {
@@ -40,42 +40,47 @@ const AddProduct = () => {
   }
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files[0]
     if (file) {
-      const cleanName = file.name.replace(/\s+/g, "-").toLowerCase();
-      setForm({ ...form, image: cleanName });
+      setForm({ ...form, imageFile: file })
     }
-  };
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const payload = {
-      name: form.name.trim(),
-      description: form.description.trim(),
-      price: Number(form.price),
-      image: form.image,
-      category: form.category,
-      origin: form.origin,
-      stock: Number(form.stock),
-      collection: form.collection || undefined,
-      caffeine: form.caffeine || undefined,
-      flavour: form.flavour,
-      qualities: form.qualities,
-      allergens: form.allergens,
-      organic: Boolean(form.organic),
-      isActive: Boolean(form.isActive),
-    };
+    const formData = new FormData();
+
+    formData.append("name", form.name);
+    formData.append("description", form.description);
+    formData.append("price", form.price);
+    formData.append("category", form.category);
+    formData.append("origin", form.origin);
+    formData.append("stock", form.stock);
+
+    if (form.collection) formData.append("collection", form.collection);
+    if (form.caffeine) formData.append("caffeine", form.caffeine);
+
+    form.flavour.forEach((f) => formData.append("flavour[]", f));
+    form.qualities.forEach((q) => formData.append("qualities[]", q));
+    form.allergens.forEach((a) => formData.append("allergens[]", a));
+
+    formData.append("organic", form.organic ? "true" : "false");
+
+    if (form.imageFile) {
+      formData.append("image", form.imageFile);
+    }
 
     try {
-      await addProduct(payload).unwrap();
-      alert("Product added successfully!");
+      await addProduct(formData).unwrap()
+      alert("Product added successfully!")
       navigate("/products");
     } catch (err) {
-      console.error("Add product error:", err);
+      console.error("Add product error:", err)
       alert("Failed to add product: " + (err?.data?.message || "Unknown error"));
     }
-  };
+  }
+
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-xl shadow-md transition">
@@ -172,6 +177,7 @@ const AddProduct = () => {
           type="number"
           name="stock"
           placeholder="Stock No."
+          value={form.stock}
           onChange={handleChange}
           className="w-full border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-200 p-2 rounded"
           required

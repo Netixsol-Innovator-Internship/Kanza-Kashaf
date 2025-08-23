@@ -14,7 +14,6 @@ import LoginPage from "./pages/LoginPage.jsx"
 import RegisterPage from "./pages/RegisterPage.jsx"
 import Footer from "./components/Footer.jsx"
 
-// ✅ Import AddProduct page
 import AddProduct from "./pages/AddProduct.jsx"
 
 function App() {
@@ -31,17 +30,11 @@ function App() {
                   <Route path="/admin/manage-users" element={<ManageUsers />} />
                   <Route path="/super-admin/manage-users" element={<SuperAdminManageUsers />} />
                   <Route path="/super-admin/manage-admins" element={<SuperAdminManageAdmins />} />
-
-                  {/* ✅ Collections & Products */}
                   <Route path="/collections" element={<CollectionsPage />} />
                   <Route path="/collections/:category" element={<CollectionsPage />} />
                   <Route path="/products" element={<CollectionsPage />} />
-
-                  {/* ✅ Product details & Add Product */}
                   <Route path="/product/:id" element={<ProductPage />} />
                   <Route path="/add-product" element={<AddProduct />} />
-
-                  {/* ✅ Cart & Auth */}
                   <Route path="/cart" element={<CartPage />} />
                   <Route path="/login" element={<LoginPage />} />
                   <Route path="/register" element={<RegisterPage />} />

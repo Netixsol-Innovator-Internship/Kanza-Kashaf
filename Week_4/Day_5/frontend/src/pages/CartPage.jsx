@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { useCart } from "../context/CartContext"
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api"
+const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_URL || "http://localhost:5000"
 
 const CartPage = () => {
   const { cartItems, updateQuantity, removeFromCart, getCartTotal } = useCart()
@@ -80,7 +80,11 @@ const CartPage = () => {
               {cartItems.map((item) => (
                 <div key={item.product._id} className="flex flex-row items-start sm:items-center py-6 gap-4">
                   <img
-                    src={`${API_BASE_URL}${item.product.image}`}
+                    src={
+                      item.product.image
+                        ? `${IMAGE_BASE_URL}/${item.product.image.replace(/^\//, "")}`
+                        : "/placeholder.svg"
+                    }
                     alt={item.product.name}
                     className="w-20 h-20 object-cover rounded-md"
                   />

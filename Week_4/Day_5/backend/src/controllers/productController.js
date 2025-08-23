@@ -111,15 +111,22 @@ const getProductById = async (req, res) => {
 // Create new product (Admin only)
 const createProduct = async (req, res) => {
   try {
-    const product = new Product(req.body)
-    await product.save()
+    const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+
+    const product = new Product({
+      ...req.body,
+      image: imagePath,
+    });
+
+    await product.save();
 
     res.status(201).json({
       success: true,
       message: "Product created successfully",
       data: { product },
-    })
+    });
   } catch (error) {
+    console.error("Product creation error:", error);
     res.status(500).json({
       success: false,
       message: "Failed to create product",

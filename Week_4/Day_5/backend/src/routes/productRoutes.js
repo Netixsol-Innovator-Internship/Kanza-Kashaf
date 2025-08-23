@@ -1,4 +1,5 @@
 const express = require("express")
+const multer = require("multer")
 const { body, param, query } = require("express-validator")
 const {
   getProducts,
@@ -13,22 +14,19 @@ const validateRequest = require("../middleware/validateRequest")
 
 const router = express.Router()
 
+// Store images in /uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, "uploads/"),
+  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname),
+})
+
+const upload = multer({ storage });
+
 const productValidation = [
   body("name").trim().isLength({ min: 2, max: 100 }).withMessage("Product name must be between 2 and 100 characters"),
   body("description").trim().isLength({ min: 10, max: 500 }).withMessage("Description must be between 10 and 500 characters"),
   body("price").isFloat({ min: 0 }).withMessage("Price must be a positive number"),
-  body("image").custom((value) => {
-    if (/^[\w,\s-]+\.(jpg|jpeg|png|gif|webp)$/i.test(value)) {
-      return true;
-    }
-    if (typeof value === "string" && value.startsWith("/")) {
-      return true;
-    }
-    if (/^(https?:\/\/[^\s]+)$/.test(value)) {
-      return true;
-    }
-    throw new Error("Image must be a valid filename, URL, or relative path");
-  }),
+  body("image").optional().isString().withMessage("Image must be a string"),
   body("category")
     .isIn(["black-tea", "green-tea", "herbal-tea", "oolong-tea", "white-tea", "chai", "matcha", "rooibos", "teaware"])
     .withMessage("Invalid category"),
@@ -180,7 +178,7 @@ router.get("/:id", idValidation, validateRequest, getProductById)
  *       401:
  *         description: Unauthorized
  */
-router.post("/", auth, role("admin", "superAdmin"), productValidation, validateRequest, createProduct)
+router.post("/", auth, role("admin", "superAdmin"), upload.single("image"), productValidation, validateRequest, createProduct)
 
 /**
  * @swagger

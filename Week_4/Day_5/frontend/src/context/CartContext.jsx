@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from "react"
 import { useSelector } from "react-redux"
+import { useAuth } from "./AuthContext"
 import {
   useGetCartQuery,
   useAddToCartMutation,

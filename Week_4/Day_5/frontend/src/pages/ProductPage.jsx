@@ -14,7 +14,7 @@ const Notification = ({ message, onClose }) => {
   return (
     <div className="fixed top-6 right-6 z-50">
       <div className="bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-6 py-3 rounded-xl shadow-lg flex items-center space-x-4 animate-slideIn">
-        <img src="/images/Bag.png" alt="cart" className="w-6 h-6 opacity-80 dark:opacity-60" />
+        <img src="/images/Bag.png" alt="cart" className="w-6 h-6 opacity-80 dark:invert" />
         <span className="font-medium">{message}</span>
         <button
           onClick={onClose}
@@ -44,6 +44,7 @@ const ProductPage = () => {
   const product = data?.data?.product
 
   const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api"
+  const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_URL || "http://localhost:5000"
 
   const [isEditing, setIsEditing] = useState(false)
   const [editData, setEditData] = useState({
@@ -77,23 +78,32 @@ const ProductPage = () => {
 
       await updateProduct({ id: product._id, updatedData: payload }).unwrap()
       setIsEditing(false)
+
+      setNotification("Product updated successfully!")
+      setTimeout(() => setNotification(null), 3000)
     } catch (err) {
       console.error("Update failed", err)
+      alert("Failed to update product.")
     }
   }
 
 
   const handleCancelEdit = () => {
-      setIsEditing(false)
-    }
+    setIsEditing(false)
+  }
 
-    const handleDelete = async () => {
+  const handleDelete = async () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this product?")
     if (!confirmDelete) return
 
     try {
       await deleteProduct(product._id).unwrap()
-      navigate(`/collections/${product.collection?.toLowerCase().replace(" ", "-")}`)
+
+      setNotification("Product deleted successfully!")
+      setTimeout(() => {
+        setNotification(null)
+        navigate("/collections")
+      }, 1500)
     } catch (err) {
       console.error("Delete failed", err)
       alert("Failed to delete product.")
@@ -101,13 +111,6 @@ const ProductPage = () => {
   }
 
   const handleAddToCart = async () => {
-  {(user?.role !== "user") && (
-    (() => {
-      setRedirectUrl(location.pathname)
-      alert("Please login with a user account to add items to cart.")
-      return
-    })()
-  )}
 
   setAddingToCart(true)
   const result = await addToCart(product._id, quantity)
@@ -178,7 +181,11 @@ const ProductPage = () => {
         <div className="grid grid-cols-1 mb-6 sm:mb-16 lg:grid-cols-2 gap-8 lg:gap-16">
           {/* Product Image */}
           <div className="aspect-square bg-gray-100 dark:bg-gray-800 overflow-hidden rounded-lg">
-            <img src={`${API_BASE_URL}${product.image}`} alt={product.name} className="w-full h-full object-cover"/>
+            <img src={
+                          product.image
+                            ? `${IMAGE_BASE_URL}/${product.image.replace(/^\//, "")}`
+                            : "/placeholder.svg"
+                        } alt={product.name} className="w-full h-full object-cover"/>
           </div>
 
           {/* Product Info */}

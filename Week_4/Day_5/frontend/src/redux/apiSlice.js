@@ -53,13 +53,10 @@ export const apiSlice = createApi({
     }),
 
     addProduct: builder.mutation({
-      query: (product) => ({
+      query: (formData) => ({
         url: "/products",
         method: "POST",
-        body: product,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        body: formData,
       }),
       invalidatesTags: [{ type: "Products", id: "LIST" }],
     }),
@@ -159,7 +156,6 @@ export const apiSlice = createApi({
         url: "/cart/clear",
         method: "DELETE",
       }),
-      invalidatesTags: ["Cart"],
     }),
   }),
 });

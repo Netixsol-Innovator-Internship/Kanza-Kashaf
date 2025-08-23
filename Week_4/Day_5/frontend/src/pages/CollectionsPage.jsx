@@ -32,7 +32,7 @@ const CollectionsPage = () => {
   })
   const [sortBy, setSortBy] = useState("name")
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api"
+  const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_URL || "http://localhost:5000"
 
   const filterOptions = {
     collections: [
@@ -54,7 +54,9 @@ const CollectionsPage = () => {
   }
 
   // RTK Query
-  const { data, isLoading, error } = useGetProductsQuery()
+  const { data, isLoading, error } = useGetProductsQuery(undefined, {
+  refetchOnMountOrArgChange: true,
+})
   const products = data?.data?.products || []
 
   useEffect(() => {
@@ -413,7 +415,11 @@ const CollectionsPage = () => {
                   <div className="bg-white dark:bg-gray-800 overflow-hidden hover:shadow-md dark:hover:shadow-lg transition-shadow">
                     <div className="aspect-square bg-gray-100 dark:bg-gray-700">
                       <img
-                        src={`${API_BASE_URL}${product.image || "/placeholder.svg"}`}
+                        src={
+                          product.image
+                            ? `${IMAGE_BASE_URL}/${product.image.replace(/^\//, "")}`
+                            : "/placeholder.svg"
+                        }
                         alt={product.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
