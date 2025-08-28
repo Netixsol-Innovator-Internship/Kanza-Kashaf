@@ -143,10 +143,10 @@ function CommentEditor({
   const addLink = () => {
     const selection = editorState.getSelection();
     if (selection.isCollapsed()) {
-      if (typeof window !== "undefined") alert('Select text to add a link');
+      alert('Select text to add a link');
       return;
     }
-    const url = typeof window !== "undefined" ? window.prompt('Enter URL (include https://)') : null;
+    const url = window.prompt('Enter URL (include https://)');
     if (!url) return;
     const content = editorState.getCurrentContent();
     const contentWithEntity = content.createEntity('LINK', 'MUTABLE', { url });
@@ -155,7 +155,6 @@ function CommentEditor({
     newState = RichUtils.toggleLink(newState, newState.getSelection(), entityKey);
     handleChange(newState);
   };
-
   const removeLink = () => {
     const selection = editorState.getSelection();
     if (selection.isCollapsed()) {
@@ -252,14 +251,9 @@ function CommentItem({ item, onReply }: any) {
       alert('Failed to save edit');
     }
   };
-  const onDelete = async () => {
-    if (typeof window !== "undefined" && window.confirm('Delete this comment?')) {
-      try {
-        await deleteComment({ id: item._id }).unwrap();
-      } catch {}
-    }
+  const onDelete = async ()=>{
+    if (confirm('Delete this comment?')) { try { await deleteComment({ id: item._id }).unwrap(); } catch {} }
   };
-
 
   const safeHtml = DOMPurify.sanitize(item.content || '');
 
@@ -504,7 +498,7 @@ export default function HomeUI() {
 
   const submit = async (e:any)=>{
     e.preventDefault();
-    if (!token) { if (typeof window !== "undefined") alert('Login first'); }
+    if (!token) { alert('Login first'); return; }
     await createComment({ content: textHtml, parentId: replyTo?._id }).unwrap();
     setTextHtml('');
     setReplyTo(null);
