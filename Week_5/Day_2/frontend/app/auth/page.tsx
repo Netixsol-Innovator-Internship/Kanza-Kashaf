@@ -4,6 +4,7 @@ import { useLoginMutation, useSignupMutation } from '../../lib/api';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../lib/authSlice';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function AuthPage() {
   const [mode, setMode] = useState<'login'|'signup'>('login');
@@ -14,20 +15,21 @@ export default function AuthPage() {
   const [login] = useLoginMutation();
   const [signup] = useSignupMutation();
   const dispatch = useDispatch();
+  const router = useRouter();
 
-  const submit = async (e:any) => {
+  const submit = async (e: any) => {
     e.preventDefault();
     try {
       if (mode === 'login') {
         const res = await login({ identifier, password }).unwrap();
         dispatch(setToken(res.accessToken));
-        window.location.href = '/';
+        router.push('/');
       } else {
         const res = await signup({ username, email, password }).unwrap();
         dispatch(setToken(res.accessToken));
-        window.location.href = '/';
+        router.push('/');
       }
-    } catch (e:any) {
+    } catch (e: any) {
       alert(e?.data?.message || 'Failed');
     }
   };

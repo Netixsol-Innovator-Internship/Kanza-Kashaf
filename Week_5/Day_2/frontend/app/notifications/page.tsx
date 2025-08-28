@@ -6,17 +6,19 @@ import {
   useMarkReadMutation, 
   useDeleteNotificationMutation
 } from '../../lib/api';
+import { useRouter } from 'next/navigation';
 
 function Inner() {
   const { data } = useNotificationsQuery();
   const [markRead] = useMarkReadMutation();
   const [deleteNotification] = useDeleteNotificationMutation();
+  const router = useRouter();
 
   return (
     <div className="card space-y-4">
       <div className="flex items-center justify-between">
         <button
-          onClick={() => window.history.back()}
+          onClick={() => router.back()}
           className="px-3 py-1 rounded"
         >
           ← Back
