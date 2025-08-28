@@ -1,4 +1,3 @@
-// users.controller.ts
 import { Controller, Get, Param, UseGuards, Post, Req, Patch, Body } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../../common/jwt.guard';
@@ -22,7 +21,6 @@ export class UsersController {
 
   @Get(':id')
   async get(@Req() req, @Param('id') id: string) {
-    // optional JWT (so profiles work for logged-out users too)
     let currentUserId: string | undefined;
     const auth = req.headers?.authorization;
     if (auth?.startsWith('Bearer ')) {

@@ -13,7 +13,7 @@ const baseQuery = fetchBaseQuery({
 export const api = createApi({
   reducerPath: 'api',
   baseQuery,
-  tagTypes: ['Comments', 'Notifications', 'Profile', 'Users'], // 🔹 Added Users
+  tagTypes: ['Comments', 'Notifications', 'Profile', 'Users'],
   endpoints: (builder) => ({
     signup: builder.mutation<{accessToken:string}, {username:string,email:string,password:string}>({
       query: body => ({ url: '/auth/signup', method: 'POST', body }),
@@ -27,7 +27,7 @@ export const api = createApi({
     }),
     updateProfile: builder.mutation<any, { bio?: string; profilePic?: string }>({
       query: (body) => ({ url: '/users/me', method: 'PATCH', body }),
-      invalidatesTags: ['Profile', 'Users'], // also invalidate Users for own page refresh
+      invalidatesTags: ['Profile', 'Users'],
     }),
 
     getUserById: builder.query<any, string>({
@@ -88,8 +88,8 @@ export const {
   useProfileMeQuery,
   useUpdateProfileMutation,
   useGetUserByIdQuery,
-  useFollowUserMutation,        // 🔹 Added
-  useUnfollowUserMutation,      // 🔹 Added
+  useFollowUserMutation,   
+  useUnfollowUserMutation,
   useCommentListQuery,
   useCreateCommentMutation,
   useEditCommentMutation,

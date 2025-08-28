@@ -24,14 +24,12 @@ function Inner() {
         <h2 className="text-xl font-semibold">Notifications</h2>
       </div>
 
-      {/* Notifications List */}
       <div className="space-y-3">
         {data?.map((n: any) => (
           <div
             key={n._id}
             className="p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
           >
-            {/* Left Side: Type + Message */}
             <div className="flex-1 min-w-0">
               <div className="font-medium break-words">
                 {n.actorDisplayName ? (
@@ -45,7 +43,6 @@ function Inner() {
               </div>
             </div>
 
-            {/* Right Side: Actions */}
             <div className="flex flex-wrap gap-2 justify-end">
               {!n.read && (
                 <button

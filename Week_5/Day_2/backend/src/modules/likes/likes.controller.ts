@@ -1,4 +1,3 @@
-// likes.controller.ts
 import { Controller, Post, Param, Req, UseGuards } from '@nestjs/common';
 import { LikesService } from './likes.service';
 import { JwtAuthGuard } from '../../common/jwt.guard';

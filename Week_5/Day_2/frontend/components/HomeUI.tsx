@@ -1,4 +1,3 @@
-// homeui.tsx
 'use client';
 import { useEffect, useMemo, useState, useRef } from 'react';
 import {
@@ -8,7 +7,7 @@ import {
   useDeleteCommentMutation,
   useLikeToggleMutation,
   useUnreadCountQuery,
-  useGetUserByIdQuery, // ← added
+  useGetUserByIdQuery,
   useProfileMeQuery,
 } from '../lib/api';
 import { useSelector, useDispatch } from 'react-redux';
@@ -19,7 +18,6 @@ import { FaHeart, FaReply, FaTrash, FaEdit, FaBell, FaBold, FaItalic, FaUnderlin
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-// Draft.js imports
 import {
   Editor,
   EditorState,
@@ -33,21 +31,15 @@ import htmlToDraft from 'html-to-draftjs';
 import DOMPurify from 'dompurify';
 import 'draft-js/dist/Draft.css';
 
-/**
- * Avatar component — shows user's profilePic if available (realtime updates),
- * otherwise a letter avatar. Pass either userId OR name. If both given, userId is used.
- */
+
 function Avatar({ userId, name, onClick }: { userId?: string; name?: string; onClick?: () => void }) {
-  // use RTK Query to get user info (cached) when userId present
   const { data: user } = useGetUserByIdQuery(userId ?? '', { skip: !userId });
   const [profilePic, setProfilePic] = useState<string | undefined>(() => user?.profilePic);
 
-  // keep local profilePic in sync with query result
   useEffect(() => {
     if (user?.profilePic !== undefined) setProfilePic(user.profilePic);
   }, [user?.profilePic]);
 
-  // subscribe to socket profile:update for realtime changes
   useEffect(() => {
     if (!userId) return;
     const handler = (payload: any) => {
@@ -62,7 +54,6 @@ function Avatar({ userId, name, onClick }: { userId?: string; name?: string; onC
     };
   }, [userId]);
 
-  // letter uses displayName first, then username, then passed name
   const letter = (user?.displayName || user?.username || name || '?')?.charAt(0).toUpperCase() || '?';
 
   return (
@@ -81,14 +72,6 @@ function Avatar({ userId, name, onClick }: { userId?: string; name?: string; onC
   );
 }
 
-
-/**
- * CommentEditor - Draft.js editor with toolbar
- * props:
- * - initialHtml?: string  -> load editor with this HTML
- * - onChangeHtml: (html:string) => void -> called whenever content changes with HTML output
- * - placeholder?: string
- */
 function CommentEditor({
   initialHtml,
   onChangeHtml,
@@ -101,7 +84,6 @@ function CommentEditor({
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
   const editorRef = useRef<any>(null);
 
-  // move caret to end (used only when loading initial content)
   const moveCaretToEnd = (state: EditorState) => {
     const content = state.getCurrentContent();
     const lastBlock = content.getBlockMap().last();
@@ -132,14 +114,12 @@ function CommentEditor({
           contentBlock.entityMap
         );
         let loaded = EditorState.createWithContent(contentState);
-        // Only force caret to end ONCE when loading content
         loaded = moveCaretToEnd(loaded);
         setEditorState(loaded);
       } catch {
         setEditorState(EditorState.createEmpty());
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialHtml]);
 
   const pushHtml = (st: EditorState) => {
@@ -157,7 +137,6 @@ function CommentEditor({
     pushHtml(st);
   };
 
-  // toolbar helpers unchanged
   const toggleInline = (inline: string) => handleChange(RichUtils.toggleInlineStyle(editorState, inline));
   const toggleBlock = (block: string) => handleChange(RichUtils.toggleBlockType(editorState, block));
 
@@ -198,13 +177,10 @@ function CommentEditor({
     }
   };
 
-  // Focus helper: only focus (do NOT change selection). This lets mouse drag selection work normally.
   const focusEditor = () => {
     editorRef.current?.focus();
   };
 
-  // Remove any "force selection on state change" logic — that was breaking selection.
-  // Keep the wrapper LTR isolation so direction remains correct.
   const currentInline = editorState.getCurrentInlineStyle();
   const selectionState = editorState.getSelection();
   const blockType = editorState.getCurrentContent().getBlockForKey(selectionState.getStartKey())?.getType();
@@ -228,7 +204,7 @@ function CommentEditor({
       <div
         onKeyDown={onKeyDown}
         className="border rounded p-2 min-h-[64px] sm:min-h-[80px] w-full"
-        onClick={focusEditor}           // just focus — don't force selection
+        onClick={focusEditor}
         dir="ltr"
         style={{ direction: 'ltr', textAlign: 'left', unicodeBidi: 'isolate-override' }}
       >
@@ -279,7 +255,6 @@ function CommentItem({ item, onReply }: any) {
     if (confirm('Delete this comment?')) { try { await deleteComment({ id: item._id }).unwrap(); } catch {} }
   };
 
-  // sanitize HTML for display
   const safeHtml = DOMPurify.sanitize(item.content || '');
 
   return (
@@ -329,7 +304,7 @@ function CommentItem({ item, onReply }: any) {
 export default function HomeUI() {
   const { data, refetch } = useCommentListQuery();
   const [createComment] = useCreateCommentMutation();
-  const [textHtml, setTextHtml] = useState(''); // html string
+  const [textHtml, setTextHtml] = useState('');
   const [replyTo, setReplyTo] = useState<any>(null);
   const token = useSelector((s:RootState)=>s.auth.token);
   const userId = useSelector((s: RootState) => s.auth.userId);
@@ -358,7 +333,6 @@ export default function HomeUI() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
-  // --- new: small in-memory cache and resolver for display names ---
   const nameCache = useRef<Map<string, string>>(new Map());
 
   const apiBase = (process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:4000').replace(/\/$/, '');
@@ -372,7 +346,6 @@ export default function HomeUI() {
         headers: token ? { authorization: `Bearer ${token}` } : {},
       });
       if (!res.ok) {
-        // fallback to id
         nameCache.current.set(id, id);
         return id;
       }
@@ -385,9 +358,7 @@ export default function HomeUI() {
       return id;
     }
   }
-  // --- end name resolver ---
 
-  // NEW: show resolved name for the reply banner
   const [replyName, setReplyName] = useState<string | null>(null);
   useEffect(() => {
     let mounted = true;
@@ -395,19 +366,17 @@ export default function HomeUI() {
       setReplyName(null);
       return;
     }
-    // prefer authorDisplayName if embedded
     if (replyTo.authorDisplayName) {
       setReplyName(replyTo.authorDisplayName);
       return;
     }
-    // otherwise resolve via cache / API
     (async () => {
       const id = replyTo.authorId;
       const name = await resolveName(id);
       if (mounted) setReplyName(name);
     })();
     return () => { mounted = false; };
-  }, [replyTo]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [replyTo]);
 
   useEffect(()=>{
     if (token) {
@@ -418,7 +387,6 @@ export default function HomeUI() {
           async (payload: any) => {
             refetch();
             if (payload?.comment?.parentId) return;
-            // prefer embedded display name (if backend provided), otherwise resolve
             const immediateName = payload?.comment?.authorDisplayName;
             const authorId = payload?.comment?.authorId;
             const name = immediateName || (authorId ? await resolveName(authorId) : (authorId || 'Someone'));
@@ -452,34 +420,29 @@ export default function HomeUI() {
             }
           },
         ],
-        // replace the existing "comment.liked" handler with this:
-[
-  "comment.liked",
-  async (payload: any) => {
-    // update local comment likes (payload.likes is expected to be an array of userIds)
-    setLocalData((prev) =>
-      prev.map((c) =>
-        c._id === payload.commentId ? { ...c, likes: payload.likes } : c
-      )
-    );
+        [
+          "comment.liked",
+          async (payload: any) => {
+            setLocalData((prev) =>
+              prev.map((c) =>
+                c._id === payload.commentId ? { ...c, likes: payload.likes } : c
+              )
+            );
 
-    // Only notify when it's a _like_ (not an unlike), the recipient is the current user,
-    // and the actor is not the recipient (avoid notifying the actor themselves).
-    if (payload.liked && payload.commentOwnerId === userId && payload.actorId !== userId) {
-      const actorName = await resolveName(payload.actorId);
-      toast.custom((t) => (
-        <div className={`${t.visible ? "animate-enter" : "animate-leave"} bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 flex items-center gap-3`}>
-          <div className="avatar">{(actorName?.charAt?.(0) || '?').toUpperCase()}</div>
-          <div>
-            <p className="font-semibold">{actorName}</p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">liked your comment ❤️</p>
-          </div>
-        </div>
-      ));
-    }
-  },
-],
-
+            if (payload.liked && payload.commentOwnerId === userId && payload.actorId !== userId) {
+              const actorName = await resolveName(payload.actorId);
+              toast.custom((t) => (
+                <div className={`${t.visible ? "animate-enter" : "animate-leave"} bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 flex items-center gap-3`}>
+                  <div className="avatar">{(actorName?.charAt?.(0) || '?').toUpperCase()}</div>
+                  <div>
+                    <p className="font-semibold">{actorName}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">liked your comment ❤️</p>
+                  </div>
+                </div>
+              ));
+            }
+          },
+        ],
         ["comment.edited",
           async (payload: any) => {
             if (payload?.userId === userId) {
@@ -515,7 +478,6 @@ export default function HomeUI() {
             refetch();
           },
         ],
-        // 👇 add these notification handlers
         [
           "notification.new",
           () => setUnreadCount((c) => c + 1),
@@ -537,7 +499,6 @@ export default function HomeUI() {
   const submit = async (e:any)=>{
     e.preventDefault();
     if (!token) { alert('Login first'); return; }
-    // send the HTML string; backend will sanitize before saving
     await createComment({ content: textHtml, parentId: replyTo?._id }).unwrap();
     setTextHtml('');
     setReplyTo(null);
@@ -547,17 +508,14 @@ export default function HomeUI() {
     const tree = useMemo(() => {
     const list = localData || [];
 
-    // parents newest-first
     const parents = list.filter((c: any) => !c.parentId).slice().reverse();
 
-    // replies grouped and sorted newest-first per parent
     const replies = list.filter((c: any) => c.parentId);
     const map = replies.reduce((acc: any, r: any) => {
       (acc[r.parentId] = acc[r.parentId] || []).push(r);
       return acc;
     }, {});
 
-    // sort each replies array so newest replies appear first
     Object.keys(map).forEach((k) => {
       map[k].sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     });
@@ -569,7 +527,6 @@ export default function HomeUI() {
     <div className="card w-full max-w-4xl mx-auto p-4 sm:p-6 space-y-4">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          {/* header avatar: prefer showing logged-in user's profilePic when available */}
           <Avatar userId={userId} name={username || "Guest"} onClick={() => userId ? router.push(`/profile/${userId}`) : router.push('/auth')} />
           <div className="font-semibold truncate">
             {!mounted ? "Guest" : displayHeaderName}

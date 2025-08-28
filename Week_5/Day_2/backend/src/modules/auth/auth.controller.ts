@@ -8,7 +8,7 @@ class SignupDto {
   @MinLength(6) password: string;
 }
 class LoginDto {
-  @IsNotEmpty() identifier: string; // email or username
+  @IsNotEmpty() identifier: string;
   @IsNotEmpty() password: string;
 }
 

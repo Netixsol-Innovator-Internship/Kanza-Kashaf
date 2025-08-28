@@ -9,7 +9,7 @@ import { WsGateway } from '../../ws/ws.gateway';
 export class UsersService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
-    private readonly ws: WsGateway, // inject gateway
+    private readonly ws: WsGateway,
   ) {}
 
   async findById(id: string) {
@@ -24,8 +24,6 @@ export class UsersService {
     return this.userModel.findOne({ username });
   }
 
-  // createUser now stores username (lowercased) for uniqueness/login,
-  // and stores the original-cased value in displayName for UI.
   async createUser(username: string, email: string, password: string) {
     const usernameTrimmed = username.trim();
     const usernameLower = usernameTrimmed.toLowerCase();
@@ -33,8 +31,8 @@ export class UsersService {
     if (exists) throw new BadRequestException('User already exists');
     const hash = await bcrypt.hash(password, 10);
     const user = new this.userModel({
-      username: usernameLower, // used for login & uniqueness
-      displayName: usernameTrimmed, // keep original casing for display
+      username: usernameLower,
+      displayName: usernameTrimmed,
       email,
       password: hash
     });
@@ -65,7 +63,6 @@ export class UsersService {
     await user.save();
     const pub = await this.publicProfile(user);
 
-    // 🔹 Emit realtime updates
     this.ws.emitToUser(userId, 'profile:update', pub);
     this.ws.emitToAllExceptActor('profile:update', pub, userId);
 
@@ -85,20 +82,17 @@ export class UsersService {
       await target.save();
     }
 
-    const me = await this.publicProfile(user, userId);           // with isFollowing
-    const targetForMe = await this.publicProfile(target, userId); // with isFollowing
+    const me = await this.publicProfile(user, userId);
+    const targetForMe = await this.publicProfile(target, userId);
     const targetForOthers = await this.publicProfile(target, undefined, false);
 
-    // send to actor
     this.ws.emitToUser(userId, 'profile:update', me);
     this.ws.emitToUser(userId, 'profile:update', targetForMe);
 
-    // send to target
     this.ws.emitToUser(targetId, 'profile:update', {
-      ...(await this.publicProfile(target, targetId)), // with isFollowing for target
+      ...(await this.publicProfile(target, targetId)),
     });
 
-    // broadcast only counts to others
     this.ws.emitToAllExceptActor('profile:update', targetForOthers, userId);
   }
 
@@ -112,20 +106,17 @@ export class UsersService {
     await user.save();
     await target.save();
 
-    const me = await this.publicProfile(user, userId);           // with isFollowing
-    const targetForMe = await this.publicProfile(target, userId); // with isFollowing
+    const me = await this.publicProfile(user, userId);
+    const targetForMe = await this.publicProfile(target, userId);
     const targetForOthers = await this.publicProfile(target, undefined, false);
 
-    // send to actor
     this.ws.emitToUser(userId, 'profile:update', me);
     this.ws.emitToUser(userId, 'profile:update', targetForMe);
 
-    // send to target
     this.ws.emitToUser(targetId, 'profile:update', {
-      ...(await this.publicProfile(target, targetId)), // with isFollowing for target
+      ...(await this.publicProfile(target, targetId)),
     });
 
-    // broadcast only counts to others
     this.ws.emitToAllExceptActor('profile:update', targetForOthers, userId);
   }
 }

@@ -6,13 +6,13 @@ import { NotificationsService } from './notifications.service';
 import { NotificationsController } from './notifications.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { WsGateway } from '../../ws/ws.gateway';
-import { UsersModule } from '../users/users.module'; // <-- add this
+import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Notification.name, schema: NotificationSchema }]),
     JwtModule.register({ global: true, secret: process.env.JWT_SECRET }),
-    UsersModule, // <-- added so UsersService is available
+    UsersModule,
   ],
   providers: [NotificationsService, WsGateway],
   controllers: [NotificationsController],

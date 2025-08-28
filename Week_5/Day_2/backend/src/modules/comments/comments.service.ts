@@ -6,11 +6,9 @@ import { NotificationsService } from '../notifications/notifications.service';
 import { WsGateway } from '../../ws/ws.gateway';
 import { LikesService } from '../likes/likes.service';
 
-// 🟢 New imports for sanitizing HTML
 import { JSDOM } from 'jsdom';
 import * as createDOMPurify from 'dompurify';
 
-// 🟢 Import UsersService to fetch author info
 import { UsersService } from '../users/users.service';
 
 const window = new JSDOM('').window as any;
@@ -23,7 +21,7 @@ export class CommentsService {
     private notifs: NotificationsService,
     private ws: WsGateway,
     private likesService: LikesService,
-    private usersService: UsersService, // << injected
+    private usersService: UsersService,
   ) {}
 
   async list() {
@@ -37,10 +35,8 @@ export class CommentsService {
       if (parent.parentId) throw new ForbiddenException('Only single-level replies allowed');
     }
 
-    // Sanitize HTML before saving
     const safeContent = DOMPurify.sanitize(content || '');
 
-    // Fetch author info once to embed display name + profile pic
     const author = await this.usersService.findById(authorId);
     const authorDisplayName = author?.displayName || author?.username || authorId;
     const authorProfilePic = author?.profilePic || '';
@@ -53,10 +49,8 @@ export class CommentsService {
       parentId,
     }).save();
 
-    // Always broadcast new comment (for real-time UI update)
     this.ws.emitToAllExceptActor('comment.created', { comment: doc }, authorId);
 
-    // If it's a reply, notify only the parent
     if (parentId) {
       const parent = await this.model.findById(parentId);
       if (parent) {
@@ -85,7 +79,6 @@ export class CommentsService {
     if (!comment) throw new NotFoundException('Not found');
     if (comment.authorId !== userId) throw new ForbiddenException('Not yours');
 
-    // Sanitize new HTML before updating
     const safe = DOMPurify.sanitize(content || '');
     comment.content = safe;
     await comment.save();

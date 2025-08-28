@@ -19,7 +19,7 @@ function letterAvatar(username: string) {
 
 export default function ProfilePage() {
   const params = useParams();
-  const router = useRouter(); // <- router for Back button
+  const router = useRouter();
   const profileId = params?.id as string;
   const userId = useSelector((s: RootState) => s.auth.userId);
   const isOwnProfile = userId === profileId;
@@ -31,24 +31,18 @@ export default function ProfilePage() {
   const [followUser] = useFollowUserMutation();
   const [unfollowUser] = useUnfollowUserMutation();
 
-  // local state for live updates
   const [profileState, setProfileState] = useState<any>(null);
 
-  // local preview for selected file (ObjectURL)
   const [selectedPreview, setSelectedPreview] = useState<string | null>(null);
-  // store pending raw File until user clicks Save
   const [pendingFile, setPendingFile] = useState<File | null>(null);
   const [savingPreview, setSavingPreview] = useState(false);
 
-  // keep track of previous preview URL for cleanup
   const prevPreviewRef = useRef<string | null>(null);
 
-  // keep local state in sync with query data on load
   useEffect(() => {
     if (profile) setProfileState(profile);
   }, [profile?._id]);
 
-  // init socket once (you already had this)
   useEffect(() => {
     if (!userId) return;
     const token = localStorage.getItem("token");
@@ -67,7 +61,6 @@ export default function ProfilePage() {
     };
   }, [profileId, userId]);
 
-  // Bio editing (unchanged)
   const [editingBio, setEditingBio] = useState(false);
   const [bioDraft, setBioDraft] = useState<string>("");
 
@@ -75,20 +68,16 @@ export default function ProfilePage() {
     setBioDraft(profileState?.bio || "");
   }, [profileState?._id]);
 
-  // Avatar editing helpers
   const fileRef = useRef<HTMLInputElement>(null);
   const onPickFile = () => fileRef.current?.click();
 
-  // clean up old objectURLs when selectedPreview changes or on unmount
   useEffect(() => {
     const prev = prevPreviewRef.current;
-    // revoke previous if different
     if (prev && prev !== selectedPreview) {
       try { URL.revokeObjectURL(prev); } catch {}
     }
     prevPreviewRef.current = selectedPreview;
     return () => {
-      // on unmount also revoke any leftover preview
       if (prevPreviewRef.current) {
         try { URL.revokeObjectURL(prevPreviewRef.current); } catch {}
         prevPreviewRef.current = null;
@@ -100,26 +89,19 @@ export default function ProfilePage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // revoke any previous pending preview (cleanup handled by effect, but do it proactively)
     if (selectedPreview) {
       try { URL.revokeObjectURL(selectedPreview); } catch {}
     }
 
-    // set pending file and preview; do NOT upload yet
     const previewUrl = URL.createObjectURL(file);
     setSelectedPreview(previewUrl);
     setPendingFile(file);
-
-    // keep file input value so user can re-pick same file later if needed
-    // (we'll clear this on save/discard)
   };
 
-  // Save the pending preview (compress & upload) — only executed when user clicks Save
   const onSavePreview = async () => {
     if (!pendingFile) return;
     setSavingPreview(true);
     try {
-      // compress/resize before upload (same approach as before)
       const bitmap = await createImageBitmap(pendingFile);
 
       const MAX = 1024;
@@ -140,18 +122,13 @@ export default function ProfilePage() {
       if (!ctx) throw new Error("Canvas not supported");
       ctx.drawImage(bitmap, 0, 0, w, h);
 
-      // compress to JPEG (tune quality if needed)
       const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
 
-      // upload compressed dataUrl to backend
       await updateProfile({ profilePic: dataUrl }).unwrap();
 
-      // on success clear pending and preview (socket will deliver final profile:update)
       setPendingFile(null);
-      // keep a short visual preview until server update arrives, then clear it
       setTimeout(() => setSelectedPreview(null), 1500);
 
-      // clear file input
       if (fileRef.current) fileRef.current.value = "";
     } catch (err) {
       console.error("Failed compress/upload image", err);
@@ -161,7 +138,6 @@ export default function ProfilePage() {
     }
   };
 
-  // Discard pending preview
   const onDiscardPreview = () => {
     if (selectedPreview) {
       try { URL.revokeObjectURL(selectedPreview); } catch {}
@@ -184,7 +160,6 @@ export default function ProfilePage() {
     if (!userId) return alert("Login first");
 
     const isFollowing = profileState?.isFollowing;
-    // optimistic update
     setProfileState((prev: any) => ({
       ...prev,
       isFollowing: !isFollowing,
@@ -198,7 +173,6 @@ export default function ProfilePage() {
         await followUser({ userId: profileId }).unwrap();
       }
     } catch {
-      // rollback
       setProfileState((prev: any) => ({
         ...prev,
         isFollowing,
@@ -218,25 +192,21 @@ export default function ProfilePage() {
 
   return (
     <div className="max-w-3xl mx-auto p-6 px-4 sm:px-6 relative">
-      {/* Back button (top-right on md+, inline on small screens) */}
       <div className="md:absolute md:top-4 md:right-4 mt-2 md:mt-0">
         <button
-          onClick={() => router.push("/")} // navigate back to comments/home
+          onClick={() => router.push("/")}
           className="text-white px-3 py-1 rounded text-sm"
         >
           ← Go Back
         </button>
       </div>
 
-      {/* Header */}
       <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-        {/* Avatar */}
         <div className="relative flex-shrink-0">
           <div
             className="w-20 h-20 sm:w-24 md:w-32 rounded-full bg-indigo-500 flex items-center justify-center text-2xl sm:text-3xl md:text-4xl overflow-hidden select-none"
             style={{ boxShadow: "0 2px 10px rgba(0,0,0,0.06)" }}
           >
-            {/* prefer showing selectedPreview (client-side) if present, otherwise server profilePic */}
             {selectedPreview ? (
               <img src={selectedPreview} alt="preview" className="w-full h-full object-cover" />
             ) : profileState.profilePic ? (
@@ -262,14 +232,13 @@ export default function ProfilePage() {
 
           <input
             type="file"
-            accept=".png,.jpg,.jpeg,.webp,image/*" // restrict to image extensions
+            accept=".png,.jpg,.jpeg,.webp,image/*" 
             ref={fileRef}
             onChange={onFileChange}
             className="hidden"
           />
         </div>
 
-        {/* Name / Actions */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
             <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold truncate">
@@ -295,7 +264,6 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* Selected preview (shows after user picks a file) */}
       {selectedPreview && (
         <div className="mt-4 flex flex-col sm:flex-row items-start gap-4">
           <div>
@@ -324,7 +292,6 @@ export default function ProfilePage() {
         </div>
       )}
 
-      {/* Bio */}
       <div className="mt-8">
         <div className="flex items-center justify-between gap-2">
           <h2 className="font-semibold">Bio</h2>

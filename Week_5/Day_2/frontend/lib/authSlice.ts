@@ -13,7 +13,6 @@ const slice = createSlice({
     setToken(state, action) {
       state.token = action.payload;
       if (typeof window !== 'undefined') localStorage.setItem('token', action.payload);
-      // decode token to extract username and sub
       try {
         const payload = JSON.parse(atob(action.payload.split('.')[1]));
         state.username = payload.username;

@@ -6,7 +6,6 @@ export class User extends Document {
   @Prop({ required: true, unique: true, lowercase: true, trim: true })
   username: string;
 
-  // preserve the original-cased name the user typed
   @Prop({ required: true, trim: true })
   displayName: string;
 
