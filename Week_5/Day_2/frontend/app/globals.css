@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light dark; }
+body { @apply bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100; }
+.container { @apply max-w-4xl mx-auto px-4; }
+.card { @apply bg-white dark:bg-gray-800 rounded-2xl shadow p-4; }
+.btn { @apply inline-flex items-center gap-2 px-4 py-2 rounded-xl shadow bg-indigo-600 text-white hover:bg-indigo-700 transition; }
+.input { @apply w-full rounded-xl border p-2 bg-white dark:bg-gray-800; }
+.avatar { @apply w-10 h-10 rounded-full flex items-center justify-center font-bold text-white bg-indigo-500; }
+.heart { @apply cursor-pointer select-none; }
+@keyframes enter {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes leave {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-10px); }
+}
+
+.animate-enter { animation: enter 0.2s ease-out; }
+.animate-leave { animation: leave 0.2s ease-in forwards; }
+
+.public-DraftEditor-content,
+.public-DraftEditor-content * {
+  direction: ltr !important;
+  unicode-bidi: isolate-override !important;
+  text-align: left !important;
+}
