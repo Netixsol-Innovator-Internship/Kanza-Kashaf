@@ -1,7 +1,10 @@
 'use client';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function Hero() {
+  const router = useRouter();
+
   return (
     <section className="w-full">
       {/* Hero Container */}
@@ -17,7 +20,11 @@ export default function Hero() {
             Browse through our diverse range of meticulously crafted garments,
             designed to bring out your individuality and cater to your sense of style.
           </p>
-          <button className="bg-black text-white px-6 py-3 rounded-full text-sm font-medium w-fit hover:bg-gray-900 transition">
+          {/* ✅ Linked Shop Now button */}
+          <button
+            onClick={() => router.push('/products')}
+            className="bg-black text-white px-6 py-3 rounded-full text-sm font-medium w-fit hover:bg-gray-900 transition"
+          >
             Shop Now
           </button>
 
@@ -41,28 +48,17 @@ export default function Hero() {
         {/* Right Column - Image */}
         <div className="flex justify-center lg:justify-end relative">
           <Image
-            src="/bgpic.png" // replace with your image path
+            src="/bgpic.png"
             alt="Hero Fashion"
             width={600}
             height={700}
             className="object-contain"
           />
-          {/* Decorative Stars (optional) */}
           <div className="absolute top-10 right-20 hidden lg:block">
-            <Image
-                src="/bigstar.png"
-                alt="big star"
-                width={40}
-                height={40}
-            />
+            <Image src="/bigstar.png" alt="big star" width={40} height={40} />
           </div>
           <div className="absolute bottom-10 left-10 hidden lg:block">
-            <Image
-                src="/smallstar.png"
-                alt="small star"
-                width={40}
-                height={40}
-            />
+            <Image src="/smallstar.png" alt="small star" width={40} height={40} />
           </div>
         </div>
       </div>

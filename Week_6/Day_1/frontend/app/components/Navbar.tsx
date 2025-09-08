@@ -124,7 +124,7 @@ export default function Navbar() {
         </div>
 
         {/* Right: Search + Cart + Profile */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center md:gap-4 gap-2">
           {/* Mobile search */}
           <button className="lg:hidden">
             <Search size={24} className="text-gray-600" />

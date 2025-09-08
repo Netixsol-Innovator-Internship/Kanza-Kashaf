@@ -78,16 +78,27 @@ export default function ProductsPageWrapper({ mode, title }: Props) {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6">
+        {/* Mobile filter button */}
+        <div className="lg:hidden">
+          <details className="mb-4">
+            <summary className="inline-flex items-center gap-2 px-3 py-2 border rounded cursor-pointer select-none">
+              Filters
+            </summary>
+            <div className="mt-3 border rounded p-3">
+              <FiltersSidebar current={filters} onApply={onApplyFilters} />
+            </div>
+          </details>
+        </div>
+
         <aside className="hidden lg:block">
           <FiltersSidebar current={filters} onApply={onApplyFilters} />
         </aside>
 
         <main>
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-3xl font-semibold">{title}</h1>
-            <div className="text-sm text-gray-600">
-              Showing {Math.min(total, page * limit) - (page - 1) * limit} of{" "}
-              {total} products
+          <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
+            <h1 className="text-2xl lg:text-3xl font-semibold">{title}</h1>
+            <div className="text-xs lg:text-sm text-gray-600">
+              Showing {Math.min(total, page * limit) - (page - 1) * limit} of {total} products
             </div>
           </div>
 
