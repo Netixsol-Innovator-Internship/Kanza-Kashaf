@@ -255,19 +255,49 @@ export class OrdersService {
         const product = await this.productModel.findById(item.product).session(session);
         if (!product) continue;
 
-        const totalStock = (product.variants || []).reduce(
-          (sum, v) =>
-            sum + (v.sizes || []).reduce((s, sz) => s + (sz.stock || 0), 0),
-          0,
-        );
+        // Decrement stock per ordered variant/size
+        try {
+          const variant = (product.variants || []).find((v) => !item.color || v.color === (item.color as any));
+          if (variant) {
+            if (item.size) {
+              const sz = (variant.sizes || []).find((s) => s.size === (item.size as any));
+              if (sz) {
+                sz.stock = Math.max(0, (sz.stock || 0) - (item.quantity || 0));
+              }
+            }
+          }
 
-        if (totalStock <= 0) {
+          // Increment sales count
+          product.salesCount = (product.salesCount || 0) + (item.quantity || 0);
+
+          await product.save({ session });
+
+          // After saving, compute remaining total stock and send sold-out notification if needed
+          const remainingStock = (product.variants || []).reduce(
+            (sum, v) => sum + (v.sizes || []).reduce((s, sz) => s + (sz.stock || 0), 0),
+            0,
+          );
+          if (remainingStock <= 0) {
+            try {
+              await this.notifications.sendProductSoldOutNotification(
+                product._id.toString(),
+                product.name,
+              );
+            } catch (e) {}
+          }
+
+          // Emit realtime product-updated event so product pages refresh stock/prices
           try {
-            await this.notifications.sendProductSoldOutNotification(
-              product._id.toString(),
-              product.name,
-            );
+            const salePercent = await this.computeEffectiveSalePercent(product);
+            const salePrice = Math.round(product.regularPrice * (1 - salePercent / 100));
+            this.notifications.emitEvent(`product-updated:${product._id.toString()}`, {
+              ...product.toObject(),
+              salePercent,
+              salePrice,
+            });
           } catch (e) {}
+        } catch (e) {
+          // ignore per-item stock update failure to avoid blocking entire order
         }
       }
 

@@ -217,12 +217,37 @@ let OrdersService = class OrdersService {
                 const product = await this.productModel.findById(item.product).session(session);
                 if (!product)
                     continue;
-                const totalStock = (product.variants || []).reduce((sum, v) => sum + (v.sizes || []).reduce((s, sz) => s + (sz.stock || 0), 0), 0);
-                if (totalStock <= 0) {
+                try {
+                    const variant = (product.variants || []).find((v) => !item.color || v.color === item.color);
+                    if (variant) {
+                        if (item.size) {
+                            const sz = (variant.sizes || []).find((s) => s.size === item.size);
+                            if (sz) {
+                                sz.stock = Math.max(0, (sz.stock || 0) - (item.quantity || 0));
+                            }
+                        }
+                    }
+                    product.salesCount = (product.salesCount || 0) + (item.quantity || 0);
+                    await product.save({ session });
+                    const remainingStock = (product.variants || []).reduce((sum, v) => sum + (v.sizes || []).reduce((s, sz) => s + (sz.stock || 0), 0), 0);
+                    if (remainingStock <= 0) {
+                        try {
+                            await this.notifications.sendProductSoldOutNotification(product._id.toString(), product.name);
+                        }
+                        catch (e) { }
+                    }
                     try {
-                        await this.notifications.sendProductSoldOutNotification(product._id.toString(), product.name);
+                        const salePercent = await this.computeEffectiveSalePercent(product);
+                        const salePrice = Math.round(product.regularPrice * (1 - salePercent / 100));
+                        this.notifications.emitEvent(`product-updated:${product._id.toString()}`, {
+                            ...product.toObject(),
+                            salePercent,
+                            salePrice,
+                        });
                     }
                     catch (e) { }
+                }
+                catch (e) {
                 }
             }
             await session.commitTransaction();
