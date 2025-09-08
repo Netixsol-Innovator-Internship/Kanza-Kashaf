@@ -44,6 +44,31 @@ export default function NotificationsProvider({ children }: { children: React.Re
 
   useEffect(() => { fetchUnread(); }, [profile?.id]);
 
+  // Also refresh unread when token changes (login/logout in another tab)
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === 'token') fetchUnread();
+    };
+    if (typeof window !== 'undefined') window.addEventListener('storage', onStorage);
+    return () => { if (typeof window !== 'undefined') window.removeEventListener('storage', onStorage); };
+  }, []);
+
+  // Refresh on custom auth-changed events within the same tab
+  useEffect(() => {
+    const onAuthChanged = () => { fetchUnread(); };
+    if (typeof window !== 'undefined') window.addEventListener('auth-changed', onAuthChanged as any);
+    return () => { if (typeof window !== 'undefined') window.removeEventListener('auth-changed', onAuthChanged as any); };
+  }, []);
+
+  // When socket connects (after login), refetch unread to initialize badge without reload
+  useEffect(() => {
+    const s = getSocket();
+    if (!s) return;
+    const onConnect = () => { fetchUnread(); };
+    s.on('connect', onConnect);
+    return () => { s.off('connect', onConnect); };
+  }, []);
+
   useEffect(() => {
     const s = getSocket();
     if (!s) return;

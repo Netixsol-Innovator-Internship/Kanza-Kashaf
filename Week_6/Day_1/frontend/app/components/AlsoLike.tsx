@@ -170,7 +170,7 @@ export default function AlsoLike({ showCount = 4 }: { showCount?: number }) {
         <div className="mt-4 text-center">
           <button
             onClick={() => router.push("/products")}
-            className="px-4 py-2 bg-blue-600 text-white rounded"
+            className="px-4 py-2 bg-black text-white rounded hover:bg-gray-700"
           >
             View All
           </button>

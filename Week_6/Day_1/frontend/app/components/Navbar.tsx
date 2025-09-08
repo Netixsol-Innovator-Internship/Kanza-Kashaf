@@ -34,6 +34,9 @@ export default function Navbar() {
       // 👇 Clear RTK Query cache to update profile
       dispatch(api.util.resetApiState());
 
+      // Inform same-tab listeners and reset notifications without reload
+      if (typeof window !== 'undefined') window.dispatchEvent(new Event('auth-changed'));
+
       router.push('/');
     }
   };

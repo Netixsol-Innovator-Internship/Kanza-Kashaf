@@ -26,3 +26,9 @@ export function disconnectSocket() {
   }
 }
 
+export function reconnectSocket() {
+  if (typeof window === 'undefined') return null;
+  try { disconnectSocket(); } catch {}
+  return getSocket();
+}
+

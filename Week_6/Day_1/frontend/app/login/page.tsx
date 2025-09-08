@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { login } from "../../lib/api";
 import { useDispatch } from "react-redux";
 import { api } from "../../store/api";
+import { reconnectSocket } from "../../lib/socket";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -18,7 +19,11 @@ export default function LoginPage() {
     try {
       const data = await login(form);
       localStorage.setItem("token", data.accessToken);
+      if (data.refreshToken) localStorage.setItem('refreshToken', data.refreshToken);
       dispatch(api.util.resetApiState());
+      try { reconnectSocket(); } catch {}
+      // Notify listeners (same-tab) to refetch profile/unread
+      if (typeof window !== 'undefined') window.dispatchEvent(new Event('auth-changed'));
       router.push("/");
     } catch (err: any) {
       if (err.message.includes("verify")) {
