@@ -52,7 +52,7 @@ export class LikesService {
           userId: comment.authorId,
           actorId: userId,
           type: 'like',
-          message: 'Someone liked your comment',
+          message: 'liked your comment',
           commentId: comment._id.toString(),
         });
       } catch (err) {

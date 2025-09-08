@@ -204,7 +204,7 @@ export default function ProfilePage() {
       <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
         <div className="relative flex-shrink-0">
           <div
-            className="w-20 h-20 sm:w-24 md:w-32 rounded-full bg-indigo-500 flex items-center justify-center text-2xl sm:text-3xl md:text-4xl overflow-hidden select-none"
+            className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full bg-indigo-500 flex items-center justify-center text-2xl sm:text-3xl md:text-4xl overflow-hidden select-none"
             style={{ boxShadow: "0 2px 10px rgba(0,0,0,0.06)" }}
           >
             {selectedPreview ? (

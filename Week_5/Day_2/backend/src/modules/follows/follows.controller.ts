@@ -28,7 +28,7 @@ export class FollowsController {
     await this.users.unfollow(req.user.sub, id);
     if (id !== req.user.sub) {
       this.ws.emitToUser(id, 'unfollow', { by: req.user.sub });
-      await this.notifs.create({ userId: id, actorId: req.user.sub, type: 'unfollow', message: 'Someone unfollowed you', targetUserId: req.user.sub });
+      await this.notifs.create({ userId: id, actorId: req.user.sub, type: 'unfollow', message: 'unfollowed you', targetUserId: req.user.sub });
     }
     return { ok: true };
   }

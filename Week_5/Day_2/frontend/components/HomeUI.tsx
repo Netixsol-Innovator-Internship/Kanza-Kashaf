@@ -140,15 +140,13 @@ function CommentEditor({
   const toggleInline = (inline: string) => handleChange(RichUtils.toggleInlineStyle(editorState, inline));
   const toggleBlock = (block: string) => handleChange(RichUtils.toggleBlockType(editorState, block));
 
-  const promptFn = typeof prompt !== 'undefined' ? prompt : (_: string) => null;
-
   const addLink = () => {
     const selection = editorState.getSelection();
     if (selection.isCollapsed()) {
       alert('Select text to add a link');
       return;
     }
-    const url = promptFn('Enter URL (include https://)');
+    const url = window.prompt('Enter URL (include https://)');
     if (!url) return;
     const content = editorState.getCurrentContent();
     const contentWithEntity = content.createEntity('LINK', 'MUTABLE', { url });
@@ -253,11 +251,8 @@ function CommentItem({ item, onReply }: any) {
       alert('Failed to save edit');
     }
   };
-
-  const confirmFn = typeof confirm !== 'undefined' ? confirm : (_: string) => true;
-
   const onDelete = async ()=>{
-    if (confirmFn('Delete this comment?')) { try { await deleteComment({ id: item._id }).unwrap(); } catch {} }
+    if (confirm('Delete this comment?')) { try { await deleteComment({ id: item._id }).unwrap(); } catch {} }
   };
 
   const safeHtml = DOMPurify.sanitize(item.content || '');

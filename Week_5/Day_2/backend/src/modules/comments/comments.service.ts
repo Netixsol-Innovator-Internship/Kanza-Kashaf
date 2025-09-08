@@ -65,7 +65,7 @@ export class CommentsService {
           userId: parent.authorId,
           actorId: authorId,
           type: 'reply',
-          message: 'Someone replied to your comment',
+          message: 'replied to your comment',
           commentId: doc.id,
         });
       }
@@ -83,11 +83,16 @@ export class CommentsService {
     comment.content = safe;
     await comment.save();
 
-    this.ws.emitToUser(userId, 'comment.edited', { 
-      commentId, 
-      content: comment.content, 
-      userId 
+    this.ws.emitToUser(userId, 'comment.edited', {
+      commentId,
+      content: comment.content,
+      userId,
     });
+    this.ws.emitToAllExceptActor('comment.edited', {
+      commentId,
+      content: comment.content,
+      userId,
+    }, userId);
 
     await this.notifs.create({
       userId,

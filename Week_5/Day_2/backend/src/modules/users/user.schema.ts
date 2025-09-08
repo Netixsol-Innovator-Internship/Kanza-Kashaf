@@ -1,3 +1,4 @@
+
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
@@ -22,10 +23,10 @@ export class User extends Document {
   bio: string;
 
   @Prop({ type: [String], default: [] })
-  followers: string[]; // userIds
+  followers: string[];
 
   @Prop({ type: [String], default: [] })
-  following: string[]; // userIds
+  following: string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
