@@ -34,12 +34,12 @@ declare module 'express' {
 export class NotificationsController {
   constructor(private notifications: NotificationsService) {}
 
-  // 👇 NEW: all notifications (for SUPER_ADMIN)
+  // Default: current user's notifications (personal + role-wide)
   @Get()
-  @Roles(Role.SUPER_ADMIN)
   @ApiOkResponse({ type: [Notification] })
-  async getAllNotifications() {
-    return this.notifications.findAll();
+  async getMyNotifications(@Req() req: Request) {
+    const currentUser = req.user as any;
+    return this.notifications.findUserAndRoleNotifications(currentUser.userId, currentUser.role);
   }
 
   @Get('super-admin')

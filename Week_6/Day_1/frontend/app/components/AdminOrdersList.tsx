@@ -61,7 +61,7 @@ export default function AdminOrdersList() {
                   key={order._id}
                   className="border-t cursor-pointer hover:bg-gray-50"
                   onClick={() =>
-                    (window.location.href = `/admin/orders/${order._id}`)
+                    (window.location.href = `profile/admin/orders/${order._id}`)
                   }
                 >
                   <td className="py-2">

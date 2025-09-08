@@ -9,9 +9,9 @@ declare module 'express' {
 export declare class NotificationsController {
     private notifications;
     constructor(notifications: NotificationsService);
-    getAllNotifications(): Promise<Omit<import("mongoose").Document<unknown, {}, import("../../schemas/notification.schema").NotificationDocument> & Notification & import("mongoose").Document<any, any, any> & {
+    getMyNotifications(req: Request): Promise<(import("mongoose").Document<unknown, {}, import("../../schemas/notification.schema").NotificationDocument> & Notification & import("mongoose").Document<any, any, any> & {
         _id: import("mongoose").Types.ObjectId;
-    }, never>[]>;
+    })[]>;
     getSuperAdminNotifs(): Promise<(import("mongoose").Document<unknown, {}, import("../../schemas/notification.schema").NotificationDocument> & Notification & import("mongoose").Document<any, any, any> & {
         _id: import("mongoose").Types.ObjectId;
     })[]>;

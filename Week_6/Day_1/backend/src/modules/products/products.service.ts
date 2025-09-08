@@ -516,6 +516,41 @@ export class ProductsService {
     });
 
     await doc.save();
+    
+    // Notify users about sale start for affected products
+    try {
+      const q: any = {
+        $or: [
+          ...(doc.productIds && doc.productIds.length
+            ? [{ _id: { $in: doc.productIds } }]
+            : []),
+          ...(doc.categories && doc.categories.length
+            ? [{ category: { $in: doc.categories } }]
+            : []),
+        ],
+      };
+      // if neither productIds nor categories, skip
+      if (q.$or.length > 0) {
+        const affected = await this.productModel.find(q).lean();
+        for (const p of affected) {
+          try {
+            await this.notifications.sendSaleStartNotificationForProduct(
+              p._id.toString(),
+              p.name,
+              doc.percent,
+            );
+            // Emit realtime product-updated so UIs recompute prices
+            const salePercent = await this.computeEffectiveSalePercent(p as any);
+            const salePrice = this.computeSalePrice(p.regularPrice, salePercent);
+            this.notifications.emitEvent(`product-updated:${p._id.toString()}`, {
+              ...p,
+              salePercent,
+              salePrice,
+            });
+          } catch (e) {}
+        }
+      }
+    } catch (e) {}
     return doc;
   }
 

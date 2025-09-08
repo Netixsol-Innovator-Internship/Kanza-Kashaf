@@ -25,8 +25,9 @@ let NotificationsController = class NotificationsController {
     constructor(notifications) {
         this.notifications = notifications;
     }
-    async getAllNotifications() {
-        return this.notifications.findAll();
+    async getMyNotifications(req) {
+        const currentUser = req.user;
+        return this.notifications.findUserAndRoleNotifications(currentUser.userId, currentUser.role);
     }
     async getSuperAdminNotifs() {
         return this.notifications.findSuperAdminNotifications();
@@ -55,12 +56,12 @@ let NotificationsController = class NotificationsController {
 exports.NotificationsController = NotificationsController;
 __decorate([
     (0, common_1.Get)(),
-    (0, roles_decorator_1.Roles)(user_schema_1.Role.SUPER_ADMIN),
     (0, swagger_1.ApiOkResponse)({ type: [notification_schema_1.Notification] }),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], NotificationsController.prototype, "getAllNotifications", null);
+], NotificationsController.prototype, "getMyNotifications", null);
 __decorate([
     (0, common_1.Get)('super-admin'),
     (0, roles_decorator_1.Roles)(user_schema_1.Role.SUPER_ADMIN),

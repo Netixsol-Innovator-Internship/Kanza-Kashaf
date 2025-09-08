@@ -22,12 +22,8 @@ export declare class NotificationsService {
     sendNewArrivalNotification(productId: string, productName: string): Promise<import("mongoose").Document<unknown, {}, NotificationDocument> & Notification & import("mongoose").Document<any, any, any> & {
         _id: Types.ObjectId;
     }>;
-    sendSaleStartNotificationForProduct(productId: string, productName: string, percent: number): Promise<import("mongoose").Document<unknown, {}, NotificationDocument> & Notification & import("mongoose").Document<any, any, any> & {
-        _id: Types.ObjectId;
-    }>;
-    sendSaleEndNotificationForProduct(productId: string, productName: string): Promise<import("mongoose").Document<unknown, {}, NotificationDocument> & Notification & import("mongoose").Document<any, any, any> & {
-        _id: Types.ObjectId;
-    }>;
+    sendSaleStartNotificationForProduct(productId: string, productName: string, percent: number): Promise<any>;
+    sendSaleEndNotificationForProduct(productId: string, productName: string): Promise<any>;
     sendProductSoldOutNotification(productId: string, productName: string, variant?: string, size?: string): Promise<void>;
     sendOutOfStockNotification(userId: string, productName: string, variant?: string, size?: string): Promise<import("mongoose").Document<unknown, {}, NotificationDocument> & Notification & import("mongoose").Document<any, any, any> & {
         _id: Types.ObjectId;

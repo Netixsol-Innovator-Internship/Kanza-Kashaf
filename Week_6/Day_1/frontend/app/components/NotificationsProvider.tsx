@@ -49,19 +49,18 @@ export default function NotificationsProvider({ children }: { children: React.Re
     if (!s) return;
 
     const handler = (event: string, payload: any) => {
-      // Heuristic: backend fires events with a title/message for notifications.
-      // We only toast when both are present.
-      const title = payload?.title || payload?.type || event;
+      // Only treat server 'notification' events as unread items
+      if (event !== 'notification') return;
+      const title = payload?.title || payload?.type || 'Notification';
       const message = payload?.message;
-      if (title && message) {
-        toast.custom((t) => (
-          <div className="bg-white shadow-lg rounded-2xl p-4 w-80 border">
-            <div className="text-sm font-semibold">{title}</div>
-            <div className="text-sm text-gray-600 mt-1">{message}</div>
-          </div>
-        ), { position: 'top-right', duration: 5000 });
-        setUnread((c) => c + 1);
-      }
+      if (!message) return;
+      toast.custom((t) => (
+        <div className="bg-white shadow-lg rounded-2xl p-4 w-80 border">
+          <div className="text-sm font-semibold">{title}</div>
+          <div className="text-sm text-gray-600 mt-1">{message}</div>
+        </div>
+      ), { position: 'top-right', duration: 5000 });
+      setUnread((c) => c + 1);
     };
 
     // Use onAny so we don’t need to enumerate every event name

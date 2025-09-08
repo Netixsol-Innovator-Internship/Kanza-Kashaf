@@ -116,25 +116,21 @@ export class NotificationsService {
   }
 
   async sendSaleStartNotificationForProduct(productId: string, productName: string, percent: number) {
-    const notif = await this.createAndEmit(
-      'SALE_STARTED',
-      `Sale started for ${productName}: ${percent}% off`,
-      undefined,
-      Role.USER,
-    );
+    // Persist two role-targeted notifications (USER and ADMIN) so both audiences see it in their lists
+    await this.createAndEmit('SALE_STARTED', `Sale started for ${productName}: ${percent}% off`, undefined, Role.USER);
+    await this.createAndEmit('SALE_STARTED', `Sale started for ${productName}: ${percent}% off`, undefined, Role.ADMIN);
+    await this.createAndEmit('SALE_STARTED', `Sale started for ${productName}: ${percent}% off`, undefined, Role.SUPER_ADMIN);
     this.emitEvent('SALE_STARTED', { productId, productName, percent });
-    return notif;
+    // No single doc to return when multiple are created
+    return { ok: true } as any;
   }
 
   async sendSaleEndNotificationForProduct(productId: string, productName: string) {
-    const notif = await this.createAndEmit(
-      'SALE_ENDED',
-      `Sale ended for ${productName}`,
-      undefined,
-      Role.USER,
-    );
+    await this.createAndEmit('SALE_ENDED', `Sale ended for ${productName}`, undefined, Role.USER);
+    await this.createAndEmit('SALE_ENDED', `Sale ended for ${productName}`, undefined, Role.ADMIN);
+    await this.createAndEmit('SALE_ENDED', `Sale ended for ${productName}`, undefined, Role.SUPER_ADMIN);
     this.emitEvent('SALE_ENDED', { productId, productName });
-    return notif;
+    return { ok: true } as any;
   }
 
   async sendProductSoldOutNotification(productId: string, productName: string, variant?: string, size?: string) {

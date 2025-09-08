@@ -94,14 +94,18 @@ let NotificationsService = class NotificationsService {
         return notif;
     }
     async sendSaleStartNotificationForProduct(productId, productName, percent) {
-        const notif = await this.createAndEmit('SALE_STARTED', `Sale started for ${productName}: ${percent}% off`, undefined, user_schema_1.Role.USER);
+        await this.createAndEmit('SALE_STARTED', `Sale started for ${productName}: ${percent}% off`, undefined, user_schema_1.Role.USER);
+        await this.createAndEmit('SALE_STARTED', `Sale started for ${productName}: ${percent}% off`, undefined, user_schema_1.Role.ADMIN);
+        await this.createAndEmit('SALE_STARTED', `Sale started for ${productName}: ${percent}% off`, undefined, user_schema_1.Role.SUPER_ADMIN);
         this.emitEvent('SALE_STARTED', { productId, productName, percent });
-        return notif;
+        return { ok: true };
     }
     async sendSaleEndNotificationForProduct(productId, productName) {
-        const notif = await this.createAndEmit('SALE_ENDED', `Sale ended for ${productName}`, undefined, user_schema_1.Role.USER);
+        await this.createAndEmit('SALE_ENDED', `Sale ended for ${productName}`, undefined, user_schema_1.Role.USER);
+        await this.createAndEmit('SALE_ENDED', `Sale ended for ${productName}`, undefined, user_schema_1.Role.ADMIN);
+        await this.createAndEmit('SALE_ENDED', `Sale ended for ${productName}`, undefined, user_schema_1.Role.SUPER_ADMIN);
         this.emitEvent('SALE_ENDED', { productId, productName });
-        return notif;
+        return { ok: true };
     }
     async sendProductSoldOutNotification(productId, productName, variant, size) {
         const variantInfo = variant ? ` variant:${variant}` : '';

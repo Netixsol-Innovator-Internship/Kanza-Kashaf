@@ -415,6 +415,35 @@ let ProductsService = class ProductsService {
             endAt: new Date(dto.endAt),
         });
         await doc.save();
+        try {
+            const q = {
+                $or: [
+                    ...(doc.productIds && doc.productIds.length
+                        ? [{ _id: { $in: doc.productIds } }]
+                        : []),
+                    ...(doc.categories && doc.categories.length
+                        ? [{ category: { $in: doc.categories } }]
+                        : []),
+                ],
+            };
+            if (q.$or.length > 0) {
+                const affected = await this.productModel.find(q).lean();
+                for (const p of affected) {
+                    try {
+                        await this.notifications.sendSaleStartNotificationForProduct(p._id.toString(), p.name, doc.percent);
+                        const salePercent = await this.computeEffectiveSalePercent(p);
+                        const salePrice = this.computeSalePrice(p.regularPrice, salePercent);
+                        this.notifications.emitEvent(`product-updated:${p._id.toString()}`, {
+                            ...p,
+                            salePercent,
+                            salePrice,
+                        });
+                    }
+                    catch (e) { }
+                }
+            }
+        }
+        catch (e) { }
         return doc;
     }
     async listActiveCampaigns() {

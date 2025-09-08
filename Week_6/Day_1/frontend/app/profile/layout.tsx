@@ -39,13 +39,14 @@ export default function ProfileLayout({ children }: { children: React.ReactNode 
   const isProductDetailPage = !!pathname && pathname.startsWith("/profile/products/");
   const isProductAddPage = !!pathname && pathname.startsWith("/profile/products/add");
   const isSalePage = !!pathname && pathname.startsWith("/profile/sales");
+  const isAdminOrderDetailPage = !!pathname && pathname.startsWith("/profile/admin/orders/");
 
   useEffect(() => {
     if (!pathname) return;
 
     if (pathname === "/profile" || pathname === "/profile/") {
       setActiveTab("dashboard");
-    } else if (pathname.startsWith("/profile/orders")) {
+    } else if (pathname.startsWith("/profile/orders") || pathname.startsWith("/profile/admin/orders")) {
       setActiveTab("orders");
     } else if (pathname === "/profile/settings") {
       setActiveTab("settings");
@@ -58,7 +59,7 @@ export default function ProfileLayout({ children }: { children: React.ReactNode 
 
   const handleTabClick = (tab: typeof activeTab) => {
     setActiveTab(tab);
-    if (isOrderDetailPage || isProductDetailPage || isProductAddPage || isSalePage) {
+    if (isOrderDetailPage || isProductDetailPage || isProductAddPage || isSalePage || isAdminOrderDetailPage) {
       router.push("/profile");
     }
   };
@@ -206,7 +207,7 @@ export default function ProfileLayout({ children }: { children: React.ReactNode 
 
       {/* Content area */}
       <main className="flex-1 p-8">
-        {isOrderDetailPage || isProductDetailPage || isProductAddPage || isSalePage ? (
+        {isOrderDetailPage || isProductDetailPage || isProductAddPage || isSalePage || isAdminOrderDetailPage ? (
           children
         ) : (
           <>

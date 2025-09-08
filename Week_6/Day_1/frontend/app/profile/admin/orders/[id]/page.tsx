@@ -1,9 +1,9 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
-import { getSocket } from '../../../../lib/socket';
-import { useGetAdminOrderByIdQuery } from "../../../../store/api";
-import OrderDetails from "../../../components/OrderDetails";
+import { getSocket } from '../../../../../lib/socket';
+import { useGetAdminOrderByIdQuery } from "../../../../../store/api";
+import OrderDetails from "../../../../components/OrderDetails";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
