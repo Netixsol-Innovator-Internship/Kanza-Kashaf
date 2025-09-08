@@ -225,4 +225,8 @@ export declare class ProductsController {
     listActiveCampaigns(): Promise<(import("mongoose").Document<unknown, {}, import("../../schemas/sale-campaign.schema").SaleCampaignDocument> & import("../../schemas/sale-campaign.schema").SaleCampaign & import("mongoose").Document<any, any, any> & {
         _id: import("mongoose").Types.ObjectId;
     })[]>;
+    processCampaignNotifications(): Promise<{
+        started: number;
+        ended: number;
+    }>;
 }

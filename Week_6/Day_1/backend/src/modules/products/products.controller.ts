@@ -202,4 +202,12 @@ export class ProductsController {
   async listActiveCampaigns() {
     return this.products.listActiveCampaigns();
   }
+
+  // ---------- Cron hook for campaign notifications ----------
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.SUPER_ADMIN)
+  @Post('campaigns/process-notifications')
+  async processCampaignNotifications() {
+    return this.products.processCampaignNotifications();
+  }
 }

@@ -9,6 +9,8 @@ export declare class SaleCampaign {
     categories: Category[];
     startAt: Date;
     endAt: Date;
+    startNotified: boolean;
+    endNotified: boolean;
 }
 export declare const SaleCampaignSchema: import("mongoose").Schema<SaleCampaign, import("mongoose").Model<SaleCampaign, any, any, any, Document<unknown, any, SaleCampaign> & SaleCampaign & {
     _id: Types.ObjectId;

@@ -1,3 +1,4 @@
+import { OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { Model, Connection, Types } from 'mongoose';
 import { Product, ProductDocument, PaymentType } from '../../schemas/product.schema';
 import { Review, ReviewDocument } from '../../schemas/review.schema';
@@ -8,7 +9,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { FilterProductsDto } from './dto/filter-products.dto';
 import { CloudinaryService } from './cloudinary.service';
 import { NotificationsService } from '../notifications/notifications.service';
-export declare class ProductsService {
+export declare class ProductsService implements OnModuleInit, OnModuleDestroy {
     private productModel;
     private reviewModel;
     private campaignModel;
@@ -16,6 +17,9 @@ export declare class ProductsService {
     private notifications;
     private readonly connection;
     constructor(productModel: Model<ProductDocument>, reviewModel: Model<ReviewDocument>, campaignModel: Model<SaleCampaignDocument>, cloudinary: CloudinaryService, notifications: NotificationsService, connection: Connection);
+    private campaignTimer;
+    onModuleInit(): void;
+    onModuleDestroy(): void;
     private computePointsPrice;
     private computeEffectiveSalePercent;
     private computeSalePrice;
@@ -204,6 +208,10 @@ export declare class ProductsService {
     private recalculateProductRating;
     createCampaign(dto: CreateCampaignDto): Promise<import("mongoose").Document<unknown, {}, SaleCampaignDocument> & SaleCampaign & import("mongoose").Document<any, any, any> & {
         _id: Types.ObjectId;
+    }>;
+    processCampaignNotifications(): Promise<{
+        started: number;
+        ended: number;
     }>;
     listActiveCampaigns(): Promise<(import("mongoose").Document<unknown, {}, SaleCampaignDocument> & SaleCampaign & import("mongoose").Document<any, any, any> & {
         _id: Types.ObjectId;

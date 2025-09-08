@@ -44,6 +44,14 @@ __decorate([
     (0, mongoose_1.Prop)({ type: Date, required: true }),
     __metadata("design:type", Date)
 ], SaleCampaign.prototype, "endAt", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Boolean, default: false }),
+    __metadata("design:type", Boolean)
+], SaleCampaign.prototype, "startNotified", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Boolean, default: false }),
+    __metadata("design:type", Boolean)
+], SaleCampaign.prototype, "endNotified", void 0);
 exports.SaleCampaign = SaleCampaign = __decorate([
     (0, mongoose_1.Schema)({ timestamps: true })
 ], SaleCampaign);

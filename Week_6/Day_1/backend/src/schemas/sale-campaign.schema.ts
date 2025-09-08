@@ -13,6 +13,8 @@ export class SaleCampaign {
   @Prop({ type: [String], enum: Category, default: [] }) categories: Category[]; // categories affected
   @Prop({ type: Date, required: true }) startAt: Date;
   @Prop({ type: Date, required: true }) endAt: Date;
+  @Prop({ type: Boolean, default: false }) startNotified: boolean;
+  @Prop({ type: Boolean, default: false }) endNotified: boolean;
 }
 
 export const SaleCampaignSchema = SchemaFactory.createForClass(SaleCampaign);

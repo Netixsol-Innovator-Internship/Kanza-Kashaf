@@ -133,6 +133,25 @@ export class NotificationsService {
     return { ok: true } as any;
   }
 
+  // Global sale notifications (campaign-level)
+  async sendSaleStartGlobal(campaignName: string, percent: number) {
+    const msg = `Sale started: ${campaignName} - ${percent}% off`;
+    await this.createAndEmit('SALE_STARTED', msg, undefined, Role.USER);
+    await this.createAndEmit('SALE_STARTED', msg, undefined, Role.ADMIN);
+    await this.createAndEmit('SALE_STARTED', msg, undefined, Role.SUPER_ADMIN);
+    this.emitEvent('SALE_STARTED_GLOBAL', { campaignName, percent });
+    return { ok: true } as any;
+  }
+
+  async sendSaleEndGlobal(campaignName: string) {
+    const msg = `Sale ended: ${campaignName}`;
+    await this.createAndEmit('SALE_ENDED', msg, undefined, Role.USER);
+    await this.createAndEmit('SALE_ENDED', msg, undefined, Role.ADMIN);
+    await this.createAndEmit('SALE_ENDED', msg, undefined, Role.SUPER_ADMIN);
+    this.emitEvent('SALE_ENDED_GLOBAL', { campaignName });
+    return { ok: true } as any;
+  }
+
   async sendProductSoldOutNotification(productId: string, productName: string, variant?: string, size?: string) {
     const variantInfo = variant ? ` variant:${variant}` : '';
     const sizeInfo = size ? ` size:${size}` : '';

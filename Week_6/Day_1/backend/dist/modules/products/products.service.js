@@ -29,6 +29,18 @@ let ProductsService = class ProductsService {
         this.cloudinary = cloudinary;
         this.notifications = notifications;
         this.connection = connection;
+        this.campaignTimer = null;
+    }
+    onModuleInit() {
+        this.campaignTimer = setInterval(() => {
+            this.processCampaignNotifications().catch(() => { });
+        }, 30000);
+    }
+    onModuleDestroy() {
+        if (this.campaignTimer) {
+            clearInterval(this.campaignTimer);
+            this.campaignTimer = null;
+        }
     }
     computePointsPrice(regularPrice) {
         return Math.round(regularPrice / 100);
@@ -415,36 +427,29 @@ let ProductsService = class ProductsService {
             endAt: new Date(dto.endAt),
         });
         await doc.save();
-        try {
-            const q = {
-                $or: [
-                    ...(doc.productIds && doc.productIds.length
-                        ? [{ _id: { $in: doc.productIds } }]
-                        : []),
-                    ...(doc.categories && doc.categories.length
-                        ? [{ category: { $in: doc.categories } }]
-                        : []),
-                ],
-            };
-            if (q.$or.length > 0) {
-                const affected = await this.productModel.find(q).lean();
-                for (const p of affected) {
-                    try {
-                        await this.notifications.sendSaleStartNotificationForProduct(p._id.toString(), p.name, doc.percent);
-                        const salePercent = await this.computeEffectiveSalePercent(p);
-                        const salePrice = this.computeSalePrice(p.regularPrice, salePercent);
-                        this.notifications.emitEvent(`product-updated:${p._id.toString()}`, {
-                            ...p,
-                            salePercent,
-                            salePrice,
-                        });
-                    }
-                    catch (e) { }
-                }
-            }
-        }
-        catch (e) { }
         return doc;
+    }
+    async processCampaignNotifications() {
+        const now = new Date();
+        const toStart = await this.campaignModel.find({ startAt: { $lte: now }, startNotified: false });
+        for (const c of toStart) {
+            try {
+                await this.notifications.sendSaleStartGlobal(c.name, c.percent);
+            }
+            catch { }
+            c.startNotified = true;
+            await c.save();
+        }
+        const toEnd = await this.campaignModel.find({ endAt: { $lte: now }, endNotified: false });
+        for (const c of toEnd) {
+            try {
+                await this.notifications.sendSaleEndGlobal(c.name);
+            }
+            catch { }
+            c.endNotified = true;
+            await c.save();
+        }
+        return { started: toStart.length, ended: toEnd.length };
     }
     async listActiveCampaigns() {
         const now = new Date();

@@ -119,6 +119,9 @@ let ProductsController = class ProductsController {
     async listActiveCampaigns() {
         return this.products.listActiveCampaigns();
     }
+    async processCampaignNotifications() {
+        return this.products.processCampaignNotifications();
+    }
 };
 exports.ProductsController = ProductsController;
 __decorate([
@@ -254,6 +257,14 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ProductsController.prototype, "listActiveCampaigns", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(user_schema_1.Role.SUPER_ADMIN),
+    (0, common_1.Post)('campaigns/process-notifications'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProductsController.prototype, "processCampaignNotifications", null);
 exports.ProductsController = ProductsController = __decorate([
     (0, swagger_1.ApiTags)('products'),
     (0, swagger_1.ApiBearerAuth)('jwt'),

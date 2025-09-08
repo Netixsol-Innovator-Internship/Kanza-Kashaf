@@ -107,6 +107,22 @@ let NotificationsService = class NotificationsService {
         this.emitEvent('SALE_ENDED', { productId, productName });
         return { ok: true };
     }
+    async sendSaleStartGlobal(campaignName, percent) {
+        const msg = `Sale started: ${campaignName} - ${percent}% off`;
+        await this.createAndEmit('SALE_STARTED', msg, undefined, user_schema_1.Role.USER);
+        await this.createAndEmit('SALE_STARTED', msg, undefined, user_schema_1.Role.ADMIN);
+        await this.createAndEmit('SALE_STARTED', msg, undefined, user_schema_1.Role.SUPER_ADMIN);
+        this.emitEvent('SALE_STARTED_GLOBAL', { campaignName, percent });
+        return { ok: true };
+    }
+    async sendSaleEndGlobal(campaignName) {
+        const msg = `Sale ended: ${campaignName}`;
+        await this.createAndEmit('SALE_ENDED', msg, undefined, user_schema_1.Role.USER);
+        await this.createAndEmit('SALE_ENDED', msg, undefined, user_schema_1.Role.ADMIN);
+        await this.createAndEmit('SALE_ENDED', msg, undefined, user_schema_1.Role.SUPER_ADMIN);
+        this.emitEvent('SALE_ENDED_GLOBAL', { campaignName });
+        return { ok: true };
+    }
     async sendProductSoldOutNotification(productId, productName, variant, size) {
         const variantInfo = variant ? ` variant:${variant}` : '';
         const sizeInfo = size ? ` size:${size}` : '';

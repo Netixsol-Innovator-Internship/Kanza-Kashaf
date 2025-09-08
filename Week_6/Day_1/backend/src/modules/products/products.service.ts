@@ -3,6 +3,8 @@ import {
   BadRequestException,
   NotFoundException,
   ForbiddenException,
+  OnModuleInit,
+  OnModuleDestroy,
 } from '@nestjs/common';
 import { InjectModel, InjectConnection } from '@nestjs/mongoose';
 import { Model, Connection, Types } from 'mongoose';
@@ -24,7 +26,7 @@ import { CloudinaryService } from './cloudinary.service';
 import { NotificationsService } from '../notifications/notifications.service';
 
 @Injectable()
-export class ProductsService {
+export class ProductsService implements OnModuleInit, OnModuleDestroy {
   constructor(
     @InjectModel(Product.name) private productModel: Model<ProductDocument>,
     @InjectModel(Review.name) private reviewModel: Model<ReviewDocument>,
@@ -34,6 +36,22 @@ export class ProductsService {
     private notifications: NotificationsService,
     @InjectConnection() private readonly connection: Connection,
   ) {}
+
+  private campaignTimer: NodeJS.Timer | null = null;
+
+  onModuleInit() {
+    // Poll every 30 seconds for campaign start/end to send notifications
+    this.campaignTimer = setInterval(() => {
+      this.processCampaignNotifications().catch(() => {});
+    }, 30_000);
+  }
+
+  onModuleDestroy() {
+    if (this.campaignTimer) {
+      clearInterval(this.campaignTimer as any);
+      this.campaignTimer = null;
+    }
+  }
 
   // ✅ 100 PKR = 1 point
   private computePointsPrice(regularPrice: number) {
@@ -517,41 +535,27 @@ export class ProductsService {
 
     await doc.save();
     
-    // Notify users about sale start for affected products
-    try {
-      const q: any = {
-        $or: [
-          ...(doc.productIds && doc.productIds.length
-            ? [{ _id: { $in: doc.productIds } }]
-            : []),
-          ...(doc.categories && doc.categories.length
-            ? [{ category: { $in: doc.categories } }]
-            : []),
-        ],
-      };
-      // if neither productIds nor categories, skip
-      if (q.$or.length > 0) {
-        const affected = await this.productModel.find(q).lean();
-        for (const p of affected) {
-          try {
-            await this.notifications.sendSaleStartNotificationForProduct(
-              p._id.toString(),
-              p.name,
-              doc.percent,
-            );
-            // Emit realtime product-updated so UIs recompute prices
-            const salePercent = await this.computeEffectiveSalePercent(p as any);
-            const salePrice = this.computeSalePrice(p.regularPrice, salePercent);
-            this.notifications.emitEvent(`product-updated:${p._id.toString()}`, {
-              ...p,
-              salePercent,
-              salePrice,
-            });
-          } catch (e) {}
-        }
-      }
-    } catch (e) {}
+    // Do not notify at creation time if startAt is in the future. A scheduler will handle.
     return doc;
+  }
+
+  // Called periodically (e.g., via external cron hitting an endpoint) to process campaign start/end notifications
+  async processCampaignNotifications() {
+    const now = new Date();
+    const toStart = await this.campaignModel.find({ startAt: { $lte: now }, startNotified: false });
+    for (const c of toStart) {
+      try { await this.notifications.sendSaleStartGlobal(c.name, c.percent); } catch {}
+      c.startNotified = true;
+      await c.save();
+    }
+
+    const toEnd = await this.campaignModel.find({ endAt: { $lte: now }, endNotified: false });
+    for (const c of toEnd) {
+      try { await this.notifications.sendSaleEndGlobal(c.name); } catch {}
+      c.endNotified = true;
+      await c.save();
+    }
+    return { started: toStart.length, ended: toEnd.length };
   }
 
   async listActiveCampaigns() {
