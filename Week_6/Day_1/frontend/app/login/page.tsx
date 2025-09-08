@@ -1,14 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { login } from "../../lib/api";
 import { useDispatch } from "react-redux";
-import { api } from "../../store/api"; // 👈 import api
+import { api } from "../../store/api";
 
 export default function LoginPage() {
   const router = useRouter();
-  const dispatch = useDispatch(); // 👈 get dispatch
+  const dispatch = useDispatch();
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
@@ -17,10 +18,7 @@ export default function LoginPage() {
     try {
       const data = await login(form);
       localStorage.setItem("token", data.accessToken);
-
-      // 👇 Clear RTK Query cache so getProfile refetches with new token
       dispatch(api.util.resetApiState());
-
       router.push("/");
     } catch (err: any) {
       if (err.message.includes("verify")) {
@@ -32,28 +30,36 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Login</h1>
-      {error && <p className="text-red-500">{error}</p>}
+    <div className="max-w-md mx-auto p-6 mt-20 bg-white shadow rounded-lg">
+      <h1 className="text-2xl font-bold mb-4 text-black">Login</h1>
+      {error && <p className="text-red-500 mb-2">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-3">
         <input
           type="email"
           placeholder="Email"
-          className="w-full border p-2 rounded"
+          className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-black"
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
         <input
           type="password"
           placeholder="Password"
-          className="w-full border p-2 rounded"
+          className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-black"
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
-        <button className="w-full bg-blue-600 text-white p-2 rounded">
+        <button className="w-full bg-black text-white p-2 rounded hover:bg-gray-800 transition">
           Login
         </button>
       </form>
+      <div className="mt-4 flex justify-between text-sm text-gray-600">
+        <Link href="/signup" className="hover:underline">
+          Create an account
+        </Link>
+        <Link href="/reset-password" className="text-black font-semibold hover:underline">
+          Reset Password
+        </Link>
+      </div>
     </div>
   );
 }
