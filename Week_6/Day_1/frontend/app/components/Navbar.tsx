@@ -47,7 +47,7 @@ export default function Navbar() {
   return (
     <header className="w-full border-b relative">
       {/* Top Banner */}
-      {showBanner && (
+      {showBanner && !user && (
         <div className="bg-black text-white text-center text-sm py-2 flex justify-center items-center relative">
           <p>
             Sign up and get 20% off to your first order.{' '}

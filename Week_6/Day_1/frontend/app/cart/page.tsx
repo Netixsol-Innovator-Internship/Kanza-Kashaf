@@ -34,6 +34,12 @@ export default function CartPage() {
   const [hybridChoices, setHybridChoices] = useState<Record<string, PayChoice>>({});
 
   useEffect(() => {
+    if (user === undefined) return; // still fetching
+    if (!user) {
+      alert('Please sign up or log in to view your cart');
+      router.push('/signup');
+      return;
+    }
     const socket = getSocket();
     if (!socket) return;
 

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import {
   useGetProductQuery,
   useAddToCartMutation,
+  useGetProfileQuery,
 } from "../../../store/api";
 import ProductGallery from "../../components/ProductGallery";
 import ProductInfo from "../../components/ProductInfo";
@@ -24,6 +25,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
   const [selectedSizeIndex, setSelectedSizeIndex] = useState<number | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [addToCart] = useAddToCartMutation();
+  const { data: user } = useGetProfileQuery();
 
   useEffect(() => {
     if (product && product.variants && product.variants.length) {
@@ -59,6 +61,11 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
   const handleAddToCart = async () => {
     try {
       if (!productId) return;
+      if (!user) {
+        alert('Please sign up or log in to continue');
+        window.location.href = '/signup';
+        return;
+      }
       if (!variant) {
         alert("Select variant");
         return;
