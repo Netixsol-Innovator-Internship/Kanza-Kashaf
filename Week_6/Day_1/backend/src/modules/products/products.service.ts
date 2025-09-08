@@ -111,6 +111,7 @@ export class ProductsService implements OnModuleInit, OnModuleDestroy {
       name: dto.name,
       description: dto.description,
       category: dto.category,
+      style: (dto as any).style,
       brand: dto.brand,
       regularPrice: dto.regularPrice,
       paymentType: dto.paymentType,
@@ -161,6 +162,7 @@ export class ProductsService implements OnModuleInit, OnModuleDestroy {
     if (dto.name) product.name = dto.name;
     if (dto.description) product.description = dto.description;
     if (dto.category) product.category = dto.category as any;
+    if ((dto as any).style !== undefined) (product as any).style = (dto as any).style as any;
     if (dto.brand !== undefined) product.brand = dto.brand;
     if (dto.regularPrice !== undefined)
       product.regularPrice = dto.regularPrice;
@@ -279,8 +281,12 @@ export class ProductsService implements OnModuleInit, OnModuleDestroy {
 
     const q: any = { active: true };
     if (filters.category) q.category = filters.category;
-    if (filters.styles && (filters.styles as any).length)
-      q.style = { $in: filters.styles as any };
+    if (filters.styles && (filters.styles as any).length) {
+      const stylesArray = (filters.styles as any[]).map((s: any) =>
+        typeof s === 'string' ? new RegExp(`^${s}$`, 'i') : s,
+      );
+      q.style = { $in: stylesArray };
+    }
     if (filters.colors && filters.colors.length)
       q['variants.color'] = { $in: filters.colors };
     if (filters.sizes && filters.sizes.length)

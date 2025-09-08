@@ -87,6 +87,7 @@ let ProductsService = class ProductsService {
             name: dto.name,
             description: dto.description,
             category: dto.category,
+            style: dto.style,
             brand: dto.brand,
             regularPrice: dto.regularPrice,
             paymentType: dto.paymentType,
@@ -129,6 +130,8 @@ let ProductsService = class ProductsService {
             product.description = dto.description;
         if (dto.category)
             product.category = dto.category;
+        if (dto.style !== undefined)
+            product.style = dto.style;
         if (dto.brand !== undefined)
             product.brand = dto.brand;
         if (dto.regularPrice !== undefined)
@@ -221,8 +224,10 @@ let ProductsService = class ProductsService {
         const q = { active: true };
         if (filters.category)
             q.category = filters.category;
-        if (filters.styles && filters.styles.length)
-            q.style = { $in: filters.styles };
+        if (filters.styles && filters.styles.length) {
+            const stylesArray = filters.styles.map((s) => typeof s === 'string' ? new RegExp(`^${s}$`, 'i') : s);
+            q.style = { $in: stylesArray };
+        }
         if (filters.colors && filters.colors.length)
             q['variants.color'] = { $in: filters.colors };
         if (filters.sizes && filters.sizes.length)

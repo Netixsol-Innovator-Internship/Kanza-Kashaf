@@ -82,6 +82,7 @@ async function bootstrap() {
           name: `${style.charAt(0).toUpperCase() + style.slice(1)} ${category.charAt(0).toUpperCase() + category.slice(1)}`,
           description: `A stylish ${style} ${category} available in 3 random colors and multiple sizes.`,
           category,
+          style: style as any,
           regularPrice: basePrice,
           pointsPrice:
             paymentType !== PaymentType.MONEY

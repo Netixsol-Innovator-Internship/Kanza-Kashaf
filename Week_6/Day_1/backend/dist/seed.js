@@ -51,6 +51,7 @@ async function bootstrap() {
                     name: `${style.charAt(0).toUpperCase() + style.slice(1)} ${category.charAt(0).toUpperCase() + category.slice(1)}`,
                     description: `A stylish ${style} ${category} available in 3 random colors and multiple sizes.`,
                     category,
+                    style: style,
                     regularPrice: basePrice,
                     pointsPrice: paymentType !== product_schema_1.PaymentType.MONEY
                         ? Math.round(computePointsPrice(basePrice) * (1 - salePercent / 100))
