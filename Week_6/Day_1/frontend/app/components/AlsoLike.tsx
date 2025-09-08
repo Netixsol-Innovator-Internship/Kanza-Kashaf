@@ -28,7 +28,7 @@ export default function AlsoLike({ showCount = 4 }: { showCount?: number }) {
           `${process.env.NEXT_PUBLIC_API_URL}/products/top-selling?limit=15`
         );
         const data = await res.json();
-        setItems(data.items || []); // ✅ use .items from backend response
+        setItems(data.items || []);
       } catch (err) {
         console.error("Failed to load top selling:", err);
       } finally {

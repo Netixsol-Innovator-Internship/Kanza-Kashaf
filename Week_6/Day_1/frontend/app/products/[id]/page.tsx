@@ -39,7 +39,6 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
     }
   }, [product]);
 
-  // ✅ Realtime socket refresh
   useEffect(() => {
     if (!productId) return;
     const socket = getSocket();

@@ -24,9 +24,7 @@ export default function BrowseByStyle() {
           BROWSE BY DRESS STYLE
         </h2>
 
-        {/* Desktop & Tablet: 2 rows × 3 cols with spans */}
         <div className="grid grid-cols-3 grid-rows-2 gap-6 sm:grid-cols-3 sm:grid-rows-2">
-          {/* Row 1 - Casual */}
           <div
             className="relative rounded-xl overflow-hidden shadow-sm cursor-pointer"
             onClick={() => onClick("casual")}
@@ -41,7 +39,6 @@ export default function BrowseByStyle() {
             </div>
           </div>
 
-          {/* Row 1 - Formal (col-span-2 desktop) */}
           <div
             className="relative rounded-xl overflow-hidden shadow-sm cursor-pointer sm:col-span-2"
             onClick={() => onClick("formal")}
@@ -56,7 +53,6 @@ export default function BrowseByStyle() {
             </div>
           </div>
 
-          {/* Row 2 - Party (col-span-2 desktop) */}
           <div
             className="relative rounded-xl overflow-hidden shadow-sm cursor-pointer sm:col-span-2"
             onClick={() => onClick("party")}
@@ -71,7 +67,6 @@ export default function BrowseByStyle() {
             </div>
           </div>
 
-          {/* Row 2 - Gym */}
           <div
             className="relative rounded-xl overflow-hidden shadow-sm cursor-pointer"
             onClick={() => onClick("gym")}
@@ -88,7 +83,6 @@ export default function BrowseByStyle() {
         </div>
       </div>
 
-      {/* Mobile (<640px): 1 column, equal height cards */}
       <style jsx>{`
         @media (max-width: 639px) {
           section > div > div {

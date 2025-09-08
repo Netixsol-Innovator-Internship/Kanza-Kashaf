@@ -34,7 +34,7 @@ export default function CartPage() {
   const [hybridChoices, setHybridChoices] = useState<Record<string, PayChoice>>({});
 
   useEffect(() => {
-    if (user === undefined) return; // still fetching
+    if (user === undefined) return;
     if (!user) {
       alert('Please sign up or log in to view your cart');
       router.push('/signup');
@@ -219,7 +219,6 @@ export default function CartPage() {
     return <div className="max-w-6xl mx-auto p-6">Loading cart...</div>;
   }
 
-  // **New total display logic**
   const getTotalDisplay = () => {
     if (paymentMethod === 'points') {
       return `PKR ${DELIVERY_FEE} + Points ${subtotalPoints}`;

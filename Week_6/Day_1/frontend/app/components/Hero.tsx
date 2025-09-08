@@ -20,7 +20,6 @@ export default function Hero() {
             Browse through our diverse range of meticulously crafted garments,
             designed to bring out your individuality and cater to your sense of style.
           </p>
-          {/* ✅ Linked Shop Now button */}
           <button
             onClick={() => router.push('/products')}
             className="bg-black text-white px-6 py-3 rounded-full text-sm font-medium w-fit hover:bg-gray-900 transition"

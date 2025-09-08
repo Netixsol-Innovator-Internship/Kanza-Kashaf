@@ -9,7 +9,6 @@ const SuperAdminManageUsers = () => {
   const [updateRole] = useUpdateUserRoleMutation()
   const [toggleBlock] = useToggleUserBlockMutation()
 
-  // store error messages per user by ID
   const [errors, setErrors] = useState<{ [key: string]: string | null }>({})
 
   if (isLoading) return <p>Loading admins...</p>
@@ -56,7 +55,6 @@ const SuperAdminManageUsers = () => {
                   onCheckedChange={(checked) => {
                     toggleBlock({ id: user._id, block: checked })
                     if (!checked) {
-                      // ✅ clear error when user is activated
                       setErrors((prev) => ({ ...prev, [user._id]: null }))
                     }
                   }}
@@ -65,7 +63,6 @@ const SuperAdminManageUsers = () => {
             </div>
           </div>
 
-          {/* Inline error message */}
           {errors[user._id] && (
             <p className="text-sm text-red-500 mt-1">{errors[user._id]}</p>
           )}

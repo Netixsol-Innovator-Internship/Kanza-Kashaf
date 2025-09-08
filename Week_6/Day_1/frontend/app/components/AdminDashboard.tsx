@@ -20,7 +20,7 @@ import {
 import { getSocket } from "../../lib/socket";
 
 export default function AdminDashboard() {
-  const [range, setRange] = useState<"daily" | "weekly" | "monthly">("monthly");
+  const [range, setRange] = useState<"daily" | "weekly" | "monthly">("daily");
 
   const { data: stats, isLoading: statsLoading, refetch: refetchStats } =
     useGetAdminStatsQuery();
@@ -31,7 +31,6 @@ export default function AdminDashboard() {
   const { data: recentOrders, isLoading: recentLoading, refetch: refetchRecent } =
     useGetAdminRecentOrdersQuery(6);
 
-  // ✅ Realtime updates via shared socket
   useEffect(() => {
     const socket = getSocket();
     if (!socket) return;

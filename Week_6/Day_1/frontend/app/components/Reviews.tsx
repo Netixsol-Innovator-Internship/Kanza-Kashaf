@@ -20,7 +20,6 @@ export default function Reviews() {
   const [itemsPerPage, setItemsPerPage] = useState<number>(3);
   const [pageIndex, setPageIndex] = useState<number>(0);
 
-  // responsive columns
   useEffect(() => {
     function handleResize() {
       const w = window.innerWidth;
@@ -33,7 +32,6 @@ export default function Reviews() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // sort & set reviews
   useEffect(() => {
     const list = (data && Array.isArray((data as any).items)) ? (data as any).items : Array.isArray(data) ? (data as any) : [];
     if (list.length) {
@@ -52,7 +50,6 @@ export default function Reviews() {
     }
   }, [data]);
 
-  // ✅ realtime: refresh when any review is added anywhere
   useEffect(() => {
     const socket = getSocket();
     if (!socket) return;
@@ -63,11 +60,9 @@ export default function Reviews() {
         refreshTop();
       }
     };
-    // @ts-ignore onAny exists on v4
     socket.onAny(anyHandler);
 
     return () => {
-      // @ts-ignore offAny exists on v4
       socket.offAny?.(anyHandler);
     };
   }, []);

@@ -30,7 +30,6 @@ export default function ProductsPageWrapper({ mode, title }: Props) {
     limit: DEFAULT_LIMIT,
   });
 
-  // choose API based on mode
   const queryHook =
     mode === "new-arrivals"
       ? useGetNewArrivalProductsQuery
@@ -46,14 +45,13 @@ export default function ProductsPageWrapper({ mode, title }: Props) {
   const limit = data?.limit || filters.limit;
 
   const onApplyFilters = (newFilters: any) => {
-    setFilters({ ...filters, ...newFilters, page: 1 }); // reset to first page
+    setFilters({ ...filters, ...newFilters, page: 1 }); 
   };
 
   const onPageChange = (newPage: number) => {
     setFilters({ ...filters, page: newPage });
   };
 
-  // ✅ Realtime refresh via socket
   useEffect(() => {
     const s = getSocket();
     if (!s) return;

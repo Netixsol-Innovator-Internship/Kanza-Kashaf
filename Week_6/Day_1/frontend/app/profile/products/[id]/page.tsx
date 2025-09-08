@@ -1,4 +1,3 @@
-// frontend/app/profile/products/[id]/page.tsx
 'use client';
 
 import React, { useEffect } from 'react';
@@ -16,7 +15,6 @@ export default function AdminProductDetailPage() {
     if (!isLoading && user) {
       const role = (user.role || '').toString().toLowerCase();
       if (!(role === 'admin' || role === 'super_admin')) {
-        // non-admins should use public product page
         router.push(`/products/${id}`);
       }
     }

@@ -1,4 +1,3 @@
-// frontend/app/profile/sales/start/page.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -17,13 +16,11 @@ const CATEGORIES = [
 export default function StartSalePage() {
   const router = useRouter();
   const { data: user, isLoading: userLoading } = useGetProfileQuery();
-  // fetch a larger list of products so admin can pick them
   const { data: productsData, isLoading: productsLoading } = useGetProductsQuery({ page: 1, limit: 200 });
   const products = productsLoading ? [] : productsData?.items || [];
 
   const [createCampaign, { isLoading: creating }] = useCreateCampaignMutation();
 
-  // form state
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [percent, setPercent] = useState<number>(10);
@@ -32,12 +29,11 @@ export default function StartSalePage() {
   const [startAt, setStartAt] = useState<string>("");
   const [endAt, setEndAt] = useState<string>("");
 
-  // role guard: only admin / super_admin
   useEffect(() => {
     if (!userLoading && user) {
       const role = (user.role || "").toString().toLowerCase();
       if (!(role === "admin" || role === "super_admin")) {
-        router.push("/profile"); // not allowed
+        router.push("/profile");
       }
     }
   }, [user, userLoading, router]);
@@ -84,7 +80,7 @@ export default function StartSalePage() {
 
     try {
       await createCampaign(payload).unwrap();
-      alert("✅ Campaign created");
+      alert("Campaign created");
       router.push("/profile");
     } catch (err: any) {
       console.error(err);

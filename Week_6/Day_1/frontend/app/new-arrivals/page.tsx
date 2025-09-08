@@ -1,4 +1,3 @@
-// frontend/app/new-arrivals/page.tsx
 "use client";
 
 import ProductsPageWrapper from "../components/ProductsPageWrapper";

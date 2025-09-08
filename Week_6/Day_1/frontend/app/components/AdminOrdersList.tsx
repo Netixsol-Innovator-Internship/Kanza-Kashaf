@@ -8,7 +8,6 @@ export default function AdminOrdersList() {
   const [page, setPage] = useState(1);
   const { data, isLoading, refetch } = useGetAdminOrdersQuery({ page, limit: 8 });
 
-  // ✅ Realtime order updates
   useEffect(() => {
     const socket = getSocket();
     if (!socket) return;

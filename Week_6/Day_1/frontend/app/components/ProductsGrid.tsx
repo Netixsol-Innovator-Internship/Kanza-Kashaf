@@ -34,7 +34,6 @@ export default function ProductsGrid({ products = [], loading = false }: any) {
               </div>
             </div>
 
-            {/* ✅ Updated Price Rendering */}
             <div className="text-lg font-semibold">
               {p.paymentType === 'points' ? (
                 <span className="text-blue-600">Points {p.pointsPrice || 0}</span>

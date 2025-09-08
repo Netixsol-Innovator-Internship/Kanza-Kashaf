@@ -22,7 +22,6 @@ export default function LoginPage() {
       if (data.refreshToken) localStorage.setItem('refreshToken', data.refreshToken);
       dispatch(api.util.resetApiState());
       try { reconnectSocket(); } catch {}
-      // Notify listeners (same-tab) to refetch profile/unread
       if (typeof window !== 'undefined') window.dispatchEvent(new Event('auth-changed'));
       router.push("/");
     } catch (err: any) {

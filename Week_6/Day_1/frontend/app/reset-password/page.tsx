@@ -20,11 +20,11 @@ export default function ResetPasswordPage() {
   const handleChangePassword = async () => {
     try {
       await resetPassword({ email, code, newPassword: newPass }).unwrap();
-      alert("✅ Password updated successfully!");
+      alert("Password updated successfully!");
       setCode("");
       setNewPass("");
     } catch (err: any) {
-      alert("❌ Failed: " + (err?.data?.message || err.message));
+      alert("Failed: " + (err?.data?.message || err.message));
     }
   };
 

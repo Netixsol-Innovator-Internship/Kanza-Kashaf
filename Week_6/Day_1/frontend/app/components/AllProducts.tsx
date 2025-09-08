@@ -7,9 +7,8 @@ import { getSocket } from "../../lib/socket";
 
 export default function AllProducts({ category = "" }: { category?: string }) {
   const [page, setPage] = useState(1);
-  const limit = 9; // Show 9 products per page
+  const limit = 9;
 
-  // ✅ Reset to first page when category changes
   useEffect(() => {
     setPage(1);
   }, [category]);
@@ -24,7 +23,6 @@ export default function AllProducts({ category = "" }: { category?: string }) {
   const total = data?.total || 0;
   const totalPages = Math.ceil(total / limit);
 
-  // ✅ Realtime refresh via socket
   useEffect(() => {
     const s = getSocket();
     if (!s) return;
@@ -46,7 +44,6 @@ export default function AllProducts({ category = "" }: { category?: string }) {
     };
   }, [refetch]);
 
-  // ✅ Format breadcrumb label (capitalize category if exists)
   const breadcrumb = category ? (
     `Home > All Products > ${
       category.charAt(0).toUpperCase() + category.slice(1)
@@ -122,7 +119,6 @@ export default function AllProducts({ category = "" }: { category?: string }) {
                   </div>
                 </div>
 
-                {/* ✅ Updated Price Rendering */}
                 <div className="text-lg font-semibold">
                   {p.paymentType === "points" ? (
                     <span className="text-blue-600">

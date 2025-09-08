@@ -14,7 +14,6 @@ export default function ReviewSection({ productId }: { productId: string }) {
   const { data, isLoading, refetch } = useGetProductReviewsQuery({ id: productId, page, limit, sort });
   const [addReview] = useAddReviewMutation();
 
-  // load/append behavior
   useEffect(() => {
     if (!data) return;
     if (page === 1) {
@@ -23,11 +22,8 @@ export default function ReviewSection({ productId }: { productId: string }) {
       setReviews((p) => [...p, ...(data.items || [])]);
     }
     setTotal(data.total || 0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  // socket-based refetch handled by parent page (it will refetch on events)
-  // provide quick write-review UI:
   const [writing, setWriting] = useState(false);
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
@@ -38,11 +34,9 @@ export default function ReviewSection({ productId }: { productId: string }) {
       await addReview({ id: productId, body: { rating, comment } }).unwrap();
       setComment("");
       setWriting(false);
-      // refresh list from first page
       setPage(1);
       await refetch();
     } catch (e: any) {
-      // toast/notifications handle errors; avoid duplicate alerts
     }
   };
 

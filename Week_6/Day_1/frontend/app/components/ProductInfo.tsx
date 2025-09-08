@@ -63,7 +63,6 @@ export default function ProductInfo({
         <div className="text-sm text-gray-600">{ratingAvg} ({ratingCount})</div>
       </div>
 
-      {/* ✅ Updated Price Rendering */}
       <div>
         {paymentType === "money" && (
           salePercent && salePercent > 0 ? (

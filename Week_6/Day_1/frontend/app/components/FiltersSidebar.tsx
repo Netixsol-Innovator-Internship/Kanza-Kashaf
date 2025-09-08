@@ -1,4 +1,3 @@
-// frontend/components/FiltersSidebar.tsx
 'use client';
 
 import React, { useState } from 'react';

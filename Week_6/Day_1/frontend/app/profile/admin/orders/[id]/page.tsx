@@ -23,10 +23,8 @@ export default function AdminOrderDetailsPage() {
     if (!socket) return;
 
     socket.on("connect", () => {
-      // console.log("admin order socket connected", socket.id);
     });
 
-    // Admin can see all orders, so refetch when any order updates
     socket.on("order-updated", (payload: any) => {
       if (payload?.orderId === orderId) {
         refetch();

@@ -23,10 +23,8 @@ export default function UserOrderDetailsPage() {
     if (!socket) return;
 
     socket.on("connect", () => {
-      // console.log("user order socket connected", socket.id);
     });
 
-    // Only refresh this order if it's updated
     socket.on("order-updated", (payload: any) => {
       if (payload?.orderId === orderId) {
         refetch();

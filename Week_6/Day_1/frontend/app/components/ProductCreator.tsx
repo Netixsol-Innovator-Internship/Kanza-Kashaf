@@ -77,7 +77,6 @@ export default function ProductCreator() {
     regularPrice?: string;
   }>({});
 
-  // auto compute pointsPrice
   useEffect(() => {
     if (form.paymentType === 'points' || form.paymentType === 'hybrid') {
       const salePrice =
@@ -138,7 +137,6 @@ export default function ProductCreator() {
 
   const addVariant = () => {
     const v = [...(form.variants || [])];
-    // put new variant at the top
     v.unshift({ color: 'black', images: [], sizes: [] });
     setForm({ ...form, variants: v });
   };

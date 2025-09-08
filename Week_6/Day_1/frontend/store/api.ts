@@ -1,4 +1,3 @@
-// frontend/store/api.ts
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
@@ -15,7 +14,6 @@ export const api = createApi({
       return headers;
     },
   }),
-  // add Products tag so we can invalidate specific product/list caches
   tagTypes: ['Products', 'NewArrivals', 'Cart', 'Orders', 'User', 'Reviews', 'Admin', 'Notifications'],
   endpoints: (builder) => ({
     // ---------- Auth ----------

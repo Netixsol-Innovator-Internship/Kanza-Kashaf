@@ -15,7 +15,7 @@ export default function Navbar() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { data: user } = useGetProfileQuery(); // simple query, no polling
+  const { data: user } = useGetProfileQuery();
 
   const [logoutMutation] = useLogoutMutation();
 
@@ -31,10 +31,8 @@ export default function Navbar() {
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');
 
-      // 👇 Clear RTK Query cache to update profile
       dispatch(api.util.resetApiState());
 
-      // Inform same-tab listeners and reset notifications without reload
       if (typeof window !== 'undefined') window.dispatchEvent(new Event('auth-changed'));
 
       router.push('/');

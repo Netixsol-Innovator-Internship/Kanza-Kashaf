@@ -14,11 +14,11 @@ const Settings = ({ user }: { user: any }) => {
         newPassword: newPass,
       }).unwrap();
 
-      alert("✅ Password updated successfully!");
+      alert("Password updated successfully!");
       setOldPass("");
       setNewPass("");
     } catch (err: any) {
-      alert("❌ Failed: " + (err?.data?.message || err.message));
+      alert("Failed: " + (err?.data?.message || err.message));
     }
   };
 

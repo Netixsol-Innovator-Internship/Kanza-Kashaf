@@ -71,7 +71,6 @@ export default function ProductEditor({ productId }: { productId: string }) {
     }
   }, [productFromServer]);
 
-  // Realtime updates using updated socket
   useEffect(() => {
     const socket = getSocket();
     if (!socket) return;
@@ -90,7 +89,6 @@ export default function ProductEditor({ productId }: { productId: string }) {
     };
   }, [productId, refetch]);
 
-  // auto compute points price
   useEffect(() => {
     if (!form) return;
     if (form.paymentType === 'points' || form.paymentType === 'hybrid') {
@@ -110,7 +108,6 @@ export default function ProductEditor({ productId }: { productId: string }) {
 
   if (isLoading || !form) return <div className="p-8">Loading product...</div>;
 
-  // helpers
   const setField = (k: string, v: any) => {
     setForm((f: any) => ({ ...f, [k]: v }));
     setDirty(true);
@@ -144,7 +141,6 @@ export default function ProductEditor({ productId }: { productId: string }) {
 
   const addVariant = () => {
     const v = [...(form.variants || [])];
-    // put new variant at the top
     v.unshift({ color: 'black', images: [], sizes: [] });
     setForm({ ...form, variants: v });
     setDirty(true);
@@ -255,7 +251,7 @@ export default function ProductEditor({ productId }: { productId: string }) {
       };
 
       await updateProduct({ id: productId, body: payload }).unwrap();
-      alert('✅ Product updated');
+      alert('Product updated');
       setDirty(false);
       refetch();
     } catch (err: any) {
