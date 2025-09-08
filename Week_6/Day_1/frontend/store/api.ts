@@ -310,7 +310,7 @@ export const api = createApi({
     ),
 
     getAllReviews: builder.query<any, void>({
-      query: () => `reviews/top-rated`,
+      query: () => `/products/reviews/top-rated`,
       providesTags: ['Reviews'],
     }),
 

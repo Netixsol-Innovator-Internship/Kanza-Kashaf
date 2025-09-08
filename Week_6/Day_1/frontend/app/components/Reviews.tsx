@@ -35,8 +35,9 @@ export default function Reviews() {
 
   // sort & set reviews
   useEffect(() => {
-    if (data) {
-      const sorted = [...data].sort((a, b) => {
+    const list = (data && Array.isArray((data as any).items)) ? (data as any).items : Array.isArray(data) ? (data as any) : [];
+    if (list.length) {
+      const sorted = [...list].sort((a, b) => {
         if (b.rating === a.rating) {
           return (
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -46,27 +47,28 @@ export default function Reviews() {
       });
       setItems(sorted);
       setPageIndex(0);
+    } else {
+      setItems([]);
     }
   }, [data]);
 
-  // ✅ realtime new reviews (prepend to list) using shared socket
+  // ✅ realtime: refresh when any review is added anywhere
   useEffect(() => {
     const socket = getSocket();
     if (!socket) return;
 
-    const handleReviewAdded = (payload: ReviewItem) => {
-      if (!payload) return;
-      setItems((prev) => {
-        const exists = prev.find((r) => r._id === payload._id);
-        if (exists) return prev;
-        return [payload, ...prev];
-      });
+    const refreshTop = () => { refetch(); };
+    const anyHandler = (evt: string, payload: any) => {
+      if (evt && typeof evt === 'string' && evt.startsWith('review-added')) {
+        refreshTop();
+      }
     };
-
-    socket.on("review-added", handleReviewAdded);
+    // @ts-ignore onAny exists on v4
+    socket.onAny(anyHandler);
 
     return () => {
-      socket.off("review-added", handleReviewAdded);
+      // @ts-ignore offAny exists on v4
+      socket.offAny?.(anyHandler);
     };
   }, []);
 
@@ -141,9 +143,6 @@ export default function Reviews() {
 
               <div className="mt-3 flex items-center gap-3">
                 <div className="font-semibold text-sm">{name}</div>
-                <div className="ml-1 inline-flex items-center gap-1 text-xs text-green-600">
-                  <span className="w-4 h-4 rounded-full bg-green-500 inline-block" />
-                </div>
               </div>
 
               <blockquote className="mt-3 text-sm text-gray-600 italic">
