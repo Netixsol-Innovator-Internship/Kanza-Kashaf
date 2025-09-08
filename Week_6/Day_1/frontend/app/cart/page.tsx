@@ -208,7 +208,6 @@ export default function CartPage() {
 
     try {
       await checkout({ cartId, body: { paymentMethod, hybridSelections } }).unwrap();
-      alert('Checkout successful');
       refetch();
       router.push('/');
     } catch (e: any) {

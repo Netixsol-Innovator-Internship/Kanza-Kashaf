@@ -279,6 +279,8 @@ export class ProductsService implements OnModuleInit, OnModuleDestroy {
 
     const q: any = { active: true };
     if (filters.category) q.category = filters.category;
+    if (filters.styles && (filters.styles as any).length)
+      q.style = { $in: filters.styles as any };
     if (filters.colors && filters.colors.length)
       q['variants.color'] = { $in: filters.colors };
     if (filters.sizes && filters.sizes.length)

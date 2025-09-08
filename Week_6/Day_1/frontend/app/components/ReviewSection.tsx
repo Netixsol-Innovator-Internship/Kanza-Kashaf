@@ -42,7 +42,7 @@ export default function ReviewSection({ productId }: { productId: string }) {
       setPage(1);
       await refetch();
     } catch (e: any) {
-      alert(e?.data?.message || e?.message || 'Failed to submit review. Are you logged in?');
+      // toast/notifications handle errors; avoid duplicate alerts
     }
   };
 

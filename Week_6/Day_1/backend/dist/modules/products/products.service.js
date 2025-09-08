@@ -221,6 +221,8 @@ let ProductsService = class ProductsService {
         const q = { active: true };
         if (filters.category)
             q.category = filters.category;
+        if (filters.styles && filters.styles.length)
+            q.style = { $in: filters.styles };
         if (filters.colors && filters.colors.length)
             q['variants.color'] = { $in: filters.colors };
         if (filters.sizes && filters.sizes.length)
